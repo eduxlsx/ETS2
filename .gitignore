@@ -1,0 +1,6 @@
+node_modules/
+dist/
+data/
+*.log
+electron/node_modules/
+electron/out/

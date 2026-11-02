@@ -1,0 +1,26 @@
+{
+  "name": "@truckpulse/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/server/src/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
+    "start": "node --disable-warning=ExperimentalWarning dist/server/src/index.js",
+    "check": "tsx src/tools/check.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "koffi": "^2.9.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

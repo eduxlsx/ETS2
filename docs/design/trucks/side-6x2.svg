@@ -1,0 +1,347 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 440" data-testid="truck-side" data-model="generic" data-axles="6x2" role="img" aria-label="Cavalo-mecânico cab-over 6x2 (eixo auxiliar) — vista lateral (referência de design)">
+  <title>TRUCKPULSE — cavalo-mecânico 6x2 com eixo auxiliar (tag), vista lateral esquerda</title>
+  <desc>
+    Referência de design. Escala: 100 px = 1 m. Frente para a DIREITA (igual ao TruckSide.tsx).
+    x = 680 − 100·m (m medido a partir do para-choque), y = 400 − 100·h (h = altura do solo).
+    Desenho deslocado +140 px (translate). Eixo dianteiro 1,45 m, tração 5,05 m, auxiliar (tag) 6,40 m, roda r = 0,52 m, teto 3,75 m, quinta-roda 1,35 m.
+    O eixo auxiliar elevado (lift > 0,5) sobe 0,22 m — contorno tracejado. Estado de exemplo: lanterna (parking), farol baixo, lanterna traseira e gabarito ACESOS; o resto apagado.
+    Cores somente por classes / variáveis CSS (--truck-*, --lamp-*, --tp-*); nada de gradiente.
+  </desc>
+  <style>
+    .t-paint{fill:var(--truck-paint,#c9ced6)}
+    .t-shade{fill:#000;opacity:.16}
+    .t-shade-2{fill:#000;opacity:.32}
+    .t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.38;stroke-width:1}
+    .t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}
+    .t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}
+    .t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}
+    .t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}
+    .t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}
+    .t-glass-hi{fill:#fff;opacity:.08}
+    .t-chassis{fill:var(--truck-chassis,#2a2b28)}
+    .t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-adblue{fill:var(--truck-adblue,#3a6ea5)}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}
+    .t-lens-red{fill:var(--lens-red,#3e1311)}
+    .t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .t-lit-xenon{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}
+    .t-lit-red{fill:var(--lamp-red,#ff2b1c)}
+    .t-beam{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-air-red{fill:none;stroke:#a8392b;stroke-width:2.4}
+    .t-air-yel{fill:none;stroke:#c9a227;stroke-width:2.4}
+    .t-air-blk{fill:none;stroke:#0b0b0a;stroke-width:2.4}
+    .t-annot{fill:none;stroke:var(--tp-dim,#6b675e);stroke-width:1}
+    .t-annot-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace;letter-spacing:.02em}
+    .t-susp{stroke:var(--tp-accent,#ff7a1a);stroke-width:1.5}
+    .t-susp-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}
+    .tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}
+    .tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+    .tp-beam{opacity:0;transition:opacity 200ms ease}
+    .tp-beam.on{opacity:1}
+    .tp-beam.dim{opacity:.45}
+  </style>
+  <defs>
+    <!-- Roda dianteira (aro 22,5", 10 furos, cubo com tampa cônica). Centro em 0,0 -->
+    <g id="s6-wheel-front">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="24.5" class="t-metal-dk" opacity=".55"/>
+      <g class="t-rubber">
+        <circle cx="20.5" cy="0" r="2.8"/><circle cx="16.58" cy="12.05" r="2.8"/><circle cx="6.33" cy="19.5" r="2.8"/>
+        <circle cx="-6.33" cy="19.5" r="2.8"/><circle cx="-16.58" cy="12.05" r="2.8"/><circle cx="-20.5" cy="0" r="2.8"/>
+        <circle cx="-16.58" cy="-12.05" r="2.8"/><circle cx="-6.33" cy="-19.5" r="2.8"/><circle cx="6.33" cy="-19.5" r="2.8"/>
+        <circle cx="16.58" cy="-12.05" r="2.8"/>
+      </g>
+      <circle r="14.5" class="t-metal-lt"/>
+      <g class="t-metal-dk">
+        <circle cx="10.46" cy="3.4" r="1.5"/><circle cx="6.47" cy="8.9" r="1.5"/><circle cx="0" cy="11" r="1.5"/>
+        <circle cx="-6.47" cy="8.9" r="1.5"/><circle cx="-10.46" cy="3.4" r="1.5"/><circle cx="-10.46" cy="-3.4" r="1.5"/>
+        <circle cx="-6.47" cy="-8.9" r="1.5"/><circle cx="0" cy="-11" r="1.5"/><circle cx="6.47" cy="-8.9" r="1.5"/>
+        <circle cx="10.46" cy="-3.4" r="1.5"/>
+      </g>
+      <circle r="7" class="t-metal-dk"/>
+      <circle r="3.2" class="t-metal-lt"/>
+      <path d="M -23 -14 A 27 27 0 0 1 -6 -26" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+    </g>
+    <!-- Roda traseira de tração (rodado duplo: prato fundo + cubo de redução) -->
+    <g id="s6-wheel-drive">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="26" class="t-metal-dk" opacity=".75"/>
+      <circle r="26" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="2"/>
+      <g class="t-rubber">
+        <circle cx="21.5" cy="0" r="2.6"/><circle cx="17.39" cy="12.64" r="2.6"/><circle cx="6.64" cy="20.45" r="2.6"/>
+        <circle cx="-6.64" cy="20.45" r="2.6"/><circle cx="-17.39" cy="12.64" r="2.6"/><circle cx="-21.5" cy="0" r="2.6"/>
+        <circle cx="-17.39" cy="-12.64" r="2.6"/><circle cx="-6.64" cy="-20.45" r="2.6"/><circle cx="6.64" cy="-20.45" r="2.6"/>
+        <circle cx="17.39" cy="-12.64" r="2.6"/>
+      </g>
+      <circle r="16.5" class="t-metal"/>
+      <circle r="16.5" fill="none" stroke="#000" stroke-opacity=".4"/>
+      <g class="t-metal-lt">
+        <circle cx="12.36" cy="4.02" r="1.8"/><circle cx="7.64" cy="10.52" r="1.8"/><circle cx="0" cy="13" r="1.8"/>
+        <circle cx="-7.64" cy="10.52" r="1.8"/><circle cx="-12.36" cy="4.02" r="1.8"/><circle cx="-12.36" cy="-4.02" r="1.8"/>
+        <circle cx="-7.64" cy="-10.52" r="1.8"/><circle cx="0" cy="-13" r="1.8"/><circle cx="7.64" cy="-10.52" r="1.8"/>
+        <circle cx="12.36" cy="-4.02" r="1.8"/>
+      </g>
+      <circle r="9" class="t-metal-dk"/>
+      <circle r="9" fill="none" stroke="#fff" stroke-opacity=".18"/>
+      <circle r="4" class="t-ink"/>
+      <path d="M -24 -15 A 28 28 0 0 1 -7 -27" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
+    </g>
+    <clipPath id="s6-win-clip"><path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z"/></clipPath>
+  </defs>
+
+  <g transform="translate(140 0)">
+  <!-- solo -->
+  <line x1="-140" y1="400" x2="800" y2="400" class="t-ground"/>
+
+  <!-- ===== FEIXES (atrás de tudo). Faixas planas sobrepostas, sem gradiente ===== -->
+  <g class="tp-beam on" data-lamp="beam-low">
+    <path class="t-beam" opacity=".08" d="M 681 299 L 800 380 L 800 400 L 681 309 Z"/>
+    <path class="t-beam" opacity=".12" d="M 681 301 L 800 390 L 800 400 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-high">
+    <path class="t-beam" opacity=".07" d="M 681 297 L 800 268 L 800 398 L 681 310 Z"/>
+    <path class="t-beam" opacity=".11" d="M 681 300 L 800 290 L 800 340 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-aux">
+    <path class="t-beam" opacity=".10" d="M 681 331 L 800 394 L 800 400 L 681 338 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-roof">
+    <path class="t-beam" opacity=".06" d="M 628 16 L 800 36 L 800 260 L 628 23 Z"/>
+    <path class="t-beam" opacity=".09" d="M 628 18 L 800 60 L 800 150 L 628 21 Z"/>
+  </g>
+
+  <!-- ===== CHASSI TRASEIRO ===== -->
+  <g data-part="chassis">
+    <rect x="-71" y="290" width="527" height="28" class="t-chassis t-out"/>
+    <line x1="-71" y1="290.5" x2="456" y2="290.5" class="t-seam-hi" stroke-opacity=".08"/>
+    <line x1="-71" y1="317.5" x2="456" y2="317.5" class="t-seam"/>
+    <!-- furação da longarina -->
+    <g class="t-ink" opacity=".6">
+      <circle cx="96" cy="304" r="1.6"/><circle cx="112" cy="304" r="1.6"/><circle cx="262" cy="300" r="1.6"/>
+      <circle cx="262" cy="310" r="1.6"/><circle cx="310" cy="300" r="1.6"/><circle cx="360" cy="300" r="1.6"/>
+    </g>
+    <!-- travessa traseira -->
+    <rect x="-75" y="288" width="8" height="34" class="t-chassis"/>
+  </g>
+
+  <!-- pórtico atrás da cabine + mangueiras de ar (vermelha = emergência, amarela = serviço, preta = elétrica) -->
+  <g data-part="gantry">
+    <rect x="430" y="96" width="5" height="194" class="t-chassis"/>
+    <rect x="422" y="104" width="16" height="6" class="t-chassis"/>
+    <path class="t-air-red" d="M 426 110 C 404 124 398 150 412 168 C 426 186 400 200 408 222 C 414 240 430 232 432 212"/>
+    <path class="t-air-yel" d="M 430 110 C 412 128 410 152 420 170 C 432 190 410 206 418 226 C 424 242 436 230 434 214"/>
+    <path class="t-air-blk" d="M 434 110 C 422 132 424 156 428 176 C 434 198 420 214 426 232"/>
+    <rect x="426" y="206" width="12" height="10" class="t-plastic"/>
+  </g>
+  <!-- passarela -->
+  <rect x="330" y="284" width="102" height="6" class="t-metal-dk"/>
+  <line x1="332" y1="287" x2="430" y2="287" stroke="#000" stroke-opacity=".35" stroke-dasharray="4 3"/>
+
+  <!-- quinta-roda (pino-rei em x≈200 → 0,25 m à frente do eixo de tração) -->
+  <g data-part="fifth-wheel" transform="translate(-67.5 0)">
+    <path d="M 164 278 L 236 278 L 230 290 L 170 290 Z" class="t-chassis"/>
+    <path d="M 146 272 L 154 265 L 246 265 L 254 272 L 254 278 L 146 278 Z" class="t-metal-dk"/>
+    <line x1="154" y1="265.5" x2="246" y2="265.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <path d="M 200 265 L 200 278" class="t-seam"/>
+    <line x1="236" y1="275" x2="260" y2="284" stroke="var(--truck-metal,#8e9196)" stroke-width="2" stroke-linecap="square"/>
+  </g>
+
+  <!-- caixa de baterias, AdBlue, tanque de combustível -->
+  <g data-part="tanks">
+    <rect x="242" y="298" width="40" height="44" rx="1" class="t-plastic"/>
+    <line x1="242" y1="305" x2="282" y2="305" class="t-seam"/>
+    <rect x="248" y="309" width="6" height="3" class="t-metal-dk"/><rect x="270" y="309" width="6" height="3" class="t-metal-dk"/>
+    <rect x="288" y="302" width="16" height="40" rx="4" class="t-plastic-2"/>
+    <rect x="292" y="298" width="8" height="5" rx="1" class="t-adblue"/>
+    <rect x="310" y="294" width="130" height="56" rx="10" class="t-metal"/>
+    <rect x="314" y="297" width="122" height="7" rx="3.5" class="t-hi" opacity=".22"/>
+    <path d="M 310 336 L 440 336 L 440 340 Q 440 350 430 350 L 320 350 Q 310 350 310 340 Z" class="t-shade"/>
+    <line x1="312" y1="322" x2="438" y2="322" class="t-seam" stroke-opacity=".18"/>
+    <rect x="328" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="416" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="426" y="289" width="10" height="6" rx="1" class="t-metal-dk"/>
+  </g>
+
+  <!-- ===== RODAS ===== -->
+  <ellipse cx="175" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <ellipse cx="535" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <ellipse cx="40" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <use href="#s6-wheel-front" transform="translate(40 348)" data-testid="truck-axle-2"/>
+  <circle cx="40" cy="326" r="52" fill="none" stroke="var(--tp-dim,#6b675e)" stroke-dasharray="4 3" data-part="lift-ghost"/>
+  <use href="#s6-wheel-drive" transform="translate(175 348)" data-testid="truck-axle-1"/>
+  <use href="#s6-wheel-front" transform="translate(535 348)" data-testid="truck-axle-0"/>
+
+  <!-- para-lama do eixo auxiliar (ponte entre os dois para-lamas) -->
+  <path d="M -22 352 L -22 344 A 62 62 0 0 1 102 344 L 102 352 L 96 352 L 96 346 A 56 56 0 0 0 -16 346 L -16 352 Z" class="t-plastic"/>
+  <rect x="96" y="300" width="21" height="8" class="t-plastic"/>
+  <!-- para-lama traseiro + para-barro -->
+  <path d="M 113 352 L 113 344 A 62 62 0 0 1 237 344 L 237 352 L 231 352 L 231 346 A 56 56 0 0 0 119 346 L 119 352 Z" class="t-plastic"/>
+  <rect x="-31" y="350" width="8" height="42" class="t-rubber"/>
+  <rect x="-31" y="350" width="8" height="5" class="t-plastic-2"/>
+
+  <!-- lanternas traseiras (vistas de topo/perfil) -->
+  <g data-part="tail" transform="translate(-135 0)">
+    <rect x="54" y="320" width="12" height="30" rx="1" class="t-plastic"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lens-amber"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lens-clear"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+  </g>
+
+  <!-- ===== CABINE ===== -->
+  <g data-part="cab">
+    <!-- colarinho / defletor lateral traseiro -->
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-paint"/>
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-shade-2"/>
+    <!-- suporte da suspensão da cabine -->
+    <rect x="446" y="280" width="14" height="12" class="t-chassis"/>
+
+    <!-- casca pintada -->
+    <path d="M 680 288 L 675 200 L 670 190 L 644 58 Q 640 28 612 26 L 466 24 Q 450 24 450 40 L 452 280 L 680 280 Z" class="t-paint"/>
+    <!-- camadas planas de sombreamento -->
+    <path d="M 640 50 Q 638 31 612 30 L 466 28 Q 455 28 454 38 L 454 46 Q 455 36 466 36 L 612 38 Q 632 39 637 56 Z" class="t-hi"/>
+    <path d="M 452 229 L 676.6 229 L 679.5 280 L 452 280 Z" class="t-shade"/>
+    <path d="M 680 288 L 675 200 L 669 200 L 674 288 Z" class="t-shade-2"/>
+    <!-- vinco lateral -->
+    <line x1="452" y1="227.5" x2="676" y2="227.5" class="t-seam-hi"/>
+    <line x1="452" y1="229" x2="676" y2="229" class="t-seam"/>
+    <!-- junta do teto alto -->
+    <line x1="451" y1="96" x2="532" y2="96" class="t-seam"/>
+    <!-- coluna A: vedação + lâmina do para-brisa -->
+    <path d="M 671 190 L 645 58 L 642 60 L 667 190 Z" class="t-glass"/>
+    <line x1="670" y1="190" x2="644" y2="58" stroke="#000" stroke-opacity=".5" stroke-width="1.5"/>
+
+    <!-- porta -->
+    <path d="M 650 96 L 661 188 L 663 272 Q 663 276 659 276 L 536 276 Q 532 276 532 272 L 532 104 Q 532 96 540 96 Z" class="t-seam"/>
+    <!-- janela com recorte inferior (visão do meio-fio) -->
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" class="t-glass"/>
+    <g clip-path="url(#s6-win-clip)">
+      <path d="M 596 100 L 618 100 L 586 200 L 564 200 Z" class="t-glass-hi"/>
+      <path d="M 626 100 L 632 100 L 600 200 L 594 200 Z" class="t-glass-hi"/>
+      <rect x="560" y="150" width="34" height="40" class="t-ink" opacity=".35"/>
+    </g>
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- maçaneta e alça -->
+    <rect x="548" y="204" width="16" height="4" rx="1" class="t-plastic"/>
+    <rect x="524" y="150" width="4" height="104" rx="2" class="t-plastic"/>
+    <!-- tomada de ar lateral -->
+    <rect x="470" y="116" width="50" height="40" class="t-seam"/>
+    <g class="t-ink" opacity=".45">
+      <rect x="473" y="120" width="44" height="3"/><rect x="473" y="127" width="44" height="3"/>
+      <rect x="473" y="134" width="44" height="3"/><rect x="473" y="141" width="44" height="3"/>
+      <rect x="473" y="148" width="44" height="3"/>
+    </g>
+    <!-- bagageiro lateral -->
+    <rect x="462" y="238" width="58" height="34" rx="2" class="t-seam"/>
+    <rect x="508" y="252" width="8" height="3" class="t-plastic"/>
+
+    <!-- para-sol -->
+    <path d="M 646 44 L 667 52 L 667 56 L 645 54 Z" class="t-plastic"/>
+
+    <!-- para-lama dianteiro + caixa de degraus (plástico) -->
+    <path d="M 606 280 L 606 352 L 597 352 L 597 348 A 62 62 0 0 0 473 348 L 473 352 L 452 352 L 452 280 Z" class="t-plastic"/>
+    <path d="M 593 348 A 58 58 0 0 0 477 348" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="4"/>
+    <rect x="452" y="290" width="21" height="62" class="t-ink" opacity=".45"/>
+    <g class="t-metal-dk">
+      <rect x="454" y="296" width="18" height="4"/><rect x="454" y="320" width="18" height="4"/><rect x="454" y="344" width="18" height="4"/>
+    </g>
+    <line x1="454" y1="296.5" x2="472" y2="296.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="320.5" x2="472" y2="320.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="344.5" x2="472" y2="344.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <rect x="456" y="352" width="12" height="36" class="t-rubber"/>
+
+    <!-- para-choque -->
+    <path d="M 680 288 L 680 344 Q 680 356 670 358 L 606 358 L 606 288 Z" class="t-plastic-2"/>
+    <line x1="606" y1="288.5" x2="680" y2="288.5" class="t-seam-hi"/>
+    <rect x="610" y="357" width="68" height="5" class="t-plastic"/>
+    <line x1="606" y1="322" x2="660" y2="322" class="t-seam"/>
+
+    <!-- espelhos (principal + grande-angular) -->
+    <line x1="662" y1="112" x2="676" y2="108" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <line x1="664" y1="186" x2="676" y2="190" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <rect x="670" y="92" width="14" height="62" rx="3" class="t-plastic"/>
+    <rect x="672" y="95" width="3" height="56" class="t-hi" opacity=".1"/>
+    <rect x="671" y="160" width="12" height="30" rx="3" class="t-plastic"/>
+
+    <!-- barra de teto -->
+    <g data-part="roof-bar">
+      <rect x="562" y="22" width="3" height="5" class="t-plastic"/><rect x="616" y="22" width="3" height="5" class="t-plastic"/>
+      <rect x="556" y="14" width="70" height="9" rx="1" class="t-plastic"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lens-clear"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lit-white tp-lamp" data-lamp="auxRoof"/>
+    </g>
+  </g>
+
+  <!-- ===== LUZES DA CABINE ===== -->
+  <!-- farol (no canto do para-choque) -->
+  <path d="M 680 293 L 680 309 L 664 309 Q 660 309 660 305 L 660 296 Q 660 293 664 293 Z" class="t-lens-clear"/>
+  <rect x="664" y="297" width="15" height="11" class="t-lit-xenon tp-lamp on" data-lamp="lowBeam"/>
+  <rect x="662" y="294" width="17" height="2.4" class="t-lit-white tp-lamp on" data-lamp="parking"/>
+  <!-- pisca dianteiro (envolve o canto) -->
+  <rect x="674" y="310" width="6" height="6" class="t-lens-amber"/>
+  <rect x="674" y="310" width="6" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-front"/>
+  <!-- repetidor lateral (cat. 6) -->
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lit-amber tp-lamp" data-lamp="blinker-left-side"/>
+  <!-- auxiliar dianteiro / neblina (SDK: auxFront) -->
+  <rect x="668" y="330" width="12" height="8" rx="1" class="t-lens-clear"/>
+  <rect x="669" y="331" width="11" height="6" class="t-lit-white tp-lamp" data-lamp="auxFront"/>
+  <!-- gabarito do teto (lateral, âmbar) -->
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lit-amber tp-lamp on" data-lamp="clearance"/>
+  <!-- giroflex -->
+  <rect x="468" y="18" width="18" height="6" class="t-plastic"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lens-amber"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lit-amber tp-lamp tp-beacon" data-lamp="beacon"/>
+
+  <!-- ===== SUSPENSÃO (dado real, mm) ===== -->
+  <g data-part="shock">
+    <line x1="527" y1="333" x2="527" y2="290" class="t-susp"/>
+    <text x="535" y="414" text-anchor="middle" class="t-susp-tx">-17</text>
+  </g>
+  <g data-part="shock">
+    <line x1="167" y1="333" x2="167" y2="292" class="t-susp"/>
+    <text x="175" y="414" text-anchor="middle" class="t-susp-tx">42</text>
+  </g>
+
+  <g data-part="shock">
+    <line x1="32" y1="333" x2="32" y2="292" class="t-susp"/>
+    <text x="40" y="414" text-anchor="middle" class="t-susp-tx">8</text>
+  </g>
+
+  <!-- ===== COTAS (somente documentação; não renderizar no app) ===== -->
+  <g id="anotacoes">
+    <path class="t-annot" d="M 680 422 V 432 M 535 422 V 432 M 175 422 V 432 M 40 422 V 432 M 680 427 H 40"/>
+    <text x="607" y="436" text-anchor="middle" class="t-annot-tx">1,45 m</text>
+    <text x="355" y="436" text-anchor="middle" class="t-annot-tx">entre-eixos 3,60 m</text>
+    <text x="108" y="436" text-anchor="middle" class="t-annot-tx">1,35 m</text>
+    <path class="t-annot" d="M -120 400 H -110 M -120 24 H -110 M -115 24 V 400 M -120 265 H -110"/>
+    <text x="-106" y="30" class="t-annot-tx">teto 3,75 m</text>
+    <text x="-106" y="262" class="t-annot-tx">5ª roda 1,35 m</text>
+  </g>
+</g>
+</svg>

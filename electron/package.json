@@ -1,0 +1,13 @@
+{
+  "name": "truckpulse-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TRUCKPULSE como aplicativo desktop (Electron) — opcional",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^33.2.1"
+  }
+}

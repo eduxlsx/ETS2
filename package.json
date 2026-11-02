@@ -1,0 +1,18 @@
+{
+  "name": "truckpulse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TRUCKPULSE — Advanced Truck Telemetry para Euro Truck Simulator 2",
+  "license": "MIT",
+  "workspaces": ["server", "web"],
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "build": "npm run build -w web && npm run build -w server",
+    "start": "node --disable-warning=ExperimentalWarning server/dist/server/src/index.js",
+    "dev": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
+    "test": "npm test -w server && npm test -w web",
+    "check": "node --disable-warning=ExperimentalWarning server/dist/server/src/tools/check.js",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web"
+  }
+}

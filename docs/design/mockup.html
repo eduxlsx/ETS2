@@ -1,0 +1,1584 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="graphite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121211">
+<title>TRUCKPULSE — mockup do painel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=B612+Mono:wght@400;700&family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root,:root[data-theme='graphite']{--tp-bg:#121211;--tp-panel:#1a1a18;--tp-panel-2:#22221f;--tp-inset:#0e0e0d;--tp-line:#2e2d29;--tp-line-strong:#45433d;--tp-text:#ebe7de;--tp-muted:#a19c90;--tp-dim:#6b675e;--tp-accent:#ff7a1a;--tp-accent-ink:#121211;--tp-accent-2:#ffb066;--tp-ok:#6fbf5a;--tp-warn:#f2b600;--tp-crit:#f0412e;--tp-info:#4a9dff;--qr-fg:var(--tp-text);--qr-bg:var(--tp-panel)}
+:root[data-theme='midnight']{--tp-bg:#0a0d12;--tp-panel:#0f141b;--tp-panel-2:#151b24;--tp-inset:#070a0e;--tp-line:#1f2732;--tp-line-strong:#2f3a48;--tp-text:#cdd5df;--tp-muted:#8593a5;--tp-dim:#556274;--tp-accent:#ff9a3c;--tp-accent-ink:#0a0d12;--tp-accent-2:#ffc078;--tp-ok:#5fb87a;--tp-warn:#e8b23a;--tp-crit:#e5533d;--tp-info:#5b9cf5}
+:root[data-theme='contrast']{--tp-bg:#000;--tp-panel:#000;--tp-panel-2:#141414;--tp-inset:#000;--tp-line:#5c5c5c;--tp-line-strong:#a0a0a0;--tp-text:#fff;--tp-muted:#d0d0d0;--tp-dim:#9a9a9a;--tp-accent:#ff9500;--tp-accent-ink:#000;--tp-accent-2:#ffc266;--tp-ok:#3cff6e;--tp-warn:#ffe000;--tp-crit:#ff4040;--tp-info:#4da3ff;--qr-fg:#000;--qr-bg:#fff;--truck-plastic:#3a3a3a;--truck-plastic-2:#4a4a4a;--truck-rubber:#262626;--truck-outline:#8a8a8a;--truck-chassis:#333}
+:root{--font-sans:'Barlow','Bahnschrift','Segoe UI',system-ui,sans-serif;--font-cond:'Barlow Condensed','Bahnschrift SemiCondensed','Bahnschrift','Arial Narrow',sans-serif;--font-mono:'B612 Mono','Cascadia Mono',Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0a;color:var(--tp-text);font:14px/20px var(--font-sans);-webkit-font-smoothing:antialiased}
+.doc{max-width:1500px;margin:0 auto;padding:24px 20px 80px}
+.doc-head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;border-bottom:1px solid #2e2d29;padding-bottom:12px;margin-bottom:20px;color:#ebe7de}
+.doc-head h1{font:600 22px/26px var(--font-cond);text-transform:uppercase;letter-spacing:.04em;margin:0}
+.doc-head p{margin:4px 0 0;color:#a19c90;font-size:13px;max-width:760px}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.tools button{font:600 12px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;background:#1a1a18;color:#a19c90;border:1px solid #45433d;border-radius:2px;padding:8px 12px;cursor:pointer;min-height:36px}
+.tools button[aria-pressed=true]{color:#121211;background:#ff7a1a;border-color:#ff7a1a}
+.doc h2{font:600 13px var(--font-cond);text-transform:uppercase;letter-spacing:.12em;color:#a19c90;margin:40px 0 10px;display:flex;gap:10px;align-items:center}
+.doc h2::after{content:'';flex:1;border-top:1px solid #2e2d29}
+.tp-label{font:600 11px/14px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;color:var(--tp-muted)}
+.tp-leader{flex:1;border-bottom:1px dotted var(--tp-line-strong);margin:0 6px 5px}
+.mono{font-family:var(--font-mono)}
+.sep{display:inline-block;margin:0 -.24em}
+
+/* ── shell ── */
+.app{display:grid;grid-template-columns:184px 1fr;background:var(--tp-bg);border:1px solid var(--tp-line);min-width:1180px;color:var(--tp-text)}
+.rail{background:var(--tp-panel);border-right:1px solid var(--tp-line);display:flex;flex-direction:column}
+.brand{height:56px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--tp-line);font:600 16px var(--font-cond);letter-spacing:.14em}
+.brand b{color:var(--tp-accent);font-weight:600}
+.brand svg{width:22px;height:22px}
+.rail a{display:flex;align-items:center;gap:12px;height:40px;padding:0 16px;color:var(--tp-muted);text-decoration:none;font:500 14px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;border-left:3px solid transparent;cursor:pointer}
+.rail a i{font:normal 11px var(--font-mono);color:var(--tp-dim);width:16px}
+.rail a:hover{color:var(--tp-text)}
+.rail a.act{background:var(--tp-panel-2);color:var(--tp-text);border-left-color:var(--tp-accent)}
+.rail a.act i{color:var(--tp-accent)}
+.rail hr{border:0;border-top:1px solid var(--tp-line);margin:8px 0}
+.rail .foot{margin-top:auto;padding:12px 16px;border-top:1px solid var(--tp-line)}
+.rail .foot div{font:11px var(--font-mono);color:var(--tp-dim)}
+.status{display:flex;align-items:stretch;height:40px;border-bottom:1px solid var(--tp-line);background:var(--tp-panel)}
+.sf{display:flex;flex-direction:column;justify-content:center;padding:0 14px;border-right:1px solid var(--tp-line);gap:1px}
+.sf .tp-label{font-size:9px;line-height:10px}
+.sf b{font:600 13px/15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+.sf b.mono{font:400 13px/15px var(--font-mono);letter-spacing:0;display:block}
+.led{width:6px;height:6px;background:var(--c,var(--tp-ok));display:inline-block}
+.sf.demo{background:var(--tp-warn)} .sf.demo .tp-label,.sf.demo b{color:#111}
+.status .sp{flex:1}
+.btn{font:600 12px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--tp-line-strong);background:transparent;color:var(--tp-text);border-radius:2px;padding:0 12px;height:28px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn.solid{background:var(--tp-accent);border-color:var(--tp-accent);color:var(--tp-accent-ink)}
+.btn.warn{background:var(--tp-warn);border-color:var(--tp-warn);color:#111}
+.btn.icon{width:32px;padding:0;justify-content:center}
+.status .acts{display:flex;align-items:center;gap:8px;padding:0 12px}
+.tape{height:4px;background:repeating-linear-gradient(135deg,var(--tp-warn) 0 10px,#111 10px 20px)}
+.demo-line{font:600 12px/26px var(--font-cond);text-transform:uppercase;letter-spacing:.14em;color:var(--tp-warn);text-align:center;background:var(--tp-panel);border-bottom:1px solid var(--tp-line)}
+.demo-wrap{display:none}.show-demo .demo-wrap{display:block}
+.ann{display:flex;gap:1px;background:var(--tp-line);border-bottom:1px solid var(--tp-line);overflow-x:auto}
+.an{display:flex;align-items:stretch;background:var(--tp-panel);min-height:30px;border:1px solid var(--c);flex:0 0 auto}
+.an b{font:600 11px var(--font-cond);letter-spacing:.1em;background:var(--c);color:var(--tp-accent-ink);display:flex;align-items:center;padding:0 8px}
+.an span{display:flex;align-items:center;padding:0 12px;font-size:13px;background:color-mix(in srgb,var(--c) 10%,transparent)}
+/* ── grade de painéis ── */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--tp-line)}
+.p{background:var(--tp-panel);min-width:0}
+.ph{height:32px;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid var(--tp-line)}
+.ph h3{margin:0;font:600 13px var(--font-cond);text-transform:uppercase;letter-spacing:.1em;color:var(--tp-text)}
+.ph .code{font:10px var(--font-mono);color:var(--tp-dim)}
+.ph .act{margin-left:auto}
+.pb{padding:12px}
+.badge{font:600 11px/18px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--c,var(--tp-line));color:var(--c,var(--tp-muted));background:color-mix(in srgb,var(--c,transparent) 12%,transparent);border-radius:2px;padding:0 6px;display:inline-flex;align-items:center;gap:6px}
+.c8{grid-column:span 8}.c4{grid-column:span 4}.c5{grid-column:span 5}.c3{grid-column:span 3}.c12{grid-column:span 12}
+/* indicadores */
+.strip{display:grid;grid-template-columns:repeat(12,1fr);border-bottom:1px solid var(--tp-line)}
+.tt{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:58px;border-right:1px solid var(--tp-line);color:var(--tp-dim)}
+.tt:last-child{border-right:0}
+.tt svg{width:24px;height:22px;opacity:.45}
+.tt span{font:500 10px/11px var(--font-cond);text-transform:uppercase;letter-spacing:.06em}
+.tt i{font:normal 9px var(--font-mono);color:var(--tp-muted)}
+.tt.on{background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c)}
+.tt.on svg{opacity:1}.tt.on span{color:var(--tp-text)}
+.tt.nd svg{opacity:.2}.tt b{position:absolute;top:3px;right:4px;font:400 8px var(--font-mono);color:var(--tp-dim)}
+.cluster{display:grid;grid-template-columns:1fr 200px 1fr;align-items:center}
+.gauge{width:100%;max-width:290px;display:block;margin:0 auto}
+.g-num{font:11px var(--font-mono);fill:var(--tp-muted)}
+.g-lcd{font:700 34px var(--font-mono);fill:var(--tp-text)}
+.g-unit{font:600 11px var(--font-cond);letter-spacing:.12em;fill:var(--tp-muted)}
+.g-sub{font:600 10px var(--font-cond);letter-spacing:.1em;fill:var(--tp-crit)}
+.center{display:flex;flex-direction:column;align-items:center;gap:12px;border-left:1px solid var(--tp-line);border-right:1px solid var(--tp-line);padding:12px 0;height:100%;justify-content:center}
+.gear{font:700 56px/56px var(--font-mono);color:var(--tp-text)}
+.gear-l{margin-top:-6px}
+.sign{width:64px;height:64px;border-radius:50%;background:#fff;border:6px solid var(--tp-crit);display:flex;align-items:center;justify-content:center;font:600 24px var(--font-cond);color:#000}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;width:100%;padding:0 16px}
+.stat .v{font:400 15px/20px var(--font-mono)}.stat .v u,.m-val u,.row u{text-decoration:none;font:500 12px var(--font-cond);color:var(--tp-muted);margin-left:4px;letter-spacing:.04em}
+.stat .v.big{font-size:34px;line-height:38px}
+.stat .v.nd{color:var(--tp-dim);text-decoration:underline dotted;text-underline-offset:3px}
+.cl-foot{display:grid;grid-template-columns:repeat(3,64px) 1fr 1fr 1fr;border-top:1px solid var(--tp-line);align-items:stretch}
+.cl-foot .tt{height:52px}.cl-foot .stat{padding:8px 12px;border-left:1px solid var(--tp-line)}
+/* combustível */
+.seg{display:grid;grid-template-columns:repeat(20,1fr);gap:1px;height:22px;background:var(--tp-inset);border:1px solid var(--tp-line);padding:1px;position:relative}
+.seg i{background:var(--tp-panel-2)}.seg i.lit{background:var(--tp-warn)}.seg i.mk{box-shadow:inset -1px 0 0 var(--tp-text)}
+.fuel-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px}
+.seg-scale{display:flex;justify-content:space-between;font:10px var(--font-mono);color:var(--tp-dim);margin-top:3px}
+/* escalas */
+.meter{margin-bottom:12px}.meter:last-child{margin-bottom:0}
+.m-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.m-val{font:400 13px var(--font-mono)}
+.m-track{position:relative;height:8px;background:var(--tp-inset);border:1px solid var(--tp-line)}
+.m-fill{position:absolute;inset:0 auto 0 0}
+.m-mark{position:absolute;top:-4px;bottom:-1px;width:1px;background:var(--tp-text)}
+.m-mark::before{content:'';position:absolute;top:-1px;left:-3px;border:3.5px solid transparent;border-top-color:var(--tp-text)}
+.m-ticks{display:flex;justify-content:space-between;height:3px}.m-ticks i{width:1px;background:var(--tp-line-strong)}
+/* veículo */
+.veh-head{display:flex;align-items:center;gap:10px}
+.veh-head .name{font:600 15px var(--font-cond);letter-spacing:.04em}
+.segctl{display:inline-flex;border:1px solid var(--tp-line-strong);margin-left:auto}
+.segctl button{font:600 12px var(--font-cond);letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--tp-muted);border:0;padding:0 12px;height:30px;cursor:pointer;border-bottom:2px solid transparent}
+.segctl button[aria-selected=true]{background:var(--tp-panel-2);color:var(--tp-text);border-bottom-color:var(--tp-accent)}
+.veh svg{width:100%;height:auto;display:block}
+.ruler line{stroke:var(--tp-line-strong)}
+.veh-wrap{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:end;margin-top:8px}
+.truck-front{width:100%;height:auto}
+.note{font-size:11px;line-height:15px;color:var(--tp-dim);margin:8px 0 0}
+/* tabelas guia */
+.row{display:flex;align-items:baseline;font-size:13px;line-height:24px}
+.row span:first-child{color:var(--tp-muted)}
+.row b{font:400 13px var(--font-mono)}
+.odo{display:flex;align-items:flex-end;gap:0;margin:2px 0 10px}
+.odo span{font:400 30px/40px var(--font-mono);width:26px;text-align:center;background:var(--tp-inset);border:1px solid var(--tp-line);margin-right:-1px}
+.odo span.dec{background:var(--tp-text);color:var(--tp-bg);border-color:var(--tp-text)}
+.odo u{text-decoration:none;font:500 12px var(--font-cond);color:var(--tp-muted);margin-left:8px}
+.chart{width:100%;height:190px;display:block}.c-ax{font:10px var(--font-mono);fill:var(--tp-dim)}
+.legend{display:flex;gap:14px;margin-left:auto}.legend span{font:500 11px var(--font-cond);letter-spacing:.06em;text-transform:uppercase;color:var(--tp-muted);display:flex;align-items:center;gap:6px}
+.legend i{width:14px;height:0;border-top:2px solid var(--c)}.legend i.d{border-top-style:dashed}
+.notebox{margin-top:10px;border-left:2px solid var(--tp-line-strong);padding:2px 0 2px 10px;font-size:12px;line-height:17px;color:var(--tp-muted)}
+.notebox b{display:block;font:600 10px var(--font-cond);letter-spacing:.1em;color:var(--tp-dim)}
+.wiper{display:flex;flex-direction:column;align-items:center;gap:6px}
+/* acessar pelo celular */
+.lan{display:grid;grid-template-columns:1fr 180px;gap:20px;align-items:center}
+.lan .url{font:400 20px var(--font-mono);color:var(--tp-text);display:flex;gap:10px;align-items:center;margin:6px 0 10px}
+.qr{width:168px;height:168px;display:block;border:1px solid var(--tp-line)}
+/* ── celular ── */
+.phones{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start}
+.phone{width:392px;height:846px;border:1px solid #45433d;background:var(--tp-bg);position:relative;overflow:hidden;display:flex;flex-direction:column;color:var(--tp-text)}
+.phone.land{width:846px;height:392px;flex-direction:row}
+.cap{font:11px var(--font-mono);color:#6b675e;margin-top:6px}
+.m-top-bar{height:44px;display:flex;align-items:center;gap:10px;padding:0 6px 0 12px;background:var(--tp-panel);border-bottom:1px solid var(--tp-line);flex:0 0 auto}
+.m-top-bar .brand2{font:600 15px var(--font-cond);letter-spacing:.12em}.m-top-bar .brand2 b{color:var(--tp-accent)}
+.m-top-bar .clock{font:13px var(--font-mono);color:var(--tp-muted);margin-left:auto}
+.m-top-bar .more{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:var(--tp-muted)}
+.m-body{flex:1;overflow:hidden}
+.m-nav{flex:0 0 auto;height:57px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--tp-panel);border-top:1px solid var(--tp-line-strong)}
+.m-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--tp-dim);font:500 11px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;border-top:2px solid transparent;margin-top:-1px;min-height:44px}
+.m-nav a svg{width:20px;height:20px}
+.m-nav a.act{color:var(--tp-text);border-top-color:var(--tp-accent)}
+.m-hero{display:grid;grid-template-columns:1fr auto;align-items:center;padding:12px 14px 10px;background:var(--tp-panel);border-bottom:1px solid var(--tp-line)}
+.m-speed{font:700 64px/60px var(--font-mono);color:var(--tp-crit)}
+.m-speed u{text-decoration:none;font:600 13px var(--font-cond);color:var(--tp-muted);letter-spacing:.1em;margin-left:6px}
+.m-sub{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--tp-line);background:var(--tp-panel)}
+.m-sub div{padding:8px 12px;border-right:1px solid var(--tp-line)}.m-sub div:last-child{border-right:0}
+.m-sub .v{font:700 30px/34px var(--font-mono)}.m-sub .v.s{font:400 20px/34px var(--font-mono)}
+.m-strip{display:grid;grid-template-columns:repeat(6,1fr);background:var(--tp-panel);border-bottom:1px solid var(--tp-line)}
+.m-strip .tt{height:52px;border-bottom:1px solid var(--tp-line)}.m-strip .tt:nth-child(6n){border-right:0}
+.m-sec{background:var(--tp-panel);border-bottom:1px solid var(--tp-line)}
+.m-sec .ph{height:32px}.m-sec .pb{padding:10px 12px}
+.m-sec .segctl button{height:44px;padding:0 14px}
+.land .m-nav{width:57px;height:auto;grid-template-columns:1fr;grid-template-rows:repeat(5,1fr);border-top:0;border-right:1px solid var(--tp-line-strong)}
+.land .m-nav a{border-top:0;border-left:2px solid transparent;margin:0}.land .m-nav a.act{border-left-color:var(--tp-accent)}.land .m-nav span{display:none}
+.land-grid{display:grid;grid-template-columns:330px 1fr;gap:1px;background:var(--tp-line);height:100%}
+.land-grid>div{background:var(--tp-panel);overflow:hidden}
+.gpair{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:6px}
+</style>
+</head>
+<body>
+<div class="doc">
+  <div class="doc-head">
+    <div>
+      <h1>TRUCKPULSE · mockup do painel</h1>
+      <p>Referência estática para implementação (ver DESIGN-SPEC.md). Os desenhos do caminhão e do reboque são os SVGs de docs/design/trucks e docs/design/trailers embutidos sem alteração. Sem internet, as fontes caem para Bahnschrift/Consolas.</p>
+    </div>
+    <div class="tools" role="group" aria-label="Tema">
+      <button data-theme-btn="graphite" aria-pressed="true">Grafite</button>
+      <button data-theme-btn="midnight" aria-pressed="false">Cabine noturna</button>
+      <button data-theme-btn="contrast" aria-pressed="false">Alto contraste</button>
+      <button id="demo-btn" aria-pressed="false">Mostrar modo DEMO</button>
+    </div>
+  </div>
+
+  <h2>Desktop · 1440 px</h2>
+  <div style="overflow-x:auto">
+  <div class="app" id="app">
+    <aside class="rail">
+      <div class="brand"><svg viewBox="0 0 32 32"><path d="M3 18h7l3-8 5 14 3-6h8" fill="none" stroke="var(--tp-accent)" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter"/></svg>TRUCK<b>PULSE</b></div>
+      <a class="act" aria-current="page" title="Painel (Alt+1)"><i>01</i>Painel</a><a class=""  title="Caminhão (Alt+2)"><i>02</i>Caminhão</a><a class=""  title="Viagem (Alt+3)"><i>03</i>Viagem</a><a class=""  title="Reboque (Alt+4)"><i>04</i>Reboque</a><a class=""  title="Manutenção (Alt+5)"><i>05</i>Manutenção</a><a class=""  title="Histórico (Alt+6)"><i>06</i>Histórico</a>
+      <hr>
+      <a title="Configurações (Alt+7)"><i>07</i>Configurações</a><a title="Diagnóstico (Alt+8)"><i>08</i>Diagnóstico</a>
+      <div class="foot"><div>v1<span class="sep">.</span>0.0</div><div>LAN ATIVA · 5170</div></div>
+    </aside>
+    <div>
+      <div class="status">
+        <div class="sf"><span class="tp-label">Link</span><b><span class="led"></span>Conectado</b></div>
+        <div class="sf" id="src-field"><span class="tp-label">Fonte</span><b>Ao vivo</b></div>
+        <div class="sf"><span class="tp-label">Atividade</span><b>Dirigindo</b></div>
+        <div class="sf"><span class="tp-label">Hora do jogo</span><b class="mono">TER 14<span class="sep">:</span>32</b></div>
+        <div class="sf"><span class="tp-label">Entrega</span><b>Calais → Lyon · 612 km</b></div>
+        <div class="sp"></div>
+        <div class="acts"><button class="btn" id="mode-btn">Modo DEMO</button><button class="btn icon" aria-label="Alternar tela cheia" title="Tela cheia (F11)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button></div>
+      </div>
+      <div class="demo-wrap" data-testid="demo-banner"><div class="tape"></div><div class="demo-line">Modo DEMO — dados simulados, não são do jogo e não são salvos no histórico</div></div>
+      <div class="ann" data-testid="alerts" role="alert">
+        <div class="an" style="--c:var(--tp-crit)"><b>CRIT</b><span>Acima do limite da via: 84 / 80 km/h</span></div>
+        <div class="an" style="--c:var(--tp-warn)"><b>AVISO</b><span>Combustível abaixo de 30 % — autonomia 412 km</span></div>
+        <div class="an" style="--c:var(--tp-muted)"><b>INFO</b><span>Descanso obrigatório em 2 h 10 min</span></div>
+      </div>
+
+      <div class="grid">
+        <!-- A · cluster -->
+        <section class="p c8">
+          <div class="ph"><h3>Instrumentos</h3><span class="code">P-01</span><span class="act badge" style="--c:var(--tp-accent)">Piloto 80 km/h</span></div>
+          <div class="strip"><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-blinkerLeft" data-state="on" role="img" aria-label="Pisca esq.: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M2 11 L10 4 V8 H21 V14 H10 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca esq.</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-hazard" data-state="off" role="img" aria-label="Alerta: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="2" stroke-linejoin="round"><path d="M12 2 L22.5 20 H1.5 Z"/><path d="M12 9 L17 17.5 H7 Z"/></g></svg><span>Alerta</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-blinkerRight" data-state="off" role="img" aria-label="Pisca dir.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M22 11 L14 4 V8 H3 V14 H14 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca dir.</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-parking" data-state="on" role="img" aria-label="Posição: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.6" fill="none"><path d="M8 6a5 5 0 0 0 0 10"/><path d="M16 6a5 5 0 0 1 0 10"/><path d="M1 5h3.5M19.5 5H23M1 10h3.5M19.5 10H23M1 15h3.5M19.5 15H23"/></g></svg><span>Posição</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-lowBeam" data-state="on" role="img" aria-label="Farol baixo: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><line x1="9" y1="5" x2="3" y2="8" stroke-linecap="round"/><line x1="9" y1="9" x2="3" y2="12" stroke-linecap="round"/><line x1="9" y1="13" x2="3" y2="16" stroke-linecap="round"/><line x1="9" y1="17" x2="3" y2="20" stroke-linecap="round"/></g></svg><span>Farol baixo</span></div><div class="tt off" style="--c:var(--tp-info)" data-testid="telltale-highBeam" data-state="off" role="img" aria-label="Farol alto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><path d="M9 5H2M9 9H2M9 13H2M9 17H2" stroke-linecap="round"/></g></svg><span>Farol alto</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-auxFront" data-state="off" role="img" aria-label="Aux. diant.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M10 5c4 0 7 3 7 6s-3 6-7 6c-1.3 0-1.7-2.5-1.7-6S8.7 5 10 5z"/><path d="M6 6 1 8M6 11 1 13M6 16 1 18" stroke-linecap="round"/><path d="M20 4v14" stroke-dasharray="2 2"/></g></svg><span>Aux. diant.</span></div><div class="tt off" style="--c:var(--tp-warn)" data-testid="telltale-auxRoof" data-state="off" role="img" aria-label="Aux. teto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><rect x="3" y="13" width="18" height="6" rx="1.5"/><path d="M6 10V4M12 10V4M18 10V4" stroke-linecap="round"/></g></svg><span>Aux. teto</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-brake" data-state="off" role="img" aria-label="Freio: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><circle cx="12" cy="11" r="6"/><path d="M5 4a10 10 0 0 0 0 14M19 4a10 10 0 0 1 0 14"/><path d="M12 7.5v4" stroke-linecap="round"/></g></svg><span>Freio</span></div><div class="tt off" style="--c:var(--tp-text)" data-testid="telltale-reverse" data-state="off" role="img" aria-label="Ré: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="14" rx="2"/><text x="12" y="15" font-size="10" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">R</text></g></svg><span>Ré</span></div><div class="tt nd" style="--c:var(--tp-warn)" data-testid="telltale-beacon" data-state="nd" role="img" aria-label="Giroflex: N/D">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M7 18v-5a5 5 0 0 1 10 0v5"/><path d="M4 19h16M12 2v3M4.5 5.5l2 2M19.5 5.5l-2 2M2 12h2.5M19.5 12H22" stroke-linecap="round"/></g></svg><span>Giroflex</span><b>N/D</b></div><div class="tt on" style="--c:var(--tp-info)" data-testid="telltale-dashboard" data-state="on" role="img" aria-label="Painel: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M3 16a9 9 0 0 1 18 0"/><path d="M12 16l4-5" stroke-linecap="round"/></g></svg><span>Painel</span><i>60%</i></div></div>
+          <div class="cluster">
+            <div style="padding:10px 6px"><svg viewBox="0 0 240 240" class="gauge" role="img" aria-label="Velocidade 84 km/h, limite 80"><path d="M 184.5 30.28 A 110.5 110.5 0 0 1 210.52 183.38" stroke="var(--tp-warn)" stroke-width="5" fill="none"/><path d="M 34.81 179.65 A 104 104 0 1 1 205.19 179.65" stroke="var(--tp-line-strong)" stroke-width="1" fill="none"/><line x1="34.81" y1="179.65" x2="43.82" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="54.47" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">0</text><line x1="28.05" y1="168.6" x2="32.47" y2="166.26" stroke="var(--tp-dim)" stroke-width="1"/><line x1="22.72" y1="156.79" x2="27.4" y2="155.02" stroke="var(--tp-dim)" stroke-width="1"/><line x1="18.9" y1="144.4" x2="23.76" y2="143.23" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.65" y1="131.64" x2="21.62" y2="131.08" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.01" y1="118.7" x2="27.01" y2="118.84" stroke="var(--tp-text)" stroke-width="1.5"/><text x="40.01" y="119" class="g-num" text-anchor="middle" dominant-baseline="central">20</text><line x1="16.98" y1="105.78" x2="21.93" y2="106.47" stroke="var(--tp-dim)" stroke-width="1"/><line x1="19.54" y1="93.08" x2="24.37" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="23.67" y1="80.8" x2="28.3" y2="82.69" stroke="var(--tp-dim)" stroke-width="1"/><line x1="29.29" y1="69.13" x2="33.65" y2="71.57" stroke="var(--tp-dim)" stroke-width="1"/><line x1="36.32" y1="58.24" x2="45.17" y2="64.77" stroke="var(--tp-text)" stroke-width="1.5"/><text x="55.63" y="72.49" class="g-num" text-anchor="middle" dominant-baseline="central">40</text><line x1="44.65" y1="48.32" x2="48.27" y2="51.76" stroke="var(--tp-dim)" stroke-width="1"/><line x1="54.15" y1="39.5" x2="57.31" y2="43.37" stroke="var(--tp-dim)" stroke-width="1"/><line x1="64.67" y1="31.94" x2="67.33" y2="36.17" stroke="var(--tp-dim)" stroke-width="1"/><line x1="76.05" y1="25.74" x2="78.16" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="88.11" y1="21.01" x2="91.48" y2="31.48" stroke="var(--tp-text)" stroke-width="1.5"/><text x="95.47" y="43.85" class="g-num" text-anchor="middle" dominant-baseline="central">60</text><line x1="100.67" y1="17.81" x2="101.59" y2="22.73" stroke="var(--tp-dim)" stroke-width="1"/><line x1="113.52" y1="16.2" x2="113.83" y2="21.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="126.48" y1="16.2" x2="126.17" y2="21.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="139.33" y1="17.81" x2="138.41" y2="22.73" stroke="var(--tp-dim)" stroke-width="1"/><line x1="151.89" y1="21.01" x2="148.52" y2="31.48" stroke="var(--tp-text)" stroke-width="1.5"/><text x="144.53" y="43.85" class="g-num" text-anchor="middle" dominant-baseline="central">80</text><line x1="163.95" y1="25.74" x2="161.84" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="175.33" y1="31.94" x2="172.67" y2="36.17" stroke="var(--tp-dim)" stroke-width="1"/><line x1="185.85" y1="39.5" x2="182.69" y2="43.37" stroke="var(--tp-dim)" stroke-width="1"/><line x1="195.35" y1="48.32" x2="191.73" y2="51.76" stroke="var(--tp-dim)" stroke-width="1"/><line x1="203.68" y1="58.24" x2="194.83" y2="64.77" stroke="var(--tp-text)" stroke-width="1.5"/><text x="184.37" y="72.49" class="g-num" text-anchor="middle" dominant-baseline="central">100</text><line x1="210.71" y1="69.13" x2="206.35" y2="71.57" stroke="var(--tp-dim)" stroke-width="1"/><line x1="216.33" y1="80.8" x2="211.7" y2="82.69" stroke="var(--tp-dim)" stroke-width="1"/><line x1="220.46" y1="93.08" x2="215.63" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.02" y1="105.78" x2="218.07" y2="106.47" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.99" y1="118.7" x2="212.99" y2="118.84" stroke="var(--tp-text)" stroke-width="1.5"/><text x="199.99" y="119" class="g-num" text-anchor="middle" dominant-baseline="central">120</text><line x1="223.35" y1="131.64" x2="218.38" y2="131.08" stroke="var(--tp-dim)" stroke-width="1"/><line x1="221.1" y1="144.4" x2="216.24" y2="143.23" stroke="var(--tp-dim)" stroke-width="1"/><line x1="217.28" y1="156.79" x2="212.6" y2="155.02" stroke="var(--tp-dim)" stroke-width="1"/><line x1="211.95" y1="168.6" x2="207.53" y2="166.26" stroke="var(--tp-dim)" stroke-width="1"/><line x1="205.19" y1="179.65" x2="196.18" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="185.53" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">140</text><path d="M 46.28 171.62 A 90 90 0 1 1 193.72 171.62" stroke="var(--tp-line)" stroke-width="3" fill="none"/><path d="M 46.28 171.62 A 90 90 0 0 1 158.04 38.43" stroke="var(--tp-accent)" stroke-width="3" fill="none"/><g data-testid="gauge-marker"><path d="M 150 10.02 L 159.84 13.19 L 151.89 21.01 Z" fill="var(--tp-crit)"/><line x1="151.89" y1="21.01" x2="148.52" y2="31.48" stroke="var(--tp-crit)" stroke-width="1.5"/></g><rect x="72" y="150" width="96" height="44" fill="var(--tp-inset)" stroke="var(--tp-line)"/><text x="120" y="173" class="g-lcd" style="font-size:34px" text-anchor="middle" dominant-baseline="central">84</text><text x="120" y="208" class="g-unit" text-anchor="middle">KM/H</text><text x="120" y="222" class="g-sub" text-anchor="middle">LIMITE 80 · ACIMA</text><line x1="114.08" y1="132.69" x2="162.26" y2="29.37" stroke="var(--tp-accent)" stroke-width="2.5"/><circle cx="120" cy="120" r="7" fill="var(--tp-panel-2)" stroke="var(--tp-line-strong)"/><circle cx="120" cy="120" r="2" fill="var(--tp-accent)"/></svg></div>
+            <div class="center">
+              <div class="tp-label">Marcha</div>
+              <div class="gear gear-l" data-testid="gear">12</div>
+              <div class="sign" data-testid="speed-limit-sign" title="Limite da via: 80 km/h">80</div>
+              <div class="kv">
+                <div class="stat"><div class="tp-label">Média trip</div><div class="v">71<u>km/h</u></div></div>
+                <div class="stat"><div class="tp-label">Máx. config.</div><div class="v">90<u>km/h</u></div></div>
+              </div>
+            </div>
+            <div style="padding:10px 6px"><svg viewBox="0 0 240 240" class="gauge" role="img" aria-label="Rotação 1430 rpm"><path d="M 229.75 107.17 A 110.5 110.5 0 0 1 210.52 183.38" stroke="var(--tp-crit)" stroke-width="5" fill="none"/><path d="M 34.81 179.65 A 104 104 0 1 1 205.19 179.65" stroke="var(--tp-line-strong)" stroke-width="1" fill="none"/><line x1="34.81" y1="179.65" x2="43.82" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="54.47" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">0</text><line x1="27.06" y1="166.68" x2="31.53" y2="164.43" stroke="var(--tp-dim)" stroke-width="1"/><line x1="21.28" y1="152.71" x2="26.02" y2="151.14" stroke="var(--tp-dim)" stroke-width="1"/><line x1="17.58" y1="138.06" x2="22.5" y2="137.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.04" y1="123.02" x2="21.04" y2="122.88" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.7" y1="107.93" x2="27.63" y2="109.2" stroke="var(--tp-text)" stroke-width="1.5"/><text x="40.54" y="110.71" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="19.54" y1="93.08" x2="24.37" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="24.51" y1="78.81" x2="29.1" y2="80.79" stroke="var(--tp-dim)" stroke-width="1"/><line x1="31.48" y1="65.4" x2="35.74" y2="68.03" stroke="var(--tp-dim)" stroke-width="1"/><line x1="40.33" y1="53.15" x2="44.16" y2="56.36" stroke="var(--tp-dim)" stroke-width="1"/><line x1="50.86" y1="42.31" x2="58.17" y2="50.53" stroke="var(--tp-text)" stroke-width="1.5"/><text x="66.82" y="60.24" class="g-num" text-anchor="middle" dominant-baseline="central">1</text><line x1="62.85" y1="33.11" x2="65.6" y2="37.29" stroke="var(--tp-dim)" stroke-width="1"/><line x1="76.05" y1="25.74" x2="78.16" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="90.17" y1="20.37" x2="91.61" y2="25.16" stroke="var(--tp-dim)" stroke-width="1"/><line x1="104.93" y1="17.1" x2="105.65" y2="22.05" stroke="var(--tp-dim)" stroke-width="1"/><line x1="120" y1="16" x2="120" y2="27" stroke="var(--tp-text)" stroke-width="1.5"/><text x="120" y="40" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="135.07" y1="17.1" x2="134.35" y2="22.05" stroke="var(--tp-dim)" stroke-width="1"/><line x1="149.83" y1="20.37" x2="148.39" y2="25.16" stroke="var(--tp-dim)" stroke-width="1"/><line x1="163.95" y1="25.74" x2="161.84" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="177.15" y1="33.11" x2="174.4" y2="37.29" stroke="var(--tp-dim)" stroke-width="1"/><line x1="189.14" y1="42.31" x2="181.83" y2="50.53" stroke="var(--tp-text)" stroke-width="1.5"/><text x="173.18" y="60.24" class="g-num" text-anchor="middle" dominant-baseline="central">2</text><line x1="199.67" y1="53.15" x2="195.84" y2="56.36" stroke="var(--tp-dim)" stroke-width="1"/><line x1="208.52" y1="65.4" x2="204.26" y2="68.03" stroke="var(--tp-dim)" stroke-width="1"/><line x1="215.49" y1="78.81" x2="210.9" y2="80.79" stroke="var(--tp-dim)" stroke-width="1"/><line x1="220.46" y1="93.08" x2="215.63" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.3" y1="107.93" x2="212.37" y2="109.2" stroke="var(--tp-text)" stroke-width="1.5"/><text x="199.46" y="110.71" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="223.96" y1="123.02" x2="218.96" y2="122.88" stroke="var(--tp-dim)" stroke-width="1"/><line x1="222.42" y1="138.06" x2="217.5" y2="137.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="218.72" y1="152.71" x2="213.98" y2="151.14" stroke="var(--tp-dim)" stroke-width="1"/><line x1="212.94" y1="166.68" x2="208.47" y2="164.43" stroke="var(--tp-dim)" stroke-width="1"/><line x1="205.19" y1="179.65" x2="196.18" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="185.53" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">3</text><path d="M 46.28 171.62 A 90 90 0 1 1 193.72 171.62" stroke="var(--tp-line)" stroke-width="3" fill="none"/><path d="M 46.28 171.62 A 90 90 0 0 1 110.85 30.47" stroke="var(--tp-accent)" stroke-width="3" fill="none"/><rect x="72" y="150" width="96" height="44" fill="var(--tp-inset)" stroke="var(--tp-line)"/><text x="120" y="173" class="g-lcd" style="font-size:27px" text-anchor="middle" dominant-baseline="central">1430</text><text x="120" y="208" class="g-unit" text-anchor="middle">RPM</text><text x="120" y="222" class="g-sub" text-anchor="middle">×1000</text><line x1="121.42" y1="133.93" x2="109.84" y2="20.52" stroke="var(--tp-accent)" stroke-width="2.5"/><circle cx="120" cy="120" r="7" fill="var(--tp-panel-2)" stroke="var(--tp-line-strong)"/><circle cx="120" cy="120" r="2" fill="var(--tp-accent)"/></svg></div>
+          </div>
+          <div class="cl-foot">
+            <div class="tt on" style="--c:var(--tp-warn)" data-testid="telltale-engineBrake" data-state="on" role="img" aria-label="Freio motor: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><rect x="5" y="7" width="14" height="9" rx="1.5"/><path d="M8 7V4h8v3M2 11h3M19 11h3M9 19h6"/></g></svg><span>Freio motor</span></div><div class="tt off" style="--c:var(--tp-warn)" data-testid="telltale-retarder" data-state="off" role="img" aria-label="Retarder: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><circle cx="12" cy="11" r="7"/><path d="M9 8v6M9 8h3a2 2 0 0 1 0 4H9M12 12l3 2" stroke-linecap="round"/></g></svg><span>Retarder</span><i>0/4</i></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-parkBrake" data-state="off" role="img" aria-label="Freio estac.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><circle cx="12" cy="11" r="6"/><path d="M5 4a10 10 0 0 0 0 14M19 4a10 10 0 0 1 0 14"/><text x="12" y="14.5" font-size="9" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">P</text></g></svg><span>Freio estac.</span></div>
+            <div class="stat"><div class="tp-label">RPM máx.</div><div class="v">2500</div></div>
+            <div class="stat"><div class="tp-label">Marcha (real)</div><div class="v">12<u>12F / 4R</u></div></div>
+            <div class="stat"><div class="tp-label">Câmbio</div><div class="v" style="font-family:var(--font-cond);font-size:14px">AUTOMÁTICO</div></div>
+          </div>
+        </section>
+        <section class="p c4">
+          <div class="ph"><h3>Combustível</h3><span class="code">P-02</span><span class="act badge" style="--c:var(--tp-warn)"><span class="led" style="--c:var(--tp-warn)"></span>Atenção</span></div>
+          <div class="pb">
+            <div class="fuel-top">
+              <div class="stat"><div class="tp-label">Tanque</div><div class="v big" style="color:var(--tp-warn)">28<u>%</u></div></div>
+              <div class="stat" style="text-align:right"><div class="tp-label">Disponível</div><div class="v">224<u>/ 800 L</u></div><div class="tp-label" style="font-size:10px;color:var(--tp-dim)">capacidade do jogo</div></div>
+            </div>
+            <div class="seg" aria-label="Tanque 28%"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit mk"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div>
+            <div class="seg-scale"><span>0</span><span>¼</span><span>½</span><span>¾</span><span>1</span></div>
+            <div style="margin-top:14px">
+              <div class="row"><span>Autonomia</span><span class="tp-leader"></span><b>412<u>km</u></b></div><div class="row"><span>Consumo médio (jogo)</span><span class="tp-leader"></span><b>31<span class="sep">,</span>4<u>L/100</u></b></div><div class="row"><span>Consumo do trip</span><span class="tp-leader"></span><b>32<span class="sep">,</span>9<u>L/100</u></b></div><div class="row"><span>AdBlue</span><span class="tp-leader"></span><b>61<u>L</u></b></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- B · veículo + motor -->
+        <section class="p c8">
+          <div class="ph"><h3>Veículo</h3><span class="code">P-03</span></div>
+          <div class="pb veh">
+            <div class="veh-head"><span class="name">Scania R</span><span class="badge" style="--c:var(--tp-ok)">Auto</span><span class="badge">Reboque: sider</span>
+              <div class="segctl" role="tablist"><button role="tab" aria-selected="true">Lateral</button><button role="tab" aria-selected="false">Frontal</button></div></div>
+            <div class="veh-wrap">
+              <svg class="" viewBox="0 -24 1890 470" role="img" aria-label="Scania R com semirreboque sider — vista lateral" style="--truck-paint:#c9ced6">
+  <svg x="5" y="-7" width="1440" height="454" viewBox="0 -14 1440 454" overflow="visible">
+  <title>TRUCKPULSE — reboque: Sider / lonado (curtain)</title>
+  <desc>Referência de design. Escala 100 px = 1 m; frente do reboque à DIREITA em x = 1400, traseira em x = 40 (13<span class="sep">,</span>6 m).
+    x = 1400 − 100·m, y = 400 − 100·h. Piso h 1<span class="sep">,</span>45 (y 255); pino-rei a 1<span class="sep">,</span>25 m da frente (x 1275).
+    Mapeamento SDK sugerido: body_type contém curtain, curtainsider, cs_.
+    Luzes com as mesmas classes do cavalo (tp-lamp / on): side-marker, tail, brake, blinker-left-rear, reverse.
+    Estado de exemplo: lanternas e marcadores laterais ACESOS.</desc>
+  <style>
+    .t-shade{fill:#000;opacity:.14}.t-shade-2{fill:#000;opacity:.3}.t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.35;stroke-width:1}.t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}.t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}.t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}.t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}.t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}.t-chassis{fill:var(--truck-chassis,#2a2b28)}.t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}.t-lens-red{fill:var(--lens-red,#3e1311)}.t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}.t-lit-red{fill:var(--lamp-red,#ff2b1c)}.t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .tr-body{fill:var(--trailer-body,#d7dbe0)}.tr-reefer{fill:var(--trailer-reefer,#eceeef)}.tr-curtain{fill:var(--trailer-curtain,#3a5a7c)}
+    .tr-alu{fill:var(--trailer-alu,#aeb3b8)}.tr-tape{fill:none;stroke:var(--trailer-tape,#e3b000);stroke-width:3;stroke-dasharray:28 18}
+    .c-tank{fill:var(--cargo-tank,#b7bec8)}.c-container{fill:var(--cargo-container,#7d3a2c)}.c-wood{fill:var(--cargo-wood,#6f4c2c)}
+    .c-wood-end{fill:var(--cargo-wood-end,#c9a46a)}.c-machine{fill:var(--cargo-machine,#d9a21b)}.c-crate{fill:var(--cargo-crate,#a07c4f)}
+    .c-strap{fill:none;stroke:var(--cargo-strap,#c9a227);stroke-width:2.5}.c-adr{fill:#f07f12}.c-deck{fill:var(--cargo-deck,#5b4632)}
+    .c-tx{fill:#fff;opacity:.8;font:600 14px 'B612 Mono',Consolas,monospace;letter-spacing:.06em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}.tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}.tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+  </style>
+  <defs>
+    <g id="tr-wheel">
+      <circle r="50" class="t-rubber t-out"/>
+      <circle r="49.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="37" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="29" class="t-metal-dk"/><circle r="27.5" class="t-metal-lt"/><circle r="23" class="t-metal" />
+      <circle cx="19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="-19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="-11.46" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="15.78" cy="-11.46" r="2.6" class="t-rubber"/>
+      <circle r="13.5" class="t-metal-lt"/><circle cx="9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="0.00" cy="10.50" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="-3.24" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="-0.00" cy="-10.50" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="9.99" cy="-3.24" r="1.4" class="t-metal-dk"/>
+      <circle r="6.5" class="t-metal-dk"/><circle r="3" class="t-metal-lt"/>
+      <path d="M -22 -13 A 26 26 0 0 1 -6 -25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2"/>
+    </g>
+    <pattern id="tr-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0 8 8M8 0 0 8" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="1" fill="none"/></pattern>
+  </defs>
+  <line x1="0" y1="400" x2="1440" y2="400" class="t-ground"/>
+  <g data-part="trailer-chassis">
+    <path d="M 1390 255 L 45 255 L 45 285 L 520 285 L 560 300 L 1060 300 L 1100 270 L 1390 270 Z" class="t-chassis t-out"/>
+    <line x1="45" y1="255.5" x2="1390" y2="255.5" class="t-seam-hi" stroke-opacity=".1"/>
+    <circle cx="1220" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="980" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="740" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="460" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="180" cy="263" r="1.6" class="t-ink" opacity=".6"/>
+  </g><rect x="1230" y="268" width="100" height="4" class="t-metal-dk"/><rect x="1272" y="272" width="6" height="8" class="t-metal"/><g data-part="landing-gear">
+    <rect x="1154" y="270" width="12" height="60" class="t-metal-dk"/>
+    <rect x="1157" y="330" width="6" height="42" class="t-metal"/>
+    <rect x="1149" y="372" width="22" height="6" class="t-metal-dk"/>
+    <rect x="1166" y="296" width="10" height="12" class="t-plastic"/>
+    <path d="M 1176 302 H 1190 V 318" fill="none" stroke="var(--truck-metal,#8e9196)" stroke-width="2"/>
+  </g><g data-part="side-guard"><rect x="1038" y="300" width="4" height="34" class="t-metal-dk"/><rect x="798" y="300" width="4" height="34" class="t-metal-dk"/><rect x="558" y="300" width="4" height="34" class="t-metal-dk"/>
+    <rect x="560" y="310" width="480" height="5" class="t-metal"/><rect x="560" y="326" width="480" height="5" class="t-metal"/></g>
+      <rect x="40" y="2" width="1360" height="253" class="tr-curtain"/>
+      <rect x="56" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="96" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="136" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="176" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="216" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="256" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="296" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="336" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="376" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="416" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="456" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="496" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="536" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="576" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="616" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="656" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="696" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="736" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="776" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="816" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="856" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="896" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="936" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="976" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1016" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1056" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1096" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1136" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1176" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1216" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1256" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1296" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1336" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1376" y="16" width="18" height="218" fill="#000" opacity=".09"/><line x1="80" y1="16" x2="80" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="77" y="220" width="6" height="11" class="t-metal"/><line x1="142" y1="16" x2="142" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="139" y="220" width="6" height="11" class="t-metal"/><line x1="204" y1="16" x2="204" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="201" y="220" width="6" height="11" class="t-metal"/><line x1="266" y1="16" x2="266" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="263" y="220" width="6" height="11" class="t-metal"/><line x1="328" y1="16" x2="328" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="325" y="220" width="6" height="11" class="t-metal"/><line x1="390" y1="16" x2="390" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="387" y="220" width="6" height="11" class="t-metal"/><line x1="452" y1="16" x2="452" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="449" y="220" width="6" height="11" class="t-metal"/><line x1="514" y1="16" x2="514" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="511" y="220" width="6" height="11" class="t-metal"/><line x1="576" y1="16" x2="576" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="573" y="220" width="6" height="11" class="t-metal"/><line x1="638" y1="16" x2="638" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="635" y="220" width="6" height="11" class="t-metal"/><line x1="700" y1="16" x2="700" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="697" y="220" width="6" height="11" class="t-metal"/><line x1="762" y1="16" x2="762" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="759" y="220" width="6" height="11" class="t-metal"/><line x1="824" y1="16" x2="824" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="821" y="220" width="6" height="11" class="t-metal"/><line x1="886" y1="16" x2="886" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="883" y="220" width="6" height="11" class="t-metal"/><line x1="948" y1="16" x2="948" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="945" y="220" width="6" height="11" class="t-metal"/><line x1="1010" y1="16" x2="1010" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1007" y="220" width="6" height="11" class="t-metal"/><line x1="1072" y1="16" x2="1072" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1069" y="220" width="6" height="11" class="t-metal"/><line x1="1134" y1="16" x2="1134" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1131" y="220" width="6" height="11" class="t-metal"/><line x1="1196" y1="16" x2="1196" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1193" y="220" width="6" height="11" class="t-metal"/><line x1="1258" y1="16" x2="1258" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1255" y="220" width="6" height="11" class="t-metal"/><line x1="1320" y1="16" x2="1320" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1317" y="220" width="6" height="11" class="t-metal"/>
+      <rect x="40" y="14" width="1360" height="10" class="t-hi" opacity=".1"/>
+      <path d="M 40 2 L 1392 2 Q 1400 2 1400 10 L 1400 16 L 40 16 Z" class="t-metal-dk"/>
+      <rect x="40" y="234" width="1360" height="21" class="t-metal-dk"/><line x1="40" y1="234.5" x2="1400" y2="234.5" class="t-seam-hi"/>
+      <rect x="1382" y="2" width="18" height="253" class="t-metal"/><rect x="1382" y="2" width="18" height="253" class="t-shade"/>
+      <rect x="40" y="2" width="16" height="253" class="t-metal"/>
+      <rect x="56" y="30" width="10" height="6" class="t-metal-dk"/><rect x="56" y="95" width="10" height="6" class="t-metal-dk"/><rect x="56" y="165" width="10" height="6" class="t-metal-dk"/><rect x="56" y="225" width="10" height="6" class="t-metal-dk"/>
+      <path class="tr-tape" d="M 1380 246 H 58"/>
+      <g data-testid="trailer-axle-0">
+      <ellipse cx="457" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="407" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="413" y1="297" x2="457" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="473" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(457 350) scale(1)"/>
+      <path d="M 399 344 A 58 58 0 0 1 515 344 L 510 344 A 53 53 0 0 0 404 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-1">
+      <ellipse cx="326" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="276" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="282" y1="297" x2="326" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="342" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(326 350) scale(1)"/>
+      <path d="M 268 344 A 58 58 0 0 1 384 344 L 379 344 A 53 53 0 0 0 273 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-2">
+      <ellipse cx="195" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="145" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="151" y1="297" x2="195" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="211" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(195 350) scale(1)"/>
+      <path d="M 137 344 A 58 58 0 0 1 253 344 L 248 344 A 53 53 0 0 0 142 344 Z" class="t-plastic"/>
+    </g><rect x="128" y="340" width="8" height="52" class="t-rubber"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="976" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="976" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="706" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="706" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="436" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="436" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="166" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="166" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><g data-part="tail">
+    <rect x="38" y="288" width="14" height="32" rx="1" class="t-plastic"/>
+    <rect x="40" y="290" width="10" height="6" class="t-lens-amber"/><rect x="40" y="290" width="10" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="40" y="297" width="10" height="6" class="t-lens-red"/><rect x="40" y="297" width="10" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="40" y="304" width="10" height="6" class="t-lens-red"/><rect x="40" y="304" width="10" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="40" y="311" width="10" height="6" class="t-lens-clear"/><rect x="40" y="311" width="10" height="6" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+    <rect x="40" y="6" width="8" height="5" class="t-lens-red"/><rect x="40" y="6" width="8" height="5" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+  </g>
+  <g data-part="underrun"><rect x="54" y="288" width="5" height="54" class="t-metal-dk"/><rect x="38" y="338" width="22" height="12" class="t-metal-dk"/></g>
+</svg>
+  <svg x="1080" y="0" width="800" height="440" viewBox="0 0 800 440" overflow="visible">
+  <title>TRUCKPULSE — cavalo-mecânico 4x2, vista lateral esquerda</title>
+  <desc>
+    Referência de design. Escala: 100 px = 1 m. Frente para a DIREITA (igual ao TruckSide.tsx).
+    x = 680 − 100·m (m medido a partir do para-choque), y = 400 − 100·h (h = altura do solo).
+    Eixo dianteiro a 1<span class="sep">,</span>45 m, entre-eixos 3<span class="sep">,</span>60 m, roda r = 0<span class="sep">,</span>52 m, teto 3<span class="sep">,</span>75 m, quinta-roda 1<span class="sep">,</span>35 m.
+    Estado de exemplo: lanterna (parking), farol baixo, lanterna traseira e gabarito ACESOS; o resto apagado.
+    Cores somente por classes / variáveis CSS (--truck-*, --lamp-*, --tp-*); nada de gradiente.
+  </desc>
+  <style>
+    .t-paint{fill:var(--truck-paint,#c9ced6)}
+    .t-shade{fill:#000;opacity:.16}
+    .t-shade-2{fill:#000;opacity:.32}
+    .t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.38;stroke-width:1}
+    .t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}
+    .t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}
+    .t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}
+    .t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}
+    .t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}
+    .t-glass-hi{fill:#fff;opacity:.08}
+    .t-chassis{fill:var(--truck-chassis,#2a2b28)}
+    .t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-adblue{fill:var(--truck-adblue,#3a6ea5)}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}
+    .t-lens-red{fill:var(--lens-red,#3e1311)}
+    .t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .t-lit-xenon{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}
+    .t-lit-red{fill:var(--lamp-red,#ff2b1c)}
+    .t-beam{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-air-red{fill:none;stroke:#a8392b;stroke-width:2.4}
+    .t-air-yel{fill:none;stroke:#c9a227;stroke-width:2.4}
+    .t-air-blk{fill:none;stroke:#0b0b0a;stroke-width:2.4}
+    .t-annot{fill:none;stroke:var(--tp-dim,#6b675e);stroke-width:1}
+    .t-annot-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace;letter-spacing:.02em}
+    .t-susp{stroke:var(--tp-accent,#ff7a1a);stroke-width:1.5}
+    .t-susp-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}
+    .tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}
+    .tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+    .tp-beam{opacity:0;transition:opacity 200ms ease}
+    .tp-beam.on{opacity:1}
+    .tp-beam.dim{opacity:.45}
+  </style>
+  <defs>
+    <!-- Roda dianteira (aro 22,5", 10 furos, cubo com tampa cônica). Centro em 0,0 -->
+    <g id="s-wheel-front">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="24.5" class="t-metal-dk" opacity=".55"/>
+      <g class="t-rubber">
+        <circle cx="20.5" cy="0" r="2.8"/><circle cx="16.58" cy="12.05" r="2.8"/><circle cx="6.33" cy="19.5" r="2.8"/>
+        <circle cx="-6.33" cy="19.5" r="2.8"/><circle cx="-16.58" cy="12.05" r="2.8"/><circle cx="-20.5" cy="0" r="2.8"/>
+        <circle cx="-16.58" cy="-12.05" r="2.8"/><circle cx="-6.33" cy="-19.5" r="2.8"/><circle cx="6.33" cy="-19.5" r="2.8"/>
+        <circle cx="16.58" cy="-12.05" r="2.8"/>
+      </g>
+      <circle r="14.5" class="t-metal-lt"/>
+      <g class="t-metal-dk">
+        <circle cx="10.46" cy="3.4" r="1.5"/><circle cx="6.47" cy="8.9" r="1.5"/><circle cx="0" cy="11" r="1.5"/>
+        <circle cx="-6.47" cy="8.9" r="1.5"/><circle cx="-10.46" cy="3.4" r="1.5"/><circle cx="-10.46" cy="-3.4" r="1.5"/>
+        <circle cx="-6.47" cy="-8.9" r="1.5"/><circle cx="0" cy="-11" r="1.5"/><circle cx="6.47" cy="-8.9" r="1.5"/>
+        <circle cx="10.46" cy="-3.4" r="1.5"/>
+      </g>
+      <circle r="7" class="t-metal-dk"/>
+      <circle r="3.2" class="t-metal-lt"/>
+      <path d="M -23 -14 A 27 27 0 0 1 -6 -26" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+    </g>
+    <!-- Roda traseira de tração (rodado duplo: prato fundo + cubo de redução) -->
+    <g id="s-wheel-drive">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="26" class="t-metal-dk" opacity=".75"/>
+      <circle r="26" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="2"/>
+      <g class="t-rubber">
+        <circle cx="21.5" cy="0" r="2.6"/><circle cx="17.39" cy="12.64" r="2.6"/><circle cx="6.64" cy="20.45" r="2.6"/>
+        <circle cx="-6.64" cy="20.45" r="2.6"/><circle cx="-17.39" cy="12.64" r="2.6"/><circle cx="-21.5" cy="0" r="2.6"/>
+        <circle cx="-17.39" cy="-12.64" r="2.6"/><circle cx="-6.64" cy="-20.45" r="2.6"/><circle cx="6.64" cy="-20.45" r="2.6"/>
+        <circle cx="17.39" cy="-12.64" r="2.6"/>
+      </g>
+      <circle r="16.5" class="t-metal"/>
+      <circle r="16.5" fill="none" stroke="#000" stroke-opacity=".4"/>
+      <g class="t-metal-lt">
+        <circle cx="12.36" cy="4.02" r="1.8"/><circle cx="7.64" cy="10.52" r="1.8"/><circle cx="0" cy="13" r="1.8"/>
+        <circle cx="-7.64" cy="10.52" r="1.8"/><circle cx="-12.36" cy="4.02" r="1.8"/><circle cx="-12.36" cy="-4.02" r="1.8"/>
+        <circle cx="-7.64" cy="-10.52" r="1.8"/><circle cx="0" cy="-13" r="1.8"/><circle cx="7.64" cy="-10.52" r="1.8"/>
+        <circle cx="12.36" cy="-4.02" r="1.8"/>
+      </g>
+      <circle r="9" class="t-metal-dk"/>
+      <circle r="9" fill="none" stroke="#fff" stroke-opacity=".18"/>
+      <circle r="4" class="t-ink"/>
+      <path d="M -24 -15 A 28 28 0 0 1 -7 -27" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
+    </g>
+    <clipPath id="s-win-clip"><path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z"/></clipPath>
+  </defs>
+
+  <!-- solo -->
+  <line x1="0" y1="400" x2="800" y2="400" class="t-ground"/>
+
+  <!-- ===== FEIXES (atrás de tudo). Faixas planas sobrepostas, sem gradiente ===== -->
+  <g class="tp-beam on" data-lamp="beam-low">
+    <path class="t-beam" opacity=".08" d="M 681 299 L 800 380 L 800 400 L 681 309 Z"/>
+    <path class="t-beam" opacity=".12" d="M 681 301 L 800 390 L 800 400 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-high">
+    <path class="t-beam" opacity=".07" d="M 681 297 L 800 268 L 800 398 L 681 310 Z"/>
+    <path class="t-beam" opacity=".11" d="M 681 300 L 800 290 L 800 340 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-aux">
+    <path class="t-beam" opacity=".10" d="M 681 331 L 800 394 L 800 400 L 681 338 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-roof">
+    <path class="t-beam" opacity=".06" d="M 628 16 L 800 36 L 800 260 L 628 23 Z"/>
+    <path class="t-beam" opacity=".09" d="M 628 18 L 800 60 L 800 150 L 628 21 Z"/>
+  </g>
+
+  <!-- ===== CHASSI TRASEIRO ===== -->
+  <g data-part="chassis">
+    <rect x="64" y="290" width="392" height="28" class="t-chassis t-out"/>
+    <line x1="64" y1="290.5" x2="456" y2="290.5" class="t-seam-hi" stroke-opacity=".08"/>
+    <line x1="64" y1="317.5" x2="456" y2="317.5" class="t-seam"/>
+    <!-- furação da longarina -->
+    <g class="t-ink" opacity=".6">
+      <circle cx="96" cy="304" r="1.6"/><circle cx="112" cy="304" r="1.6"/><circle cx="262" cy="300" r="1.6"/>
+      <circle cx="262" cy="310" r="1.6"/><circle cx="310" cy="300" r="1.6"/><circle cx="360" cy="300" r="1.6"/>
+    </g>
+    <!-- travessa traseira -->
+    <rect x="60" y="288" width="8" height="34" class="t-chassis"/>
+  </g>
+
+  <!-- pórtico atrás da cabine + mangueiras de ar (vermelha = emergência, amarela = serviço, preta = elétrica) -->
+  <g data-part="gantry">
+    <rect x="430" y="96" width="5" height="194" class="t-chassis"/>
+    <rect x="422" y="104" width="16" height="6" class="t-chassis"/>
+    <path class="t-air-red" d="M 426 110 C 404 124 398 150 412 168 C 426 186 400 200 408 222 C 414 240 430 232 432 212"/>
+    <path class="t-air-yel" d="M 430 110 C 412 128 410 152 420 170 C 432 190 410 206 418 226 C 424 242 436 230 434 214"/>
+    <path class="t-air-blk" d="M 434 110 C 422 132 424 156 428 176 C 434 198 420 214 426 232"/>
+    <rect x="426" y="206" width="12" height="10" class="t-plastic"/>
+  </g>
+  <!-- passarela -->
+  <rect x="330" y="284" width="102" height="6" class="t-metal-dk"/>
+  <line x1="332" y1="287" x2="430" y2="287" stroke="#000" stroke-opacity=".35" stroke-dasharray="4 3"/>
+
+  <!-- quinta-roda (pino-rei em x≈200 → 0,25 m à frente do eixo de tração) -->
+  <g data-part="fifth-wheel">
+    <path d="M 164 278 L 236 278 L 230 290 L 170 290 Z" class="t-chassis"/>
+    <path d="M 146 272 L 154 265 L 246 265 L 254 272 L 254 278 L 146 278 Z" class="t-metal-dk"/>
+    <line x1="154" y1="265.5" x2="246" y2="265.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <path d="M 200 265 L 200 278" class="t-seam"/>
+    <line x1="236" y1="275" x2="260" y2="284" stroke="var(--truck-metal,#8e9196)" stroke-width="2" stroke-linecap="square"/>
+  </g>
+
+  <!-- caixa de baterias, AdBlue, tanque de combustível -->
+  <g data-part="tanks">
+    <rect x="242" y="298" width="40" height="44" rx="1" class="t-plastic"/>
+    <line x1="242" y1="305" x2="282" y2="305" class="t-seam"/>
+    <rect x="248" y="309" width="6" height="3" class="t-metal-dk"/><rect x="270" y="309" width="6" height="3" class="t-metal-dk"/>
+    <rect x="288" y="302" width="16" height="40" rx="4" class="t-plastic-2"/>
+    <rect x="292" y="298" width="8" height="5" rx="1" class="t-adblue"/>
+    <rect x="310" y="294" width="130" height="56" rx="10" class="t-metal"/>
+    <rect x="314" y="297" width="122" height="7" rx="3.5" class="t-hi" opacity=".22"/>
+    <path d="M 310 336 L 440 336 L 440 340 Q 440 350 430 350 L 320 350 Q 310 350 310 340 Z" class="t-shade"/>
+    <line x1="312" y1="322" x2="438" y2="322" class="t-seam" stroke-opacity=".18"/>
+    <rect x="328" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="416" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="426" y="289" width="10" height="6" rx="1" class="t-metal-dk"/>
+  </g>
+
+  <!-- ===== RODAS ===== -->
+  <ellipse cx="175" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <ellipse cx="535" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <use href="#s-wheel-drive" transform="translate(175 348)" data-testid="truck-axle-1"/>
+  <use href="#s-wheel-front" transform="translate(535 348)" data-testid="truck-axle-0"/>
+
+  <!-- para-lama traseiro + para-barro -->
+  <path d="M 113 352 L 113 344 A 62 62 0 0 1 237 344 L 237 352 L 231 352 L 231 346 A 56 56 0 0 0 119 346 L 119 352 Z" class="t-plastic"/>
+  <rect x="104" y="350" width="8" height="42" class="t-rubber"/>
+  <rect x="104" y="350" width="8" height="5" class="t-plastic-2"/>
+
+  <!-- lanternas traseiras (vistas de topo/perfil) -->
+  <g data-part="tail">
+    <rect x="54" y="320" width="12" height="30" rx="1" class="t-plastic"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lens-amber"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lens-clear"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+  </g>
+
+  <!-- ===== CABINE ===== -->
+  <g data-part="cab">
+    <!-- colarinho / defletor lateral traseiro -->
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-paint"/>
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-shade-2"/>
+    <!-- suporte da suspensão da cabine -->
+    <rect x="446" y="280" width="14" height="12" class="t-chassis"/>
+
+    <!-- casca pintada -->
+    <path d="M 680 288 L 675 200 L 670 190 L 644 58 Q 640 28 612 26 L 466 24 Q 450 24 450 40 L 452 280 L 680 280 Z" class="t-paint"/>
+    <!-- camadas planas de sombreamento -->
+    <path d="M 640 50 Q 638 31 612 30 L 466 28 Q 455 28 454 38 L 454 46 Q 455 36 466 36 L 612 38 Q 632 39 637 56 Z" class="t-hi"/>
+    <path d="M 452 229 L 676.6 229 L 679.5 280 L 452 280 Z" class="t-shade"/>
+    <path d="M 680 288 L 675 200 L 669 200 L 674 288 Z" class="t-shade-2"/>
+    <!-- vinco lateral -->
+    <line x1="452" y1="227.5" x2="676" y2="227.5" class="t-seam-hi"/>
+    <line x1="452" y1="229" x2="676" y2="229" class="t-seam"/>
+    <!-- junta do teto alto -->
+    <line x1="451" y1="96" x2="532" y2="96" class="t-seam"/>
+    <!-- coluna A: vedação + lâmina do para-brisa -->
+    <path d="M 671 190 L 645 58 L 642 60 L 667 190 Z" class="t-glass"/>
+    <line x1="670" y1="190" x2="644" y2="58" stroke="#000" stroke-opacity=".5" stroke-width="1.5"/>
+
+    <!-- porta -->
+    <path d="M 650 96 L 661 188 L 663 272 Q 663 276 659 276 L 536 276 Q 532 276 532 272 L 532 104 Q 532 96 540 96 Z" class="t-seam"/>
+    <!-- janela com recorte inferior (visão do meio-fio) -->
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" class="t-glass"/>
+    <g clip-path="url(#s-win-clip)">
+      <path d="M 596 100 L 618 100 L 586 200 L 564 200 Z" class="t-glass-hi"/>
+      <path d="M 626 100 L 632 100 L 600 200 L 594 200 Z" class="t-glass-hi"/>
+      <rect x="560" y="150" width="34" height="40" class="t-ink" opacity=".35"/>
+    </g>
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- maçaneta e alça -->
+    <rect x="548" y="204" width="16" height="4" rx="1" class="t-plastic"/>
+    <rect x="524" y="150" width="4" height="104" rx="2" class="t-plastic"/>
+    <!-- tomada de ar lateral -->
+    <rect x="470" y="116" width="50" height="40" class="t-seam"/>
+    <g class="t-ink" opacity=".45">
+      <rect x="473" y="120" width="44" height="3"/><rect x="473" y="127" width="44" height="3"/>
+      <rect x="473" y="134" width="44" height="3"/><rect x="473" y="141" width="44" height="3"/>
+      <rect x="473" y="148" width="44" height="3"/>
+    </g>
+    <!-- bagageiro lateral -->
+    <rect x="462" y="238" width="58" height="34" rx="2" class="t-seam"/>
+    <rect x="508" y="252" width="8" height="3" class="t-plastic"/>
+
+    <!-- para-sol -->
+    <path d="M 646 44 L 667 52 L 667 56 L 645 54 Z" class="t-plastic"/>
+
+    <!-- para-lama dianteiro + caixa de degraus (plástico) -->
+    <path d="M 606 280 L 606 352 L 597 352 L 597 348 A 62 62 0 0 0 473 348 L 473 352 L 452 352 L 452 280 Z" class="t-plastic"/>
+    <path d="M 593 348 A 58 58 0 0 0 477 348" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="4"/>
+    <rect x="452" y="290" width="21" height="62" class="t-ink" opacity=".45"/>
+    <g class="t-metal-dk">
+      <rect x="454" y="296" width="18" height="4"/><rect x="454" y="320" width="18" height="4"/><rect x="454" y="344" width="18" height="4"/>
+    </g>
+    <line x1="454" y1="296.5" x2="472" y2="296.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="320.5" x2="472" y2="320.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="344.5" x2="472" y2="344.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <rect x="456" y="352" width="12" height="36" class="t-rubber"/>
+
+    <!-- para-choque -->
+    <path d="M 680 288 L 680 344 Q 680 356 670 358 L 606 358 L 606 288 Z" class="t-plastic-2"/>
+    <line x1="606" y1="288.5" x2="680" y2="288.5" class="t-seam-hi"/>
+    <rect x="610" y="357" width="68" height="5" class="t-plastic"/>
+    <line x1="606" y1="322" x2="660" y2="322" class="t-seam"/>
+
+    <!-- espelhos (principal + grande-angular) -->
+    <line x1="662" y1="112" x2="676" y2="108" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <line x1="664" y1="186" x2="676" y2="190" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <rect x="670" y="92" width="14" height="62" rx="3" class="t-plastic"/>
+    <rect x="672" y="95" width="3" height="56" class="t-hi" opacity=".1"/>
+    <rect x="671" y="160" width="12" height="30" rx="3" class="t-plastic"/>
+
+    <!-- barra de teto -->
+    <g data-part="roof-bar">
+      <rect x="562" y="22" width="3" height="5" class="t-plastic"/><rect x="616" y="22" width="3" height="5" class="t-plastic"/>
+      <rect x="556" y="14" width="70" height="9" rx="1" class="t-plastic"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lens-clear"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lit-white tp-lamp" data-lamp="auxRoof"/>
+    </g>
+  </g>
+
+  <!-- ===== LUZES DA CABINE ===== -->
+  <!-- farol (no canto do para-choque) -->
+  <path d="M 680 293 L 680 309 L 664 309 Q 660 309 660 305 L 660 296 Q 660 293 664 293 Z" class="t-lens-clear"/>
+  <rect x="664" y="297" width="15" height="11" class="t-lit-xenon tp-lamp on" data-lamp="lowBeam"/>
+  <rect x="662" y="294" width="17" height="2.4" class="t-lit-white tp-lamp on" data-lamp="parking"/>
+  <!-- pisca dianteiro (envolve o canto) -->
+  <rect x="674" y="310" width="6" height="6" class="t-lens-amber"/>
+  <rect x="674" y="310" width="6" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-front"/>
+  <!-- repetidor lateral (cat. 6) -->
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lit-amber tp-lamp" data-lamp="blinker-left-side"/>
+  <!-- auxiliar dianteiro / neblina (SDK: auxFront) -->
+  <rect x="668" y="330" width="12" height="8" rx="1" class="t-lens-clear"/>
+  <rect x="669" y="331" width="11" height="6" class="t-lit-white tp-lamp" data-lamp="auxFront"/>
+  <!-- gabarito do teto (lateral, âmbar) -->
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lit-amber tp-lamp on" data-lamp="clearance"/>
+  <!-- giroflex -->
+  <rect x="468" y="18" width="18" height="6" class="t-plastic"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lens-amber"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lit-amber tp-lamp tp-beacon" data-lamp="beacon"/>
+
+  <!-- ===== SUSPENSÃO (dado real, mm) ===== -->
+  <g data-part="shock">
+    <line x1="527" y1="333" x2="527" y2="290" class="t-susp"/>
+    <text x="535" y="414" text-anchor="middle" class="t-susp-tx">-17</text>
+  </g>
+  <g data-part="shock">
+    <line x1="167" y1="333" x2="167" y2="292" class="t-susp"/>
+    <text x="175" y="414" text-anchor="middle" class="t-susp-tx">42</text>
+  </g>
+
+  <!-- ===== COTAS (somente documentação; não renderizar no app) ===== -->
+  
+</svg>
+  <g class="ruler"><line x1="1760" y1="402" x2="1760" y2="414"/><line x1="1660" y1="402" x2="1660" y2="408"/><line x1="1560" y1="402" x2="1560" y2="408"/><line x1="1460" y1="402" x2="1460" y2="408"/><line x1="1360" y1="402" x2="1360" y2="408"/><line x1="1260" y1="402" x2="1260" y2="414"/><line x1="1160" y1="402" x2="1160" y2="408"/><line x1="1060" y1="402" x2="1060" y2="408"/><line x1="960" y1="402" x2="960" y2="408"/><line x1="860" y1="402" x2="860" y2="408"/><line x1="760" y1="402" x2="760" y2="414"/><line x1="660" y1="402" x2="660" y2="408"/><line x1="560" y1="402" x2="560" y2="408"/><line x1="460" y1="402" x2="460" y2="408"/><line x1="360" y1="402" x2="360" y2="408"/><line x1="260" y1="402" x2="260" y2="414"/><line x1="160" y1="402" x2="160" y2="408"/><line x1="60" y1="402" x2="60" y2="408"/><line x1="-40" y1="402" x2="-40" y2="408"/></g>
+</svg>
+              <div><svg class="truck-front" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" data-testid="truck-front" data-model="scania-r" role="img" aria-label="Cavalo-mecânico cab-over — vista frontal (referência de design)">
+  <title>TRUCKPULSE — vista frontal mestre (família Scania R como base)</title>
+  <desc>
+    Referência de design. Caixa 300×410 (mesma do TruckFront.tsx). Escala 96 px = 1 m, solo em y = 400, eixo central x = 150.
+    Cabine 2<span class="sep">,</span>50 m de largura (x 32–268), teto 3<span class="sep">,</span>77 m (y 38), base do para-brisa 2<span class="sep">,</span>15 m (y 194), para-choque 1<span class="sep">,</span>08–0<span class="sep">,</span>40 m.
+    Bitola: centros dos pneus em x 52 e 248, pneu 315 mm = 30 px.
+    LADO: olhando de frente, o lado ESQUERDO do caminhão aparece à DIREITA de quem olha.
+    O farol do lado esquerdo do caminhão é o MESMO desenho espelhado com transform="translate(270 300) scale(-1 1)"
+    (o teste vehicles.test.tsx verifica esse scale(-1 1)).
+    Estado de exemplo: lanterna (parking), farol baixo, gabarito e feixe ACESOS; pisca esquerdo ACESO.
+  </desc>
+  <style>
+    .t-paint{fill:var(--truck-paint,#c9ced6)}
+    .t-shade{fill:#000;opacity:.16}
+    .t-shade-2{fill:#000;opacity:.32}
+    .t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.38;stroke-width:1}
+    .t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}
+    .t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}
+    .t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}
+    .t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}
+    .t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}
+    .t-glass-hi{fill:#fff;opacity:.07}
+    .t-chassis{fill:var(--truck-chassis,#2a2b28)}
+    .t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-plate{fill:var(--truck-plate,#e9e6dc)}
+    .t-plate-eu{fill:var(--truck-plate-eu,#2a4fa0)}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}
+    .t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .t-lit-xenon{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}
+    .t-beam{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-logo{fill:var(--truck-metal-lt,#c4c6c9);font:600 10px 'Barlow Condensed','Bahnschrift',sans-serif;letter-spacing:.32em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}
+    .tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}
+    .tp-beam{opacity:0;transition:opacity 200ms ease}
+    .tp-beam.on{opacity:1}
+  </style>
+  <defs>
+    <!-- Pneu dianteiro visto de frente: banda de rodagem com 3 sulcos longitudinais + lamelas -->
+    <g id="f-tire">
+      <rect x="0" y="0" width="30" height="40" rx="5" class="t-rubber t-out"/>
+      <rect x="1" y="0" width="28" height="40" rx="4" fill="none" stroke="#fff" stroke-opacity=".06"/>
+      <g stroke="#000" stroke-opacity=".75" stroke-width="1.8" fill="none">
+        <path d="M 8 6 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4"/>
+        <path d="M 15 6 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4"/>
+        <path d="M 22 6 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4 l 1 4 l -1 4"/>
+      </g>
+      <g stroke="#000" stroke-opacity=".35" stroke-width="1">
+        <path d="M 2 12 H 7 M 10 16 H 14 M 17 12 H 21 M 24 16 H 28 M 2 24 H 7 M 10 28 H 14 M 17 24 H 21 M 24 28 H 28 M 2 36 H 7 M 17 36 H 21"/>
+      </g>
+    </g>
+    <!-- Espelho (principal + grande-angular) do lado esquerdo de quem olha -->
+    <g id="f-mirror">
+      <line x1="34" y1="108" x2="16" y2="100" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="4"/>
+      <line x1="32" y1="178" x2="16" y2="184" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="4"/>
+      <rect x="2" y="86" width="18" height="64" rx="3" class="t-plastic"/>
+      <rect x="5" y="90" width="12" height="56" rx="1.5" class="t-glass"/>
+      <path d="M 7 92 L 12 92 L 7 120 Z" class="t-glass-hi"/>
+      <rect x="3" y="156" width="16" height="30" rx="3" class="t-plastic"/>
+      <rect x="6" y="159" width="10" height="24" rx="1.5" class="t-glass"/>
+    </g>
+    <clipPath id="f-ws-clip"><path d="M 52 82 L 248 82 Q 254 82 254 88 L 258 186 Q 258 194 250 194 L 50 194 Q 42 194 42 186 L 46 88 Q 46 82 52 82 Z"/></clipPath>
+  </defs>
+
+  <!-- solo e feixe -->
+  <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+  <g class="tp-beam on" data-lamp="beam">
+    <path class="t-beam" opacity=".07" d="M 20 400 L 280 400 L 268 405 L 32 405 Z"/>
+    <path class="t-beam" opacity=".12" d="M 60 400 L 240 400 L 232 403 L 68 403 Z"/>
+  </g>
+
+  <!-- pneus + eixo -->
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <ellipse cx="52" cy="400" rx="20" ry="2" class="t-ink" opacity=".5"/>
+  <ellipse cx="248" cy="400" rx="20" ry="2" class="t-ink" opacity=".5"/>
+  <use href="#f-tire" transform="translate(37 360)"/>
+  <use href="#f-tire" transform="translate(233 360)"/>
+
+  <!-- espelhos -->
+  <use href="#f-mirror"/>
+  <use href="#f-mirror" transform="translate(300 0) scale(-1 1)"/>
+
+  <!-- defletores de canto (coluna A) -->
+  <path d="M 32 200 L 40 72 L 34 74 L 26 200 Z" class="t-paint"/>
+  <path d="M 32 200 L 40 72 L 34 74 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 72 L 266 74 L 274 200 Z" class="t-paint"/>
+  <path d="M 268 200 L 260 72 L 266 74 L 274 200 Z" class="t-shade-2"/>
+
+  <!-- cabine (casca) -->
+  <g data-part="cab">
+    <path d="M 32 296 L 32 200 L 40 60 Q 42 38 62 38 L 238 38 Q 258 38 260 60 L 268 200 L 268 296 Z" class="t-paint"/>
+    <!-- plano do teto (mais claro) -->
+    <path d="M 44 58 Q 46 42 62 42 L 238 42 Q 254 42 256 58 L 256 64 L 44 64 Z" class="t-hi"/>
+    <!-- retorno das laterais (mais escuro) -->
+    <path d="M 32 296 L 32 200 L 40 60 L 47 58 L 41 200 L 41 296 Z" class="t-shade"/>
+    <path d="M 268 296 L 268 200 L 260 60 L 253 58 L 259 200 L 259 296 Z" class="t-shade"/>
+    <!-- vinco da linha de cintura -->
+    <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/>
+    <line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+    <!-- recesso sob o para-brisa (cowl) -->
+    <rect x="42" y="194" width="216" height="6" class="t-shade-2"/>
+    <!-- costuras verticais do painel frontal -->
+    <line x1="56" y1="204" x2="56" y2="294" class="t-seam"/>
+    <line x1="244" y1="204" x2="244" y2="294" class="t-seam"/>
+  </g>
+
+  <!-- para-brisa com interior insinuado -->
+  <path d="M 52 82 L 248 82 Q 254 82 254 88 L 258 186 Q 258 194 250 194 L 50 194 Q 42 194 42 186 L 46 88 Q 46 82 52 82 Z" class="t-glass"/>
+  <g clip-path="url(#f-ws-clip)">
+    <!-- encostos (motorista à direita de quem olha = lado esquerdo do caminhão) -->
+    <rect x="186" y="140" width="36" height="40" rx="4" class="t-ink" opacity=".3"/>
+    <rect x="78" y="140" width="36" height="40" rx="4" class="t-ink" opacity=".3"/>
+    <rect x="42" y="176" width="216" height="18" class="t-ink" opacity=".35"/>
+    <ellipse cx="204" cy="176" rx="22" ry="5" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="2.5"/>
+    <path d="M 66 82 L 104 82 L 76 194 L 38 194 Z" class="t-glass-hi"/>
+    <path d="M 114 82 L 126 82 L 98 194 L 86 194 Z" class="t-glass-hi"/>
+  </g>
+  <path d="M 52 82 L 248 82 Q 254 82 254 88 L 258 186 Q 258 194 250 194 L 50 194 Q 42 194 42 186 L 46 88 Q 46 82 52 82 Z" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+
+  <!-- para-sol -->
+  <path d="M 44 72 L 256 72 L 252 88 L 48 88 Z" class="t-plastic"/>
+  <line x1="48" y1="87.5" x2="252" y2="87.5" class="t-seam-hi"/>
+  <!-- espelho frontal (classe VI) do lado do passageiro -->
+  <line x1="62" y1="64" x2="64" y2="90" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="2"/>
+  <rect x="54" y="90" width="22" height="14" rx="4" class="t-plastic"/>
+
+  <!-- gabarito do teto (5) -->
+  <g>
+    <rect x="59" y="64" width="10" height="5" rx="1" class="t-lens-clear"/>
+    <rect x="59" y="64" width="10" height="5" rx="1" class="t-lit-white tp-lamp on" data-lamp="clearance"/>
+    <rect x="125" y="64" width="10" height="5" rx="1" class="t-lens-clear"/>
+    <rect x="125" y="64" width="10" height="5" rx="1" class="t-lit-white tp-lamp on" data-lamp="clearance"/>
+    <rect x="145" y="64" width="10" height="5" rx="1" class="t-lens-clear"/>
+    <rect x="145" y="64" width="10" height="5" rx="1" class="t-lit-white tp-lamp on" data-lamp="clearance"/>
+    <rect x="165" y="64" width="10" height="5" rx="1" class="t-lens-clear"/>
+    <rect x="165" y="64" width="10" height="5" rx="1" class="t-lit-white tp-lamp on" data-lamp="clearance"/>
+    <rect x="231" y="64" width="10" height="5" rx="1" class="t-lens-clear"/>
+    <rect x="231" y="64" width="10" height="5" rx="1" class="t-lit-white tp-lamp on" data-lamp="clearance"/>
+  </g>
+
+  <!-- barra de teto com 4 auxiliares (SDK: auxRoof) -->
+  <g data-part="roof-bar">
+    <rect x="84" y="35" width="4" height="4" class="t-plastic"/><rect x="212" y="35" width="4" height="4" class="t-plastic"/>
+    <rect x="72" y="25" width="156" height="11" rx="1" class="t-plastic"/>
+    <g>
+      <circle cx="92" cy="30.5" r="5" class="t-ink"/><circle cx="92" cy="30.5" r="4" class="t-lens-clear"/>
+      <circle cx="92" cy="30.5" r="3.8" class="t-lit-white tp-lamp" data-lamp="auxRoof" data-level="0"/>
+      <circle cx="128" cy="30.5" r="5" class="t-ink"/><circle cx="128" cy="30.5" r="4" class="t-lens-clear"/>
+      <circle cx="128" cy="30.5" r="3.8" class="t-lit-white tp-lamp" data-lamp="auxRoof" data-level="0"/>
+      <circle cx="172" cy="30.5" r="5" class="t-ink"/><circle cx="172" cy="30.5" r="4" class="t-lens-clear"/>
+      <circle cx="172" cy="30.5" r="3.8" class="t-lit-white tp-lamp" data-lamp="auxRoof" data-level="0"/>
+      <circle cx="208" cy="30.5" r="5" class="t-ink"/><circle cx="208" cy="30.5" r="4" class="t-lens-clear"/>
+      <circle cx="208" cy="30.5" r="3.8" class="t-lit-white tp-lamp" data-lamp="auxRoof" data-level="0"/>
+    </g>
+  </g>
+
+  <!-- giroflex (2) -->
+  <rect x="52" y="32" width="14" height="6" class="t-plastic"/>
+  <path d="M 53 32 Q 53 20 59 20 Q 65 20 65 32 Z" class="t-lens-amber"/>
+  <path d="M 53 32 Q 53 20 59 20 Q 65 20 65 32 Z" class="t-lit-amber tp-lamp tp-beacon" data-lamp="beacon"/>
+  <rect x="234" y="32" width="14" height="6" class="t-plastic"/>
+  <path d="M 235 32 Q 235 20 241 20 Q 247 20 247 32 Z" class="t-lens-amber"/>
+  <path d="M 235 32 Q 235 20 241 20 Q 247 20 247 32 Z" class="t-lit-amber tp-lamp tp-beacon" data-lamp="beacon"/>
+
+  <!-- limpadores (estacionados; no app giram com framer-motion em torno do pivô) -->
+  <g data-lamp="wipers" class="">
+    <line x1="104" y1="197" x2="68" y2="190" stroke="var(--truck-ink,#0b0b0a)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="46" y1="189" x2="104" y2="189" stroke="var(--truck-ink,#0b0b0a)" stroke-width="2"/>
+    <circle cx="104" cy="197" r="2.5" class="t-metal-dk"/>
+  </g>
+  <g data-lamp="wipers" class="">
+    <line x1="196" y1="197" x2="160" y2="190" stroke="var(--truck-ink,#0b0b0a)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="138" y1="189" x2="196" y2="189" stroke="var(--truck-ink,#0b0b0a)" stroke-width="2"/>
+    <circle cx="196" cy="197" r="2.5" class="t-metal-dk"/>
+  </g>
+
+  <!-- grade (família Scania: retângulo alto, lamelas horizontais) -->
+  <g data-part="grille">
+    <rect x="64" y="206" width="172" height="88" class="t-plastic-2"/>
+    <rect x="66" y="208" width="168" height="14" class="t-plastic"/>
+    <text x="150" y="219" text-anchor="middle" class="t-logo">SCANIA</text>
+    <rect x="68" y="225" width="164" height="66" class="t-ink"/>
+    <g class="t-paint">
+      <rect x="66" y="230" width="168" height="4"/><rect x="66" y="240" width="168" height="4"/>
+      <rect x="66" y="250" width="168" height="4"/><rect x="66" y="260" width="168" height="4"/>
+      <rect x="66" y="270" width="168" height="4"/><rect x="66" y="280" width="168" height="4"/>
+    </g>
+    <g class="t-shade-2">
+      <rect x="66" y="233" width="168" height="1"/><rect x="66" y="243" width="168" height="1"/>
+      <rect x="66" y="253" width="168" height="1"/><rect x="66" y="263" width="168" height="1"/>
+      <rect x="66" y="273" width="168" height="1"/><rect x="66" y="283" width="168" height="1"/>
+    </g>
+    <rect x="64" y="206" width="172" height="88" class="t-seam"/>
+  </g>
+
+  <!-- para-choque -->
+  <path d="M 24 296 L 276 296 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="296.5" x2="274" y2="296.5" class="t-seam-hi"/>
+  <rect x="132" y="300" width="36" height="4" class="t-ink" opacity=".6"/>
+  <rect x="104" y="316" width="92" height="24" rx="1" class="t-ink"/>
+  <g stroke="var(--truck-plastic-2,#3a3b38)" stroke-width="1.5">
+    <line x1="106" y1="322" x2="194" y2="322"/><line x1="106" y1="328" x2="194" y2="328"/><line x1="106" y1="334" x2="194" y2="334"/>
+  </g>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/>
+  <rect x="122" y="342" width="6" height="12" class="t-plate-eu"/>
+  <g class="t-ink" opacity=".75">
+    <rect x="133" y="345" width="5" height="6"/><rect x="140" y="345" width="5" height="6"/><rect x="149" y="345" width="5" height="6"/>
+    <rect x="156" y="345" width="5" height="6"/><rect x="163" y="345" width="5" height="6"/><rect x="170" y="345" width="5" height="6"/>
+  </g>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="144" y="356" width="12" height="6" class="t-metal-dk"/>
+
+  <!-- auxiliares dianteiros / neblina (SDK: auxFront) -->
+  <circle cx="54" cy="340" r="10" class="t-ink"/><circle cx="54" cy="340" r="8" class="t-lens-clear"/>
+  <circle cx="54" cy="340" r="7.5" class="t-lit-white tp-lamp" data-lamp="auxFront" data-level="0"/>
+  <circle cx="246" cy="340" r="10" class="t-ink"/><circle cx="246" cy="340" r="8" class="t-lens-clear"/>
+  <circle cx="246" cy="340" r="7.5" class="t-lit-white tp-lamp" data-lamp="auxFront" data-level="0"/>
+
+  <!-- FARÓIS. Coordenadas locais: x = 0 é a borda EXTERNA, cresce para o centro. w = 66, h = 24 -->
+  <g transform="translate(30 300)" data-side="right">
+    <path d="M 0 4 Q 0 0 4 0 L 60 0 Q 66 0 66 6 L 62 24 L 4 24 Q 0 24 0 20 Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/>
+    <rect x="2" y="4" width="9" height="16" rx="1" class="t-lens-amber"/>
+    <rect x="2" y="4" width="9" height="16" rx="1" class="t-lit-amber tp-lamp" data-lamp="blinker-right"/>
+    <circle cx="24" cy="13" r="8.5" class="t-metal-dk"/>
+    <circle cx="24" cy="13" r="7" class="t-lit-xenon tp-lamp on" data-lamp="lowBeam"/>
+    <circle cx="44" cy="13" r="8.5" class="t-metal-dk"/>
+    <circle cx="44" cy="13" r="7" class="t-lit-xenon tp-lamp" data-lamp="highBeam"/>
+    <rect x="14" y="1.5" width="46" height="2.6" rx="1.3" class="t-lit-white tp-lamp on" data-lamp="parking"/>
+  </g>
+  <g transform="translate(270 300) scale(-1 1)" data-side="left">
+    <path d="M 0 4 Q 0 0 4 0 L 60 0 Q 66 0 66 6 L 62 24 L 4 24 Q 0 24 0 20 Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/>
+    <rect x="2" y="4" width="9" height="16" rx="1" class="t-lens-amber"/>
+    <rect x="2" y="4" width="9" height="16" rx="1" class="t-lit-amber tp-lamp on" data-lamp="blinker-left"/>
+    <circle cx="24" cy="13" r="8.5" class="t-metal-dk"/>
+    <circle cx="24" cy="13" r="7" class="t-lit-xenon tp-lamp on" data-lamp="lowBeam"/>
+    <circle cx="44" cy="13" r="8.5" class="t-metal-dk"/>
+    <circle cx="44" cy="13" r="7" class="t-lit-xenon tp-lamp" data-lamp="highBeam"/>
+    <rect x="14" y="1.5" width="46" height="2.6" rx="1.3" class="t-lit-white tp-lamp on" data-lamp="parking"/>
+  </g>
+</svg>
+<div class="tp-label" style="text-align:center;margin-top:4px">Frontal (miniatura)</div></div>
+            </div>
+            <p class="note">Representação vetorial estilizada para identificação do modelo — não é um desenho oficial do fabricante. Suspensão: a variação da deflexão real é exagerada ×8 no desenho; os números sob as rodas são a deflexão real em mm.</p>
+          </div>
+        </section>
+        <section class="p c4">
+          <div class="ph"><h3>Motor</h3><span class="code">P-04</span><span class="act badge" style="--c:var(--tp-ok)">Ligado</span></div>
+          <div class="pb">
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Temp. motor (água)</span><span class="m-val">88<u>°C</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:67.6923076923077%;background:var(--tp-ok)"></div><div class="m-mark" style="left:80.76923076923077%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Temp. óleo</span><span class="m-val">96<u>°C</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:64%;background:var(--tp-ok)"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Pressão do óleo</span><span class="m-val">4<span class="sep">,</span>1<u>bar</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:41%;background:var(--tp-accent)"></div><div class="m-mark" style="left:10%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Ar dos freios</span><span class="m-val">8<span class="sep">,</span>6<u>bar</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:78%;background:var(--tp-accent)"></div><div class="m-mark" style="left:45%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Bateria</span><span class="m-val">27<span class="sep">,</span>8<u>V</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:92.66666666666666%;background:var(--tp-ok)"></div><div class="m-mark" style="left:73.33333333333333%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div></div>
+        </section>
+
+        <!-- C · gráfico + viagem -->
+        <section class="p c8">
+          <div class="ph"><h3>Velocidade × limite</h3><span class="code">P-05</span><div class="legend"><span><i style="--c:var(--tp-accent)"></i>Velocidade</span><span><i class="d" style="--c:var(--tp-crit)"></i>Limite</span></div></div>
+          <div class="pb" data-testid="speed-chart"><svg viewBox="0 0 820 190" class="chart" preserveAspectRatio="none"><line x1="40" y1="170" x2="812" y2="170" stroke="var(--tp-line)"/><text x="34" y="170" class="c-ax" text-anchor="end" dominant-baseline="central">0</text><line x1="40" y1="129.5" x2="812" y2="129.5" stroke="var(--tp-line)"/><text x="34" y="129.5" class="c-ax" text-anchor="end" dominant-baseline="central">30</text><line x1="40" y1="89" x2="812" y2="89" stroke="var(--tp-line)"/><text x="34" y="89" class="c-ax" text-anchor="end" dominant-baseline="central">60</text><line x1="40" y1="48.5" x2="812" y2="48.5" stroke="var(--tp-line)"/><text x="34" y="48.5" class="c-ax" text-anchor="end" dominant-baseline="central">90</text><line x1="40" y1="8" x2="812" y2="8" stroke="var(--tp-line)"/><text x="34" y="8" class="c-ax" text-anchor="end" dominant-baseline="central">120</text><line x1="136.5" y1="170" x2="136.5" y2="173" stroke="var(--tp-line-strong)"/><text x="136.5" y="184" class="c-ax" text-anchor="middle">14h02</text><line x1="329.5" y1="170" x2="329.5" y2="173" stroke="var(--tp-line-strong)"/><text x="329.5" y="184" class="c-ax" text-anchor="middle">14h04</text><line x1="522.5" y1="170" x2="522.5" y2="173" stroke="var(--tp-line-strong)"/><text x="522.5" y="184" class="c-ax" text-anchor="middle">14h06</text><line x1="715.5" y1="170" x2="715.5" y2="173" stroke="var(--tp-line-strong)"/><text x="715.5" y="184" class="c-ax" text-anchor="middle">14h08</text><path d="M 40 170 L 40,64.7 L 46.5,61.9 L 53,59.2 L 59.5,56.9 L 65.9,55 L 72.4,53.6 L 78.9,52.8 L 85.4,52.5 L 91.9,52.8 L 98.4,53.4 L 104.9,54.4 L 111.4,55.6 L 117.8,56.8 L 124.3,57.9 L 130.8,58.7 L 137.3,59.3 L 143.8,59.5 L 150.3,59.3 L 156.8,58.9 L 163.3,58.1 L 169.7,57.3 L 176.2,56.5 L 182.7,55.7 L 189.2,55.3 L 195.7,55.2 L 202.2,55.7 L 208.7,56.6 L 215.2,58.1 L 221.6,60 L 228.1,62.4 L 234.6,65 L 241.1,67.8 L 247.6,70.5 L 254.1,73.1 L 260.6,75.3 L 267.1,77 L 273.5,78.3 L 280,78.9 L 286.5,78.9 L 293,78.4 L 299.5,77.4 L 306,76.1 L 312.5,74.6 L 319,73.1 L 325.4,71.6 L 331.9,70.3 L 338.4,69.4 L 344.9,68.8 L 351.4,68.5 L 357.9,68.6 L 364.4,69 L 370.9,69.6 L 377.3,70.2 L 383.8,70.7 L 390.3,71 L 396.8,71 L 403.3,70.5 L 409.8,69.6 L 416.3,68.1 L 422.8,66.3 L 429.2,64 L 435.7,61.5 L 442.2,58.9 L 448.7,56.3 L 455.2,53.9 L 461.7,51.9 L 468.2,50.4 L 474.7,49.4 L 481.1,49.1 L 487.6,49.3 L 494.1,50.1 L 500.6,57.8 L 507.1,65.6 L 513.6,73.3 L 520.1,80.7 L 526.6,87.4 L 533,93.1 L 539.5,97.8 L 546,101.2 L 552.5,103.2 L 559,103.9 L 565.5,103.2 L 572,101.4 L 578.5,98.5 L 584.9,94.8 L 591.4,90.4 L 597.9,85.6 L 604.4,80.6 L 610.9,75.6 L 617.4,70.7 L 623.9,66 L 630.4,68.1 L 636.8,70.3 L 643.3,72.7 L 649.8,75 L 656.3,77.1 L 662.8,78.9 L 669.3,80.1 L 675.8,80.8 L 682.3,80.8 L 688.7,80.3 L 695.2,79.1 L 701.7,77.5 L 708.2,75.5 L 714.7,73.3 L 721.2,71 L 727.7,68.9 L 734.2,66.9 L 740.6,65.3 L 747.1,64.1 L 753.6,63.3 L 760.1,62.9 L 766.6,62.9 L 773.1,63.1 L 779.6,63.6 L 786.1,64 L 792.5,64.3 L 799,64.4 L 805.5,64.1 L 812,63.5 L 812 170 Z" fill="var(--tp-accent)" fill-opacity=".10"/><polyline points="40,64.7 46.5,61.9 53,59.2 59.5,56.9 65.9,55 72.4,53.6 78.9,52.8 85.4,52.5 91.9,52.8 98.4,53.4 104.9,54.4 111.4,55.6 117.8,56.8 124.3,57.9 130.8,58.7 137.3,59.3 143.8,59.5 150.3,59.3 156.8,58.9 163.3,58.1 169.7,57.3 176.2,56.5 182.7,55.7 189.2,55.3 195.7,55.2 202.2,55.7 208.7,56.6 215.2,58.1 221.6,60 228.1,62.4 234.6,65 241.1,67.8 247.6,70.5 254.1,73.1 260.6,75.3 267.1,77 273.5,78.3 280,78.9 286.5,78.9 293,78.4 299.5,77.4 306,76.1 312.5,74.6 319,73.1 325.4,71.6 331.9,70.3 338.4,69.4 344.9,68.8 351.4,68.5 357.9,68.6 364.4,69 370.9,69.6 377.3,70.2 383.8,70.7 390.3,71 396.8,71 403.3,70.5 409.8,69.6 416.3,68.1 422.8,66.3 429.2,64 435.7,61.5 442.2,58.9 448.7,56.3 455.2,53.9 461.7,51.9 468.2,50.4 474.7,49.4 481.1,49.1 487.6,49.3 494.1,50.1 500.6,57.8 507.1,65.6 513.6,73.3 520.1,80.7 526.6,87.4 533,93.1 539.5,97.8 546,101.2 552.5,103.2 559,103.9 565.5,103.2 572,101.4 578.5,98.5 584.9,94.8 591.4,90.4 597.9,85.6 604.4,80.6 610.9,75.6 617.4,70.7 623.9,66 630.4,68.1 636.8,70.3 643.3,72.7 649.8,75 656.3,77.1 662.8,78.9 669.3,80.1 675.8,80.8 682.3,80.8 688.7,80.3 695.2,79.1 701.7,77.5 708.2,75.5 714.7,73.3 721.2,71 727.7,68.9 734.2,66.9 740.6,65.3 747.1,64.1 753.6,63.3 760.1,62.9 766.6,62.9 773.1,63.1 779.6,63.6 786.1,64 792.5,64.3 799,64.4 805.5,64.1 812,63.5" fill="none" stroke="var(--tp-accent)" stroke-width="1.5"/><path d="M 40 48.5 H 46.5 V 48.5 H 53 V 48.5 H 59.5 V 48.5 H 65.9 V 48.5 H 72.4 V 48.5 H 78.9 V 48.5 H 85.4 V 48.5 H 91.9 V 48.5 H 98.4 V 48.5 H 104.9 V 48.5 H 111.4 V 48.5 H 117.8 V 48.5 H 124.3 V 48.5 H 130.8 V 48.5 H 137.3 V 48.5 H 143.8 V 48.5 H 150.3 V 48.5 H 156.8 V 48.5 H 163.3 V 48.5 H 169.7 V 48.5 H 176.2 V 48.5 H 182.7 V 48.5 H 189.2 V 48.5 H 195.7 V 48.5 H 202.2 V 48.5 H 208.7 V 48.5 H 215.2 V 48.5 H 221.6 V 48.5 H 228.1 V 48.5 H 234.6 V 48.5 H 241.1 V 48.5 H 247.6 V 48.5 H 254.1 V 48.5 H 260.6 V 48.5 H 267.1 V 48.5 H 273.5 V 48.5 H 280 V 48.5 H 286.5 V 48.5 H 293 V 48.5 H 299.5 V 62 H 306 V 62 H 312.5 V 62 H 319 V 62 H 325.4 V 62 H 331.9 V 62 H 338.4 V 62 H 344.9 V 62 H 351.4 V 62 H 357.9 V 62 H 364.4 V 62 H 370.9 V 62 H 377.3 V 62 H 383.8 V 62 H 390.3 V 62 H 396.8 V 62 H 403.3 V 62 H 409.8 V 62 H 416.3 V 62 H 422.8 V 62 H 429.2 V 62 H 435.7 V 62 H 442.2 V 62 H 448.7 V 62 H 455.2 V 62 H 461.7 V 62 H 468.2 V 62 H 474.7 V 62 H 481.1 V 62 H 487.6 V 62 H 494.1 V 62 H 500.6 V 62 H 507.1 V 62 H 513.6 V 62 H 520.1 V 62 H 526.6 V 62 H 533 V 62 H 539.5 V 62 H 546 V 62 H 552.5 V 62 H 559 V 62 H 565.5 V 62 H 572 V 62 H 578.5 V 62 H 584.9 V 62 H 591.4 V 62 H 597.9 V 62 H 604.4 V 62 H 610.9 V 62 H 617.4 V 62 H 623.9 V 62 H 630.4 V 62 H 636.8 V 62 H 643.3 V 62 H 649.8 V 62 H 656.3 V 89 H 662.8 V 89 H 669.3 V 89 H 675.8 V 89 H 682.3 V 89 H 688.7 V 89 H 695.2 V 89 H 701.7 V 89 H 708.2 V 89 H 714.7 V 89 H 721.2 V 89 H 727.7 V 89 H 734.2 V 89 H 740.6 V 89 H 747.1 V 89 H 753.6 V 89 H 760.1 V 89 H 766.6 V 89 H 773.1 V 89 H 779.6 V 89 H 786.1 V 89 H 792.5 V 89 H 799 V 89 H 805.5 V 89 H 812 V 89" fill="none" stroke="var(--tp-crit)" stroke-width="1.5" stroke-dasharray="4 3"/></svg></div>
+        </section>
+        <section class="p c4">
+          <div class="ph"><h3>Viagem</h3><span class="code">P-06</span></div>
+          <div class="pb">
+            <div class="tp-label">Trip</div>
+            <div class="odo"><span class="">0</span><span class="">3</span><span class="">1</span><span class="">7</span><span class="dec">4</span><u>km</u></div>
+            <div class="row"><span>Tempo dirigindo</span><span class="tp-leader"></span><b>4 h 27 min</b></div><div class="row"><span>Odômetro (jogo)</span><span class="tp-leader"></span><b>184 302<span class="sep">,</span>6<u>km</u></b></div><div class="row"><span>Sessão</span><span class="tp-leader"></span><b>96<span class="sep">,</span>3<u>km</u></b></div><div class="row"><span>Combustível usado</span><span class="tp-leader"></span><b>104<span class="sep">,</span>2<u>L</u></b></div><div class="row"><span>Vel. máxima</span><span class="tp-leader"></span><b>91<u>km/h</u></b></div>
+            <div class="row"><span>Entrega</span><span class="tp-leader"></span><b><span style="font:500 13px var(--font-sans)">Frutas secas · 18 t</span></b></div><div class="row"><span>Rota restante</span><span class="tp-leader"></span><b>612<u>km</u></b></div>
+          </div>
+        </section>
+
+        <!-- D -->
+        <section class="p c5">
+          <div class="ph"><h3>Clima e ambiente</h3><span class="code">P-07</span></div>
+          <div class="pb">
+            <div class="row"><span>Horário do jogo</span><span class="tp-leader"></span><b>TER 14<span class="sep">:</span>32</b></div><div class="row"><span>Período</span><span class="tp-leader"></span><b>Dia</b></div><div class="row"><span>Chuva</span><span class="tp-leader"></span><b><span class="stat"><span class="v nd" title="O SCS Telemetry SDK não expõe clima">N/D</span></span></b></div><div class="row"><span>Pista (superfície)</span><span class="tp-leader"></span><b>asfalto</b></div><div class="row"><span>Próximo descanso</span><span class="tp-leader"></span><b>2 h 10 min</b></div><div class="row"><span>Escala de tempo</span><span class="tp-leader"></span><b>19×</b></div>
+            <div class="notebox"><b>NOTA</b>O SCS Telemetry SDK não fornece chuva, intensidade da chuva nem visibilidade. Esses campos ficam "N/D" em vez de serem estimados.</div>
+          </div>
+        </section>
+        <section class="p c3">
+          <div class="ph"><h3>Limpadores</h3><span class="code">P-08</span></div>
+          <div class="pb wiper" data-testid="wiper-indicator" data-state="on">
+            <svg viewBox="0 0 200 100" width="170" role="img" aria-label="Limpador ligado"><path d="M10 92 Q12 18 100 12 Q188 18 190 92 Z" fill="none" stroke="var(--tp-line-strong)" stroke-width="1.5"/><path d="M10 92 H190" stroke="var(--tp-line-strong)"/>
+              <g transform="rotate(-30 60 88)"><line x1="60" y1="88" x2="60" y2="30" stroke="var(--tp-text)" stroke-width="2"/><line x1="60" y1="70" x2="60" y2="28" stroke="var(--tp-accent)" stroke-width="4"/></g>
+              <g transform="rotate(-30 135 88)"><line x1="135" y1="88" x2="135" y2="30" stroke="var(--tp-text)" stroke-width="2"/><line x1="135" y1="70" x2="135" y2="28" stroke="var(--tp-accent)" stroke-width="4"/></g></svg>
+            <div style="font:600 14px var(--font-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--tp-accent)">Ligado</div>
+            <div style="font-size:11px;color:var(--tp-dim);text-align:center">Estágio: N/D (SDK só informa liga/desliga)</div>
+          </div>
+        </section>
+        <section class="p c4">
+          <div class="ph"><h3>Consumo</h3><span class="code">P-09</span><div class="legend"><span><i style="--c:var(--tp-accent-2)"></i>Média L/100</span></div></div>
+          <div class="pb" data-testid="consumption-chart"><svg viewBox="0 0 500 170" class="chart" style="height:170px" preserveAspectRatio="none"><line x1="40" y1="150" x2="492" y2="150" stroke="var(--tp-line)"/><text x="34" y="150" class="c-ax" text-anchor="end" dominant-baseline="central">0</text><line x1="40" y1="114.5" x2="492" y2="114.5" stroke="var(--tp-line)"/><text x="34" y="114.5" class="c-ax" text-anchor="end" dominant-baseline="central">10</text><line x1="40" y1="79" x2="492" y2="79" stroke="var(--tp-line)"/><text x="34" y="79" class="c-ax" text-anchor="end" dominant-baseline="central">20</text><line x1="40" y1="43.5" x2="492" y2="43.5" stroke="var(--tp-line)"/><text x="34" y="43.5" class="c-ax" text-anchor="end" dominant-baseline="central">30</text><line x1="40" y1="8" x2="492" y2="8" stroke="var(--tp-line)"/><text x="34" y="8" class="c-ax" text-anchor="end" dominant-baseline="central">40</text><line x1="96.5" y1="150" x2="96.5" y2="153" stroke="var(--tp-line-strong)"/><text x="96.5" y="164" class="c-ax" text-anchor="middle">14h02</text><line x1="209.5" y1="150" x2="209.5" y2="153" stroke="var(--tp-line-strong)"/><text x="209.5" y="164" class="c-ax" text-anchor="middle">14h04</text><line x1="322.5" y1="150" x2="322.5" y2="153" stroke="var(--tp-line-strong)"/><text x="322.5" y="164" class="c-ax" text-anchor="middle">14h06</text><line x1="435.5" y1="150" x2="435.5" y2="153" stroke="var(--tp-line-strong)"/><text x="435.5" y="164" class="c-ax" text-anchor="middle">14h08</text><polyline points="40,38.5 43.8,37.5 47.6,36.6 51.4,35.8 55.2,35.2 59,34.8 62.8,34.6 66.6,34.5 70.4,34.6 74.2,34.9 78,35.1 81.8,35.4 85.6,35.6 89.4,35.6 93.2,35.5 97,35.2 100.8,34.8 104.6,34.2 108.4,33.6 112.2,32.9 116,32.2 119.8,31.7 123.6,31.3 127.4,31.1 131.2,31.2 135,31.4 138.8,31.9 142.6,32.5 146.4,33.2 150.2,34 153.9,34.7 157.7,35.4 161.5,35.9 165.3,36.3 169.1,36.5 172.9,36.5 176.7,36.4 180.5,36.2 184.3,36 188.1,35.8 191.9,35.7 195.7,35.7 199.5,36 203.3,36.4 207.1,37 210.9,37.8 214.7,38.7 218.5,39.7 222.3,40.6 226.1,41.6 229.9,42.3 233.7,43 237.5,43.4 241.3,43.6 245.1,43.6 248.9,43.4 252.7,43.2 256.5,42.8 260.3,42.5 264.1,42.2 267.9,42.1 271.7,42.1 275.5,42.3 279.3,42.6 283.1,43.1 286.9,43.6 290.7,44.2 294.5,44.8 298.3,45.3 302.1,45.6 305.9,45.7 309.7,45.6 313.5,45.3 317.3,44.8 321.1,44.1 324.9,43.3 328.7,42.5 332.5,41.6 336.3,40.9 340.1,40.3 343.9,39.8 347.7,39.5 351.5,39.4 355.3,39.5 359.1,39.6 362.9,39.8 366.7,40 370.5,40.1 374.3,40.1 378.1,39.9 381.8,39.5 385.6,38.9 389.4,38.1 393.2,37.2 397,36.3 400.8,35.4 404.6,34.5 408.4,33.7 412.2,33.1 416,32.7 419.8,32.6 423.6,32.6 427.4,32.8 431.2,33.1 435,33.5 438.8,34 442.6,34.3 446.4,34.6 450.2,34.7 454,34.6 457.8,34.4 461.6,34 465.4,33.5 469.2,33 473,32.6 476.8,32.2 480.6,31.9 484.4,31.8 488.2,32 492,32.4" fill="none" stroke="var(--tp-accent-2)" stroke-width="1.5"/></svg></div>
+        </section>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <h2>Configurações › Acessar pelo celular</h2>
+  <div class="app" style="grid-template-columns:1fr;min-width:0;max-width:760px">
+    <section class="p">
+      <div class="ph"><h3>Acessar pelo celular</h3><span class="code">C-03</span><span class="act badge" style="--c:var(--tp-ok)"><span class="led"></span>LAN ativa</span></div>
+      <div class="pb lan">
+        <div>
+          <div class="tp-label">Endereço na rede local</div>
+          <div class="url">http://192<span class="sep">.</span>168<span class="sep">.</span>0.14<span class="sep">:</span>5170 <button class="btn">Copiar</button></div>
+          <div class="row"><span>Outros endereços</span><span class="tp-leader"></span><b>http://10<span class="sep">.</span>0.0<span class="sep">.</span>5:5170</b></div>
+          <div class="notebox"><b>COMO USAR</b>Conecte o celular na mesma rede Wi-Fi e aponte a câmera para o código. Se não abrir, libere a porta 5170 no Firewall do Windows (rede privada).</div>
+        </div>
+        <div><svg viewBox="-4 -4 33 33" class="qr" shape-rendering="crispEdges"><rect x="-4" y="-4" width="33" height="33" fill="var(--qr-bg)"/><rect x="9" y="0" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="0" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="0" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="1" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="1" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="1" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="2" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="2" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="2" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="2" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="3" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="3" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="3" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="4" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="4" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="4" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="5" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="5" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="5" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="5" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="6" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="6" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="6" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="7" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="7" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="2" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="3" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="5" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="6" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="7" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="8" width="1" height="1" fill="var(--qr-fg)"/><rect x="0" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="5" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="21" y="9" width="1" height="1" fill="var(--qr-fg)"/><rect x="6" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="21" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="10" width="1" height="1" fill="var(--qr-fg)"/><rect x="2" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="11" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="2" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="3" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="5" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="6" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="7" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="18" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="12" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="7" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="13" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="14" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="5" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="6" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="21" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="15" width="1" height="1" fill="var(--qr-fg)"/><rect x="1" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="3" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="4" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="5" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="21" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="16" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="18" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="21" y="17" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="18" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="18" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="18" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="18" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="18" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="16" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="18" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="19" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="15" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="20" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="21" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="21" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="21" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="21" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="22" width="1" height="1" fill="var(--qr-fg)"/><rect x="8" y="23" width="1" height="1" fill="var(--qr-fg)"/><rect x="11" y="23" width="1" height="1" fill="var(--qr-fg)"/><rect x="17" y="23" width="1" height="1" fill="var(--qr-fg)"/><rect x="22" y="23" width="1" height="1" fill="var(--qr-fg)"/><rect x="24" y="23" width="1" height="1" fill="var(--qr-fg)"/><rect x="9" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="10" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="12" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="13" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="14" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="18" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="19" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="20" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="23" y="24" width="1" height="1" fill="var(--qr-fg)"/><rect x="0" y="0" width="7" height="7" fill="var(--qr-fg)"/><rect x="1" y="1" width="5" height="5" fill="var(--qr-bg)"/><rect x="2" y="2" width="3" height="3" fill="var(--qr-fg)"/><rect x="18" y="0" width="7" height="7" fill="var(--qr-fg)"/><rect x="19" y="1" width="5" height="5" fill="var(--qr-bg)"/><rect x="20" y="2" width="3" height="3" fill="var(--qr-fg)"/><rect x="0" y="18" width="7" height="7" fill="var(--qr-fg)"/><rect x="1" y="19" width="5" height="5" fill="var(--qr-bg)"/><rect x="2" y="20" width="3" height="3" fill="var(--qr-fg)"/></svg><div class="cap" style="text-align:center">QR ilustrativo</div></div>
+      </div>
+    </section>
+  </div>
+
+  <h2>Celular · 390 × 844 (retrato) — aberto pelo IP da rede local</h2>
+  <div class="phones">
+    <div>
+      <div class="phone">
+        <div class="m-top-bar"><span class="brand2">TP<b>·</b></span><span class="badge" style="--c:var(--tp-ok)"><span class="led"></span>Ao vivo</span><span class="clock">TER 14<span class="sep">:</span>32</span><span class="more" aria-label="Mais opções"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg></span></div>
+        <div class="demo-wrap"><div class="tape"></div><div class="demo-line" style="font-size:11px;line-height:22px">Modo DEMO — dados simulados</div></div>
+        <div class="ann" style="flex:0 0 auto"><div class="an" style="--c:var(--tp-crit)"><b>CRIT</b><span>Acima do limite: 84/80</span></div><div class="an" style="--c:var(--tp-warn)"><b>AVISO</b><span>Combustível 28 %</span></div></div>
+        <div class="m-body">
+          <div class="m-hero">
+            <div><div class="tp-label">Velocidade</div><div class="m-speed" data-testid="speed-digital">84<u>KM/H</u></div></div>
+            <div class="sign" style="width:58px;height:58px;font-size:22px">80</div>
+          </div>
+          <div class="m-sub">
+            <div><div class="tp-label">Marcha</div><div class="v">12</div></div>
+            <div><div class="tp-label">RPM</div><div class="v s">1430</div></div>
+            <div><div class="tp-label">Piloto</div><div class="v s" style="color:var(--tp-accent)">80</div></div>
+          </div>
+          <div class="m-strip"><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-blinkerLeft" data-state="on" role="img" aria-label="Pisca esq.: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M2 11 L10 4 V8 H21 V14 H10 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca esq.</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-hazard" data-state="off" role="img" aria-label="Alerta: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="2" stroke-linejoin="round"><path d="M12 2 L22.5 20 H1.5 Z"/><path d="M12 9 L17 17.5 H7 Z"/></g></svg><span>Alerta</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-blinkerRight" data-state="off" role="img" aria-label="Pisca dir.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M22 11 L14 4 V8 H3 V14 H14 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca dir.</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-parking" data-state="on" role="img" aria-label="Posição: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.6" fill="none"><path d="M8 6a5 5 0 0 0 0 10"/><path d="M16 6a5 5 0 0 1 0 10"/><path d="M1 5h3.5M19.5 5H23M1 10h3.5M19.5 10H23M1 15h3.5M19.5 15H23"/></g></svg><span>Posição</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-lowBeam" data-state="on" role="img" aria-label="Farol baixo: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><line x1="9" y1="5" x2="3" y2="8" stroke-linecap="round"/><line x1="9" y1="9" x2="3" y2="12" stroke-linecap="round"/><line x1="9" y1="13" x2="3" y2="16" stroke-linecap="round"/><line x1="9" y1="17" x2="3" y2="20" stroke-linecap="round"/></g></svg><span>Farol baixo</span></div><div class="tt off" style="--c:var(--tp-info)" data-testid="telltale-highBeam" data-state="off" role="img" aria-label="Farol alto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><path d="M9 5H2M9 9H2M9 13H2M9 17H2" stroke-linecap="round"/></g></svg><span>Farol alto</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-auxFront" data-state="off" role="img" aria-label="Aux. diant.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M10 5c4 0 7 3 7 6s-3 6-7 6c-1.3 0-1.7-2.5-1.7-6S8.7 5 10 5z"/><path d="M6 6 1 8M6 11 1 13M6 16 1 18" stroke-linecap="round"/><path d="M20 4v14" stroke-dasharray="2 2"/></g></svg><span>Aux. diant.</span></div><div class="tt off" style="--c:var(--tp-warn)" data-testid="telltale-auxRoof" data-state="off" role="img" aria-label="Aux. teto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><rect x="3" y="13" width="18" height="6" rx="1.5"/><path d="M6 10V4M12 10V4M18 10V4" stroke-linecap="round"/></g></svg><span>Aux. teto</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-brake" data-state="off" role="img" aria-label="Freio: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><circle cx="12" cy="11" r="6"/><path d="M5 4a10 10 0 0 0 0 14M19 4a10 10 0 0 1 0 14"/><path d="M12 7.5v4" stroke-linecap="round"/></g></svg><span>Freio</span></div><div class="tt off" style="--c:var(--tp-text)" data-testid="telltale-reverse" data-state="off" role="img" aria-label="Ré: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="14" rx="2"/><text x="12" y="15" font-size="10" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">R</text></g></svg><span>Ré</span></div><div class="tt nd" style="--c:var(--tp-warn)" data-testid="telltale-beacon" data-state="nd" role="img" aria-label="Giroflex: N/D">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M7 18v-5a5 5 0 0 1 10 0v5"/><path d="M4 19h16M12 2v3M4.5 5.5l2 2M19.5 5.5l-2 2M2 12h2.5M19.5 12H22" stroke-linecap="round"/></g></svg><span>Giroflex</span><b>N/D</b></div><div class="tt on" style="--c:var(--tp-info)" data-testid="telltale-dashboard" data-state="on" role="img" aria-label="Painel: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M3 16a9 9 0 0 1 18 0"/><path d="M12 16l4-5" stroke-linecap="round"/></g></svg><span>Painel</span><i>60%</i></div></div>
+          <div class="m-sec"><div class="ph"><h3>Combustível</h3><span class="act badge" style="--c:var(--tp-warn)">28 %</span></div><div class="pb"><div class="seg" aria-label="Tanque 28%"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit mk"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div><div style="margin-top:8px"><div class="row"><span>Autonomia</span><span class="tp-leader"></span><b>412<u>km</u></b></div><div class="row"><span>Consumo médio</span><span class="tp-leader"></span><b>31<span class="sep">,</span>4<u>L/100</u></b></div></div></div></div>
+          <div class="m-sec"><div class="ph"><h3>Motor</h3></div><div class="pb">
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Temp. motor (água)</span><span class="m-val">88<u>°C</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:67.6923076923077%;background:var(--tp-ok)"></div><div class="m-mark" style="left:80.76923076923077%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Temp. óleo</span><span class="m-val">96<u>°C</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:64%;background:var(--tp-ok)"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Pressão do óleo</span><span class="m-val">4<span class="sep">,</span>1<u>bar</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:41%;background:var(--tp-accent)"></div><div class="m-mark" style="left:10%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Ar dos freios</span><span class="m-val">8<span class="sep">,</span>6<u>bar</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:78%;background:var(--tp-accent)"></div><div class="m-mark" style="left:45%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="meter">
+    <div class="m-top"><span class="tp-label">Bateria</span><span class="m-val">27<span class="sep">,</span>8<u>V</u></span></div>
+    <div class="m-track"><div class="m-fill" style="width:92.66666666666666%;background:var(--tp-ok)"></div><div class="m-mark" style="left:73.33333333333333%"></div></div>
+    <div class="m-ticks"><i></i><i></i><i></i><i></i><i></i></div>
+  </div></div></div>
+          <div class="m-sec"><div class="ph"><h3>Veículo</h3><div class="segctl" style="margin-left:auto"><button aria-selected="true">Lateral</button><button aria-selected="false">Frontal</button></div></div><div class="pb veh"><svg class="" viewBox="0 -24 1890 470" role="img" aria-label="Scania R com semirreboque sider — vista lateral" style="--truck-paint:#c9ced6">
+  <svg x="5" y="-7" width="1440" height="454" viewBox="0 -14 1440 454" overflow="visible">
+  <title>TRUCKPULSE — reboque: Sider / lonado (curtain)</title>
+  <desc>Referência de design. Escala 100 px = 1 m; frente do reboque à DIREITA em x = 1400, traseira em x = 40 (13<span class="sep">,</span>6 m).
+    x = 1400 − 100·m, y = 400 − 100·h. Piso h 1<span class="sep">,</span>45 (y 255); pino-rei a 1<span class="sep">,</span>25 m da frente (x 1275).
+    Mapeamento SDK sugerido: body_type contém curtain, curtainsider, cs_.
+    Luzes com as mesmas classes do cavalo (tp-lamp / on): side-marker, tail, brake, blinker-left-rear, reverse.
+    Estado de exemplo: lanternas e marcadores laterais ACESOS.</desc>
+  <style>
+    .t-shade{fill:#000;opacity:.14}.t-shade-2{fill:#000;opacity:.3}.t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.35;stroke-width:1}.t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}.t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}.t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}.t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}.t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}.t-chassis{fill:var(--truck-chassis,#2a2b28)}.t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}.t-lens-red{fill:var(--lens-red,#3e1311)}.t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}.t-lit-red{fill:var(--lamp-red,#ff2b1c)}.t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .tr-body{fill:var(--trailer-body,#d7dbe0)}.tr-reefer{fill:var(--trailer-reefer,#eceeef)}.tr-curtain{fill:var(--trailer-curtain,#3a5a7c)}
+    .tr-alu{fill:var(--trailer-alu,#aeb3b8)}.tr-tape{fill:none;stroke:var(--trailer-tape,#e3b000);stroke-width:3;stroke-dasharray:28 18}
+    .c-tank{fill:var(--cargo-tank,#b7bec8)}.c-container{fill:var(--cargo-container,#7d3a2c)}.c-wood{fill:var(--cargo-wood,#6f4c2c)}
+    .c-wood-end{fill:var(--cargo-wood-end,#c9a46a)}.c-machine{fill:var(--cargo-machine,#d9a21b)}.c-crate{fill:var(--cargo-crate,#a07c4f)}
+    .c-strap{fill:none;stroke:var(--cargo-strap,#c9a227);stroke-width:2.5}.c-adr{fill:#f07f12}.c-deck{fill:var(--cargo-deck,#5b4632)}
+    .c-tx{fill:#fff;opacity:.8;font:600 14px 'B612 Mono',Consolas,monospace;letter-spacing:.06em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}.tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}.tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+  </style>
+  <defs>
+    <g id="tr-wheel">
+      <circle r="50" class="t-rubber t-out"/>
+      <circle r="49.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="37" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="29" class="t-metal-dk"/><circle r="27.5" class="t-metal-lt"/><circle r="23" class="t-metal" />
+      <circle cx="19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="-19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="-11.46" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="15.78" cy="-11.46" r="2.6" class="t-rubber"/>
+      <circle r="13.5" class="t-metal-lt"/><circle cx="9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="0.00" cy="10.50" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="-3.24" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="-0.00" cy="-10.50" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="9.99" cy="-3.24" r="1.4" class="t-metal-dk"/>
+      <circle r="6.5" class="t-metal-dk"/><circle r="3" class="t-metal-lt"/>
+      <path d="M -22 -13 A 26 26 0 0 1 -6 -25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2"/>
+    </g>
+    <pattern id="tr-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0 8 8M8 0 0 8" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="1" fill="none"/></pattern>
+  </defs>
+  <line x1="0" y1="400" x2="1440" y2="400" class="t-ground"/>
+  <g data-part="trailer-chassis">
+    <path d="M 1390 255 L 45 255 L 45 285 L 520 285 L 560 300 L 1060 300 L 1100 270 L 1390 270 Z" class="t-chassis t-out"/>
+    <line x1="45" y1="255.5" x2="1390" y2="255.5" class="t-seam-hi" stroke-opacity=".1"/>
+    <circle cx="1220" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="980" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="740" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="460" cy="263" r="1.6" class="t-ink" opacity=".6"/><circle cx="180" cy="263" r="1.6" class="t-ink" opacity=".6"/>
+  </g><rect x="1230" y="268" width="100" height="4" class="t-metal-dk"/><rect x="1272" y="272" width="6" height="8" class="t-metal"/><g data-part="landing-gear">
+    <rect x="1154" y="270" width="12" height="60" class="t-metal-dk"/>
+    <rect x="1157" y="330" width="6" height="42" class="t-metal"/>
+    <rect x="1149" y="372" width="22" height="6" class="t-metal-dk"/>
+    <rect x="1166" y="296" width="10" height="12" class="t-plastic"/>
+    <path d="M 1176 302 H 1190 V 318" fill="none" stroke="var(--truck-metal,#8e9196)" stroke-width="2"/>
+  </g><g data-part="side-guard"><rect x="1038" y="300" width="4" height="34" class="t-metal-dk"/><rect x="798" y="300" width="4" height="34" class="t-metal-dk"/><rect x="558" y="300" width="4" height="34" class="t-metal-dk"/>
+    <rect x="560" y="310" width="480" height="5" class="t-metal"/><rect x="560" y="326" width="480" height="5" class="t-metal"/></g>
+      <rect x="40" y="2" width="1360" height="253" class="tr-curtain"/>
+      <rect x="56" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="96" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="136" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="176" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="216" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="256" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="296" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="336" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="376" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="416" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="456" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="496" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="536" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="576" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="616" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="656" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="696" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="736" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="776" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="816" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="856" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="896" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="936" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="976" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1016" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1056" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1096" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1136" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1176" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1216" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1256" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1296" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1336" y="16" width="18" height="218" fill="#000" opacity=".09"/><rect x="1376" y="16" width="18" height="218" fill="#000" opacity=".09"/><line x1="80" y1="16" x2="80" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="77" y="220" width="6" height="11" class="t-metal"/><line x1="142" y1="16" x2="142" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="139" y="220" width="6" height="11" class="t-metal"/><line x1="204" y1="16" x2="204" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="201" y="220" width="6" height="11" class="t-metal"/><line x1="266" y1="16" x2="266" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="263" y="220" width="6" height="11" class="t-metal"/><line x1="328" y1="16" x2="328" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="325" y="220" width="6" height="11" class="t-metal"/><line x1="390" y1="16" x2="390" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="387" y="220" width="6" height="11" class="t-metal"/><line x1="452" y1="16" x2="452" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="449" y="220" width="6" height="11" class="t-metal"/><line x1="514" y1="16" x2="514" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="511" y="220" width="6" height="11" class="t-metal"/><line x1="576" y1="16" x2="576" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="573" y="220" width="6" height="11" class="t-metal"/><line x1="638" y1="16" x2="638" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="635" y="220" width="6" height="11" class="t-metal"/><line x1="700" y1="16" x2="700" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="697" y="220" width="6" height="11" class="t-metal"/><line x1="762" y1="16" x2="762" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="759" y="220" width="6" height="11" class="t-metal"/><line x1="824" y1="16" x2="824" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="821" y="220" width="6" height="11" class="t-metal"/><line x1="886" y1="16" x2="886" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="883" y="220" width="6" height="11" class="t-metal"/><line x1="948" y1="16" x2="948" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="945" y="220" width="6" height="11" class="t-metal"/><line x1="1010" y1="16" x2="1010" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1007" y="220" width="6" height="11" class="t-metal"/><line x1="1072" y1="16" x2="1072" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1069" y="220" width="6" height="11" class="t-metal"/><line x1="1134" y1="16" x2="1134" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1131" y="220" width="6" height="11" class="t-metal"/><line x1="1196" y1="16" x2="1196" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1193" y="220" width="6" height="11" class="t-metal"/><line x1="1258" y1="16" x2="1258" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1255" y="220" width="6" height="11" class="t-metal"/><line x1="1320" y1="16" x2="1320" y2="234" stroke="#000" stroke-opacity=".32" stroke-width="2"/><rect x="1317" y="220" width="6" height="11" class="t-metal"/>
+      <rect x="40" y="14" width="1360" height="10" class="t-hi" opacity=".1"/>
+      <path d="M 40 2 L 1392 2 Q 1400 2 1400 10 L 1400 16 L 40 16 Z" class="t-metal-dk"/>
+      <rect x="40" y="234" width="1360" height="21" class="t-metal-dk"/><line x1="40" y1="234.5" x2="1400" y2="234.5" class="t-seam-hi"/>
+      <rect x="1382" y="2" width="18" height="253" class="t-metal"/><rect x="1382" y="2" width="18" height="253" class="t-shade"/>
+      <rect x="40" y="2" width="16" height="253" class="t-metal"/>
+      <rect x="56" y="30" width="10" height="6" class="t-metal-dk"/><rect x="56" y="95" width="10" height="6" class="t-metal-dk"/><rect x="56" y="165" width="10" height="6" class="t-metal-dk"/><rect x="56" y="225" width="10" height="6" class="t-metal-dk"/>
+      <path class="tr-tape" d="M 1380 246 H 58"/>
+      <g data-testid="trailer-axle-0">
+      <ellipse cx="457" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="407" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="413" y1="297" x2="457" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="473" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(457 350) scale(1)"/>
+      <path d="M 399 344 A 58 58 0 0 1 515 344 L 510 344 A 53 53 0 0 0 404 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-1">
+      <ellipse cx="326" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="276" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="282" y1="297" x2="326" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="342" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(326 350) scale(1)"/>
+      <path d="M 268 344 A 58 58 0 0 1 384 344 L 379 344 A 53 53 0 0 0 273 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-2">
+      <ellipse cx="195" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="145" y="285" width="12" height="16" class="t-chassis t-out"/><line x1="151" y1="297" x2="195" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="211" y="285" width="22" height="43" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(195 350) scale(1)"/>
+      <path d="M 137 344 A 58 58 0 0 1 253 344 L 248 344 A 53 53 0 0 0 142 344 Z" class="t-plastic"/>
+    </g><rect x="128" y="340" width="8" height="52" class="t-rubber"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="976" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="976" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="706" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="706" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="436" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="436" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="166" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="166" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><g data-part="tail">
+    <rect x="38" y="288" width="14" height="32" rx="1" class="t-plastic"/>
+    <rect x="40" y="290" width="10" height="6" class="t-lens-amber"/><rect x="40" y="290" width="10" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="40" y="297" width="10" height="6" class="t-lens-red"/><rect x="40" y="297" width="10" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="40" y="304" width="10" height="6" class="t-lens-red"/><rect x="40" y="304" width="10" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="40" y="311" width="10" height="6" class="t-lens-clear"/><rect x="40" y="311" width="10" height="6" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+    <rect x="40" y="6" width="8" height="5" class="t-lens-red"/><rect x="40" y="6" width="8" height="5" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+  </g>
+  <g data-part="underrun"><rect x="54" y="288" width="5" height="54" class="t-metal-dk"/><rect x="38" y="338" width="22" height="12" class="t-metal-dk"/></g>
+</svg>
+  <svg x="1080" y="0" width="800" height="440" viewBox="0 0 800 440" overflow="visible">
+  <title>TRUCKPULSE — cavalo-mecânico 4x2, vista lateral esquerda</title>
+  <desc>
+    Referência de design. Escala: 100 px = 1 m. Frente para a DIREITA (igual ao TruckSide.tsx).
+    x = 680 − 100·m (m medido a partir do para-choque), y = 400 − 100·h (h = altura do solo).
+    Eixo dianteiro a 1<span class="sep">,</span>45 m, entre-eixos 3<span class="sep">,</span>60 m, roda r = 0<span class="sep">,</span>52 m, teto 3<span class="sep">,</span>75 m, quinta-roda 1<span class="sep">,</span>35 m.
+    Estado de exemplo: lanterna (parking), farol baixo, lanterna traseira e gabarito ACESOS; o resto apagado.
+    Cores somente por classes / variáveis CSS (--truck-*, --lamp-*, --tp-*); nada de gradiente.
+  </desc>
+  <style>
+    .t-paint{fill:var(--truck-paint,#c9ced6)}
+    .t-shade{fill:#000;opacity:.16}
+    .t-shade-2{fill:#000;opacity:.32}
+    .t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.38;stroke-width:1}
+    .t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}
+    .t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}
+    .t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}
+    .t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}
+    .t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}
+    .t-glass-hi{fill:#fff;opacity:.08}
+    .t-chassis{fill:var(--truck-chassis,#2a2b28)}
+    .t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-adblue{fill:var(--truck-adblue,#3a6ea5)}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}
+    .t-lens-red{fill:var(--lens-red,#3e1311)}
+    .t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .t-lit-xenon{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}
+    .t-lit-red{fill:var(--lamp-red,#ff2b1c)}
+    .t-beam{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-air-red{fill:none;stroke:#a8392b;stroke-width:2.4}
+    .t-air-yel{fill:none;stroke:#c9a227;stroke-width:2.4}
+    .t-air-blk{fill:none;stroke:#0b0b0a;stroke-width:2.4}
+    .t-annot{fill:none;stroke:var(--tp-dim,#6b675e);stroke-width:1}
+    .t-annot-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace;letter-spacing:.02em}
+    .t-susp{stroke:var(--tp-accent,#ff7a1a);stroke-width:1.5}
+    .t-susp-tx{fill:var(--tp-muted,#a19c90);font:9px 'B612 Mono',Consolas,monospace}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}
+    .tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}
+    .tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+    .tp-beam{opacity:0;transition:opacity 200ms ease}
+    .tp-beam.on{opacity:1}
+    .tp-beam.dim{opacity:.45}
+  </style>
+  <defs>
+    <!-- Roda dianteira (aro 22,5", 10 furos, cubo com tampa cônica). Centro em 0,0 -->
+    <g id="s-wheel-front">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="24.5" class="t-metal-dk" opacity=".55"/>
+      <g class="t-rubber">
+        <circle cx="20.5" cy="0" r="2.8"/><circle cx="16.58" cy="12.05" r="2.8"/><circle cx="6.33" cy="19.5" r="2.8"/>
+        <circle cx="-6.33" cy="19.5" r="2.8"/><circle cx="-16.58" cy="12.05" r="2.8"/><circle cx="-20.5" cy="0" r="2.8"/>
+        <circle cx="-16.58" cy="-12.05" r="2.8"/><circle cx="-6.33" cy="-19.5" r="2.8"/><circle cx="6.33" cy="-19.5" r="2.8"/>
+        <circle cx="16.58" cy="-12.05" r="2.8"/>
+      </g>
+      <circle r="14.5" class="t-metal-lt"/>
+      <g class="t-metal-dk">
+        <circle cx="10.46" cy="3.4" r="1.5"/><circle cx="6.47" cy="8.9" r="1.5"/><circle cx="0" cy="11" r="1.5"/>
+        <circle cx="-6.47" cy="8.9" r="1.5"/><circle cx="-10.46" cy="3.4" r="1.5"/><circle cx="-10.46" cy="-3.4" r="1.5"/>
+        <circle cx="-6.47" cy="-8.9" r="1.5"/><circle cx="0" cy="-11" r="1.5"/><circle cx="6.47" cy="-8.9" r="1.5"/>
+        <circle cx="10.46" cy="-3.4" r="1.5"/>
+      </g>
+      <circle r="7" class="t-metal-dk"/>
+      <circle r="3.2" class="t-metal-lt"/>
+      <path d="M -23 -14 A 27 27 0 0 1 -6 -26" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+    </g>
+    <!-- Roda traseira de tração (rodado duplo: prato fundo + cubo de redução) -->
+    <g id="s-wheel-drive">
+      <circle r="52" class="t-rubber t-out"/>
+      <circle r="51.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="45" fill="none" stroke="#fff" stroke-opacity=".05"/>
+      <circle r="38" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="30" class="t-metal-dk"/>
+      <circle r="28.5" class="t-metal"/>
+      <circle r="26" class="t-metal-dk" opacity=".75"/>
+      <circle r="26" fill="none" stroke="#000" stroke-opacity=".35" stroke-width="2"/>
+      <g class="t-rubber">
+        <circle cx="21.5" cy="0" r="2.6"/><circle cx="17.39" cy="12.64" r="2.6"/><circle cx="6.64" cy="20.45" r="2.6"/>
+        <circle cx="-6.64" cy="20.45" r="2.6"/><circle cx="-17.39" cy="12.64" r="2.6"/><circle cx="-21.5" cy="0" r="2.6"/>
+        <circle cx="-17.39" cy="-12.64" r="2.6"/><circle cx="-6.64" cy="-20.45" r="2.6"/><circle cx="6.64" cy="-20.45" r="2.6"/>
+        <circle cx="17.39" cy="-12.64" r="2.6"/>
+      </g>
+      <circle r="16.5" class="t-metal"/>
+      <circle r="16.5" fill="none" stroke="#000" stroke-opacity=".4"/>
+      <g class="t-metal-lt">
+        <circle cx="12.36" cy="4.02" r="1.8"/><circle cx="7.64" cy="10.52" r="1.8"/><circle cx="0" cy="13" r="1.8"/>
+        <circle cx="-7.64" cy="10.52" r="1.8"/><circle cx="-12.36" cy="4.02" r="1.8"/><circle cx="-12.36" cy="-4.02" r="1.8"/>
+        <circle cx="-7.64" cy="-10.52" r="1.8"/><circle cx="0" cy="-13" r="1.8"/><circle cx="7.64" cy="-10.52" r="1.8"/>
+        <circle cx="12.36" cy="-4.02" r="1.8"/>
+      </g>
+      <circle r="9" class="t-metal-dk"/>
+      <circle r="9" fill="none" stroke="#fff" stroke-opacity=".18"/>
+      <circle r="4" class="t-ink"/>
+      <path d="M -24 -15 A 28 28 0 0 1 -7 -27" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
+    </g>
+    <clipPath id="s-win-clip"><path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z"/></clipPath>
+  </defs>
+
+  <!-- solo -->
+  <line x1="0" y1="400" x2="800" y2="400" class="t-ground"/>
+
+  <!-- ===== FEIXES (atrás de tudo). Faixas planas sobrepostas, sem gradiente ===== -->
+  <g class="tp-beam on" data-lamp="beam-low">
+    <path class="t-beam" opacity=".08" d="M 681 299 L 800 380 L 800 400 L 681 309 Z"/>
+    <path class="t-beam" opacity=".12" d="M 681 301 L 800 390 L 800 400 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-high">
+    <path class="t-beam" opacity=".07" d="M 681 297 L 800 268 L 800 398 L 681 310 Z"/>
+    <path class="t-beam" opacity=".11" d="M 681 300 L 800 290 L 800 340 L 681 307 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-aux">
+    <path class="t-beam" opacity=".10" d="M 681 331 L 800 394 L 800 400 L 681 338 Z"/>
+  </g>
+  <g class="tp-beam" data-lamp="beam-roof">
+    <path class="t-beam" opacity=".06" d="M 628 16 L 800 36 L 800 260 L 628 23 Z"/>
+    <path class="t-beam" opacity=".09" d="M 628 18 L 800 60 L 800 150 L 628 21 Z"/>
+  </g>
+
+  <!-- ===== CHASSI TRASEIRO ===== -->
+  <g data-part="chassis">
+    <rect x="64" y="290" width="392" height="28" class="t-chassis t-out"/>
+    <line x1="64" y1="290.5" x2="456" y2="290.5" class="t-seam-hi" stroke-opacity=".08"/>
+    <line x1="64" y1="317.5" x2="456" y2="317.5" class="t-seam"/>
+    <!-- furação da longarina -->
+    <g class="t-ink" opacity=".6">
+      <circle cx="96" cy="304" r="1.6"/><circle cx="112" cy="304" r="1.6"/><circle cx="262" cy="300" r="1.6"/>
+      <circle cx="262" cy="310" r="1.6"/><circle cx="310" cy="300" r="1.6"/><circle cx="360" cy="300" r="1.6"/>
+    </g>
+    <!-- travessa traseira -->
+    <rect x="60" y="288" width="8" height="34" class="t-chassis"/>
+  </g>
+
+  <!-- pórtico atrás da cabine + mangueiras de ar (vermelha = emergência, amarela = serviço, preta = elétrica) -->
+  <g data-part="gantry">
+    <rect x="430" y="96" width="5" height="194" class="t-chassis"/>
+    <rect x="422" y="104" width="16" height="6" class="t-chassis"/>
+    <path class="t-air-red" d="M 426 110 C 404 124 398 150 412 168 C 426 186 400 200 408 222 C 414 240 430 232 432 212"/>
+    <path class="t-air-yel" d="M 430 110 C 412 128 410 152 420 170 C 432 190 410 206 418 226 C 424 242 436 230 434 214"/>
+    <path class="t-air-blk" d="M 434 110 C 422 132 424 156 428 176 C 434 198 420 214 426 232"/>
+    <rect x="426" y="206" width="12" height="10" class="t-plastic"/>
+  </g>
+  <!-- passarela -->
+  <rect x="330" y="284" width="102" height="6" class="t-metal-dk"/>
+  <line x1="332" y1="287" x2="430" y2="287" stroke="#000" stroke-opacity=".35" stroke-dasharray="4 3"/>
+
+  <!-- quinta-roda (pino-rei em x≈200 → 0,25 m à frente do eixo de tração) -->
+  <g data-part="fifth-wheel">
+    <path d="M 164 278 L 236 278 L 230 290 L 170 290 Z" class="t-chassis"/>
+    <path d="M 146 272 L 154 265 L 246 265 L 254 272 L 254 278 L 146 278 Z" class="t-metal-dk"/>
+    <line x1="154" y1="265.5" x2="246" y2="265.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <path d="M 200 265 L 200 278" class="t-seam"/>
+    <line x1="236" y1="275" x2="260" y2="284" stroke="var(--truck-metal,#8e9196)" stroke-width="2" stroke-linecap="square"/>
+  </g>
+
+  <!-- caixa de baterias, AdBlue, tanque de combustível -->
+  <g data-part="tanks">
+    <rect x="242" y="298" width="40" height="44" rx="1" class="t-plastic"/>
+    <line x1="242" y1="305" x2="282" y2="305" class="t-seam"/>
+    <rect x="248" y="309" width="6" height="3" class="t-metal-dk"/><rect x="270" y="309" width="6" height="3" class="t-metal-dk"/>
+    <rect x="288" y="302" width="16" height="40" rx="4" class="t-plastic-2"/>
+    <rect x="292" y="298" width="8" height="5" rx="1" class="t-adblue"/>
+    <rect x="310" y="294" width="130" height="56" rx="10" class="t-metal"/>
+    <rect x="314" y="297" width="122" height="7" rx="3.5" class="t-hi" opacity=".22"/>
+    <path d="M 310 336 L 440 336 L 440 340 Q 440 350 430 350 L 320 350 Q 310 350 310 340 Z" class="t-shade"/>
+    <line x1="312" y1="322" x2="438" y2="322" class="t-seam" stroke-opacity=".18"/>
+    <rect x="328" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="416" y="292" width="6" height="60" class="t-metal-dk"/>
+    <rect x="426" y="289" width="10" height="6" rx="1" class="t-metal-dk"/>
+  </g>
+
+  <!-- ===== RODAS ===== -->
+  <ellipse cx="175" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <ellipse cx="535" cy="400" rx="48" ry="3" class="t-ink" opacity=".5"/>
+  <use href="#s-wheel-drive" transform="translate(175 348)" data-testid="truck-axle-1"/>
+  <use href="#s-wheel-front" transform="translate(535 348)" data-testid="truck-axle-0"/>
+
+  <!-- para-lama traseiro + para-barro -->
+  <path d="M 113 352 L 113 344 A 62 62 0 0 1 237 344 L 237 352 L 231 352 L 231 346 A 56 56 0 0 0 119 346 L 119 352 Z" class="t-plastic"/>
+  <rect x="104" y="350" width="8" height="42" class="t-rubber"/>
+  <rect x="104" y="350" width="8" height="5" class="t-plastic-2"/>
+
+  <!-- lanternas traseiras (vistas de topo/perfil) -->
+  <g data-part="tail">
+    <rect x="54" y="320" width="12" height="30" rx="1" class="t-plastic"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lens-amber"/>
+    <rect x="56" y="322" width="8" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="329" width="8" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lens-red"/>
+    <rect x="56" y="336" width="8" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lens-clear"/>
+    <rect x="56" y="343" width="8" height="5" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+  </g>
+
+  <!-- ===== CABINE ===== -->
+  <g data-part="cab">
+    <!-- colarinho / defletor lateral traseiro -->
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-paint"/>
+    <path d="M 450 44 L 440 54 L 440 270 L 452 280 Z" class="t-shade-2"/>
+    <!-- suporte da suspensão da cabine -->
+    <rect x="446" y="280" width="14" height="12" class="t-chassis"/>
+
+    <!-- casca pintada -->
+    <path d="M 680 288 L 675 200 L 670 190 L 644 58 Q 640 28 612 26 L 466 24 Q 450 24 450 40 L 452 280 L 680 280 Z" class="t-paint"/>
+    <!-- camadas planas de sombreamento -->
+    <path d="M 640 50 Q 638 31 612 30 L 466 28 Q 455 28 454 38 L 454 46 Q 455 36 466 36 L 612 38 Q 632 39 637 56 Z" class="t-hi"/>
+    <path d="M 452 229 L 676.6 229 L 679.5 280 L 452 280 Z" class="t-shade"/>
+    <path d="M 680 288 L 675 200 L 669 200 L 674 288 Z" class="t-shade-2"/>
+    <!-- vinco lateral -->
+    <line x1="452" y1="227.5" x2="676" y2="227.5" class="t-seam-hi"/>
+    <line x1="452" y1="229" x2="676" y2="229" class="t-seam"/>
+    <!-- junta do teto alto -->
+    <line x1="451" y1="96" x2="532" y2="96" class="t-seam"/>
+    <!-- coluna A: vedação + lâmina do para-brisa -->
+    <path d="M 671 190 L 645 58 L 642 60 L 667 190 Z" class="t-glass"/>
+    <line x1="670" y1="190" x2="644" y2="58" stroke="#000" stroke-opacity=".5" stroke-width="1.5"/>
+
+    <!-- porta -->
+    <path d="M 650 96 L 661 188 L 663 272 Q 663 276 659 276 L 536 276 Q 532 276 532 272 L 532 104 Q 532 96 540 96 Z" class="t-seam"/>
+    <!-- janela com recorte inferior (visão do meio-fio) -->
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" class="t-glass"/>
+    <g clip-path="url(#s-win-clip)">
+      <path d="M 596 100 L 618 100 L 586 200 L 564 200 Z" class="t-glass-hi"/>
+      <path d="M 626 100 L 632 100 L 600 200 L 594 200 Z" class="t-glass-hi"/>
+      <rect x="560" y="150" width="34" height="40" class="t-ink" opacity=".35"/>
+    </g>
+    <path d="M 548 184 L 627 184 L 652 196 L 638 106 L 556 104 Q 548 104 548 112 Z" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- maçaneta e alça -->
+    <rect x="548" y="204" width="16" height="4" rx="1" class="t-plastic"/>
+    <rect x="524" y="150" width="4" height="104" rx="2" class="t-plastic"/>
+    <!-- tomada de ar lateral -->
+    <rect x="470" y="116" width="50" height="40" class="t-seam"/>
+    <g class="t-ink" opacity=".45">
+      <rect x="473" y="120" width="44" height="3"/><rect x="473" y="127" width="44" height="3"/>
+      <rect x="473" y="134" width="44" height="3"/><rect x="473" y="141" width="44" height="3"/>
+      <rect x="473" y="148" width="44" height="3"/>
+    </g>
+    <!-- bagageiro lateral -->
+    <rect x="462" y="238" width="58" height="34" rx="2" class="t-seam"/>
+    <rect x="508" y="252" width="8" height="3" class="t-plastic"/>
+
+    <!-- para-sol -->
+    <path d="M 646 44 L 667 52 L 667 56 L 645 54 Z" class="t-plastic"/>
+
+    <!-- para-lama dianteiro + caixa de degraus (plástico) -->
+    <path d="M 606 280 L 606 352 L 597 352 L 597 348 A 62 62 0 0 0 473 348 L 473 352 L 452 352 L 452 280 Z" class="t-plastic"/>
+    <path d="M 593 348 A 58 58 0 0 0 477 348" fill="none" stroke="#000" stroke-opacity=".55" stroke-width="4"/>
+    <rect x="452" y="290" width="21" height="62" class="t-ink" opacity=".45"/>
+    <g class="t-metal-dk">
+      <rect x="454" y="296" width="18" height="4"/><rect x="454" y="320" width="18" height="4"/><rect x="454" y="344" width="18" height="4"/>
+    </g>
+    <line x1="454" y1="296.5" x2="472" y2="296.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="320.5" x2="472" y2="320.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <line x1="454" y1="344.5" x2="472" y2="344.5" class="t-seam-hi" stroke-opacity=".35"/>
+    <rect x="456" y="352" width="12" height="36" class="t-rubber"/>
+
+    <!-- para-choque -->
+    <path d="M 680 288 L 680 344 Q 680 356 670 358 L 606 358 L 606 288 Z" class="t-plastic-2"/>
+    <line x1="606" y1="288.5" x2="680" y2="288.5" class="t-seam-hi"/>
+    <rect x="610" y="357" width="68" height="5" class="t-plastic"/>
+    <line x1="606" y1="322" x2="660" y2="322" class="t-seam"/>
+
+    <!-- espelhos (principal + grande-angular) -->
+    <line x1="662" y1="112" x2="676" y2="108" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <line x1="664" y1="186" x2="676" y2="190" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="3"/>
+    <rect x="670" y="92" width="14" height="62" rx="3" class="t-plastic"/>
+    <rect x="672" y="95" width="3" height="56" class="t-hi" opacity=".1"/>
+    <rect x="671" y="160" width="12" height="30" rx="3" class="t-plastic"/>
+
+    <!-- barra de teto -->
+    <g data-part="roof-bar">
+      <rect x="562" y="22" width="3" height="5" class="t-plastic"/><rect x="616" y="22" width="3" height="5" class="t-plastic"/>
+      <rect x="556" y="14" width="70" height="9" rx="1" class="t-plastic"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lens-clear"/>
+      <rect x="621" y="15" width="6" height="7" class="t-lit-white tp-lamp" data-lamp="auxRoof"/>
+    </g>
+  </g>
+
+  <!-- ===== LUZES DA CABINE ===== -->
+  <!-- farol (no canto do para-choque) -->
+  <path d="M 680 293 L 680 309 L 664 309 Q 660 309 660 305 L 660 296 Q 660 293 664 293 Z" class="t-lens-clear"/>
+  <rect x="664" y="297" width="15" height="11" class="t-lit-xenon tp-lamp on" data-lamp="lowBeam"/>
+  <rect x="662" y="294" width="17" height="2.4" class="t-lit-white tp-lamp on" data-lamp="parking"/>
+  <!-- pisca dianteiro (envolve o canto) -->
+  <rect x="674" y="310" width="6" height="6" class="t-lens-amber"/>
+  <rect x="674" y="310" width="6" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-front"/>
+  <!-- repetidor lateral (cat. 6) -->
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="588" y="284" width="10" height="4" rx="1" class="t-lit-amber tp-lamp" data-lamp="blinker-left-side"/>
+  <!-- auxiliar dianteiro / neblina (SDK: auxFront) -->
+  <rect x="668" y="330" width="12" height="8" rx="1" class="t-lens-clear"/>
+  <rect x="669" y="331" width="11" height="6" class="t-lit-white tp-lamp" data-lamp="auxFront"/>
+  <!-- gabarito do teto (lateral, âmbar) -->
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lens-amber"/>
+  <rect x="606" y="27" width="7" height="4" rx="1" class="t-lit-amber tp-lamp on" data-lamp="clearance"/>
+  <!-- giroflex -->
+  <rect x="468" y="18" width="18" height="6" class="t-plastic"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lens-amber"/>
+  <path d="M 470 18 Q 470 8 477 8 Q 484 8 484 18 Z" class="t-lit-amber tp-lamp tp-beacon" data-lamp="beacon"/>
+
+  <!-- ===== SUSPENSÃO (dado real, mm) ===== -->
+  <g data-part="shock">
+    <line x1="527" y1="333" x2="527" y2="290" class="t-susp"/>
+    <text x="535" y="414" text-anchor="middle" class="t-susp-tx">-17</text>
+  </g>
+  <g data-part="shock">
+    <line x1="167" y1="333" x2="167" y2="292" class="t-susp"/>
+    <text x="175" y="414" text-anchor="middle" class="t-susp-tx">42</text>
+  </g>
+
+  <!-- ===== COTAS (somente documentação; não renderizar no app) ===== -->
+  
+</svg>
+  <g class="ruler"><line x1="1760" y1="402" x2="1760" y2="414"/><line x1="1660" y1="402" x2="1660" y2="408"/><line x1="1560" y1="402" x2="1560" y2="408"/><line x1="1460" y1="402" x2="1460" y2="408"/><line x1="1360" y1="402" x2="1360" y2="408"/><line x1="1260" y1="402" x2="1260" y2="414"/><line x1="1160" y1="402" x2="1160" y2="408"/><line x1="1060" y1="402" x2="1060" y2="408"/><line x1="960" y1="402" x2="960" y2="408"/><line x1="860" y1="402" x2="860" y2="408"/><line x1="760" y1="402" x2="760" y2="414"/><line x1="660" y1="402" x2="660" y2="408"/><line x1="560" y1="402" x2="560" y2="408"/><line x1="460" y1="402" x2="460" y2="408"/><line x1="360" y1="402" x2="360" y2="408"/><line x1="260" y1="402" x2="260" y2="414"/><line x1="160" y1="402" x2="160" y2="408"/><line x1="60" y1="402" x2="60" y2="408"/><line x1="-40" y1="402" x2="-40" y2="408"/></g>
+</svg></div></div>
+        </div>
+        <nav class="m-nav"><a class="act" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M3 16a9 9 0 0 1 18 0M12 16l4-5"/></svg><span>Painel</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 6h11v9H2zM13 9h4l3 3v3h-7M5.5 18.5a1.5 1.5 0 1 0 0-.01M16.5 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Caminhão</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M6 19a2 2 0 1 0 0-.01M18 5a2 2 0 1 0 0-.01M6 17V9a3 3 0 0 1 3-3h4M18 7v8a3 3 0 0 1-3 3h-4"/></svg><span>Viagem</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 5h16v10H2zM18 9h3v6h-3M6 18.5a1.5 1.5 0 1 0 0-.01M11 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Reboque</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg><span>Mais</span></a></nav>
+      </div>
+      <div class="cap">Retrato: faixa principal sem mostradores circulares; alvos ≥ 44 px; barra inferior fixa (+ safe-area).</div>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="m-top-bar"><span class="brand2">TP<b>·</b></span><span class="badge" style="--c:var(--tp-ok)"><span class="led"></span>Ao vivo</span><span class="clock">TER 14<span class="sep">:</span>32</span><span class="more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg></span></div>
+        <div class="m-body" style="position:relative">
+          <div style="opacity:.35">
+            <div class="m-sec"><div class="ph"><h3>Velocidade × limite</h3></div><div class="pb"><svg viewBox="0 0 400 150" class="chart" style="height:150px" preserveAspectRatio="none"><line x1="40" y1="130" x2="392" y2="130" stroke="var(--tp-line)"/><text x="34" y="130" class="c-ax" text-anchor="end" dominant-baseline="central">0</text><line x1="40" y1="99.5" x2="392" y2="99.5" stroke="var(--tp-line)"/><text x="34" y="99.5" class="c-ax" text-anchor="end" dominant-baseline="central">30</text><line x1="40" y1="69" x2="392" y2="69" stroke="var(--tp-line)"/><text x="34" y="69" class="c-ax" text-anchor="end" dominant-baseline="central">60</text><line x1="40" y1="38.5" x2="392" y2="38.5" stroke="var(--tp-line)"/><text x="34" y="38.5" class="c-ax" text-anchor="end" dominant-baseline="central">90</text><line x1="40" y1="8" x2="392" y2="8" stroke="var(--tp-line)"/><text x="34" y="8" class="c-ax" text-anchor="end" dominant-baseline="central">120</text><line x1="84" y1="130" x2="84" y2="133" stroke="var(--tp-line-strong)"/><text x="84" y="144" class="c-ax" text-anchor="middle">14h02</text><line x1="172" y1="130" x2="172" y2="133" stroke="var(--tp-line-strong)"/><text x="172" y="144" class="c-ax" text-anchor="middle">14h04</text><line x1="260" y1="130" x2="260" y2="133" stroke="var(--tp-line-strong)"/><text x="260" y="144" class="c-ax" text-anchor="middle">14h06</text><line x1="348" y1="130" x2="348" y2="133" stroke="var(--tp-line-strong)"/><text x="348" y="144" class="c-ax" text-anchor="middle">14h08</text><path d="M 40 130 L 40,50.7 L 43,48.6 L 45.9,46.6 L 48.9,44.8 L 51.8,43.4 L 54.8,42.3 L 57.7,41.7 L 60.7,41.5 L 63.7,41.7 L 66.6,42.2 L 69.6,43 L 72.5,43.8 L 75.5,44.7 L 78.5,45.5 L 81.4,46.2 L 84.4,46.6 L 87.3,46.8 L 90.3,46.7 L 93.2,46.3 L 96.2,45.8 L 99.2,45.1 L 102.1,44.5 L 105.1,44 L 108,43.6 L 111,43.6 L 113.9,43.9 L 116.9,44.6 L 119.9,45.7 L 122.8,47.2 L 125.8,48.9 L 128.7,50.9 L 131.7,53 L 134.7,55.1 L 137.6,57 L 140.6,58.7 L 143.5,60 L 146.5,60.9 L 149.4,61.4 L 152.4,61.4 L 155.4,61 L 158.3,60.3 L 161.3,59.3 L 164.2,58.2 L 167.2,57 L 170.2,55.9 L 173.1,54.9 L 176.1,54.2 L 179,53.8 L 182,53.6 L 184.9,53.7 L 187.9,54 L 190.9,54.4 L 193.8,54.8 L 196.8,55.2 L 199.7,55.5 L 202.7,55.4 L 205.6,55.1 L 208.6,54.4 L 211.6,53.3 L 214.5,51.9 L 217.5,50.2 L 220.4,48.3 L 223.4,46.3 L 226.4,44.4 L 229.3,42.6 L 232.3,41.1 L 235.2,39.9 L 238.2,39.2 L 241.1,38.9 L 244.1,39.1 L 247.1,39.7 L 250,45.5 L 253,51.4 L 255.9,57.2 L 258.9,62.7 L 261.8,67.8 L 264.8,72.1 L 267.8,75.6 L 270.7,78.2 L 273.7,79.7 L 276.6,80.2 L 279.6,79.7 L 282.6,78.3 L 285.5,76.2 L 288.5,73.3 L 291.4,70 L 294.4,66.4 L 297.3,62.7 L 300.3,58.9 L 303.3,55.2 L 306.2,51.7 L 309.2,53.2 L 312.1,55 L 315.1,56.7 L 318.1,58.5 L 321,60.1 L 324,61.4 L 326.9,62.3 L 329.9,62.8 L 332.8,62.9 L 335.8,62.4 L 338.8,61.6 L 341.7,60.3 L 344.7,58.9 L 347.6,57.2 L 350.6,55.5 L 353.5,53.8 L 356.5,52.4 L 359.5,51.1 L 362.4,50.2 L 365.4,49.6 L 368.3,49.3 L 371.3,49.3 L 374.3,49.5 L 377.2,49.8 L 380.2,50.2 L 383.1,50.4 L 386.1,50.5 L 389,50.3 L 392,49.8 L 392 130 Z" fill="var(--tp-accent)" fill-opacity=".10"/><polyline points="40,50.7 43,48.6 45.9,46.6 48.9,44.8 51.8,43.4 54.8,42.3 57.7,41.7 60.7,41.5 63.7,41.7 66.6,42.2 69.6,43 72.5,43.8 75.5,44.7 78.5,45.5 81.4,46.2 84.4,46.6 87.3,46.8 90.3,46.7 93.2,46.3 96.2,45.8 99.2,45.1 102.1,44.5 105.1,44 108,43.6 111,43.6 113.9,43.9 116.9,44.6 119.9,45.7 122.8,47.2 125.8,48.9 128.7,50.9 131.7,53 134.7,55.1 137.6,57 140.6,58.7 143.5,60 146.5,60.9 149.4,61.4 152.4,61.4 155.4,61 158.3,60.3 161.3,59.3 164.2,58.2 167.2,57 170.2,55.9 173.1,54.9 176.1,54.2 179,53.8 182,53.6 184.9,53.7 187.9,54 190.9,54.4 193.8,54.8 196.8,55.2 199.7,55.5 202.7,55.4 205.6,55.1 208.6,54.4 211.6,53.3 214.5,51.9 217.5,50.2 220.4,48.3 223.4,46.3 226.4,44.4 229.3,42.6 232.3,41.1 235.2,39.9 238.2,39.2 241.1,38.9 244.1,39.1 247.1,39.7 250,45.5 253,51.4 255.9,57.2 258.9,62.7 261.8,67.8 264.8,72.1 267.8,75.6 270.7,78.2 273.7,79.7 276.6,80.2 279.6,79.7 282.6,78.3 285.5,76.2 288.5,73.3 291.4,70 294.4,66.4 297.3,62.7 300.3,58.9 303.3,55.2 306.2,51.7 309.2,53.2 312.1,55 315.1,56.7 318.1,58.5 321,60.1 324,61.4 326.9,62.3 329.9,62.8 332.8,62.9 335.8,62.4 338.8,61.6 341.7,60.3 344.7,58.9 347.6,57.2 350.6,55.5 353.5,53.8 356.5,52.4 359.5,51.1 362.4,50.2 365.4,49.6 368.3,49.3 371.3,49.3 374.3,49.5 377.2,49.8 380.2,50.2 383.1,50.4 386.1,50.5 389,50.3 392,49.8" fill="none" stroke="var(--tp-accent)" stroke-width="1.5"/><path d="M 40 38.5 H 43 V 38.5 H 45.9 V 38.5 H 48.9 V 38.5 H 51.8 V 38.5 H 54.8 V 38.5 H 57.7 V 38.5 H 60.7 V 38.5 H 63.7 V 38.5 H 66.6 V 38.5 H 69.6 V 38.5 H 72.5 V 38.5 H 75.5 V 38.5 H 78.5 V 38.5 H 81.4 V 38.5 H 84.4 V 38.5 H 87.3 V 38.5 H 90.3 V 38.5 H 93.2 V 38.5 H 96.2 V 38.5 H 99.2 V 38.5 H 102.1 V 38.5 H 105.1 V 38.5 H 108 V 38.5 H 111 V 38.5 H 113.9 V 38.5 H 116.9 V 38.5 H 119.9 V 38.5 H 122.8 V 38.5 H 125.8 V 38.5 H 128.7 V 38.5 H 131.7 V 38.5 H 134.7 V 38.5 H 137.6 V 38.5 H 140.6 V 38.5 H 143.5 V 38.5 H 146.5 V 38.5 H 149.4 V 38.5 H 152.4 V 38.5 H 155.4 V 38.5 H 158.3 V 48.7 H 161.3 V 48.7 H 164.2 V 48.7 H 167.2 V 48.7 H 170.2 V 48.7 H 173.1 V 48.7 H 176.1 V 48.7 H 179 V 48.7 H 182 V 48.7 H 184.9 V 48.7 H 187.9 V 48.7 H 190.9 V 48.7 H 193.8 V 48.7 H 196.8 V 48.7 H 199.7 V 48.7 H 202.7 V 48.7 H 205.6 V 48.7 H 208.6 V 48.7 H 211.6 V 48.7 H 214.5 V 48.7 H 217.5 V 48.7 H 220.4 V 48.7 H 223.4 V 48.7 H 226.4 V 48.7 H 229.3 V 48.7 H 232.3 V 48.7 H 235.2 V 48.7 H 238.2 V 48.7 H 241.1 V 48.7 H 244.1 V 48.7 H 247.1 V 48.7 H 250 V 48.7 H 253 V 48.7 H 255.9 V 48.7 H 258.9 V 48.7 H 261.8 V 48.7 H 264.8 V 48.7 H 267.8 V 48.7 H 270.7 V 48.7 H 273.7 V 48.7 H 276.6 V 48.7 H 279.6 V 48.7 H 282.6 V 48.7 H 285.5 V 48.7 H 288.5 V 48.7 H 291.4 V 48.7 H 294.4 V 48.7 H 297.3 V 48.7 H 300.3 V 48.7 H 303.3 V 48.7 H 306.2 V 48.7 H 309.2 V 48.7 H 312.1 V 48.7 H 315.1 V 48.7 H 318.1 V 48.7 H 321 V 69 H 324 V 69 H 326.9 V 69 H 329.9 V 69 H 332.8 V 69 H 335.8 V 69 H 338.8 V 69 H 341.7 V 69 H 344.7 V 69 H 347.6 V 69 H 350.6 V 69 H 353.5 V 69 H 356.5 V 69 H 359.5 V 69 H 362.4 V 69 H 365.4 V 69 H 368.3 V 69 H 371.3 V 69 H 374.3 V 69 H 377.2 V 69 H 380.2 V 69 H 383.1 V 69 H 386.1 V 69 H 389 V 69 H 392 V 69" fill="none" stroke="var(--tp-crit)" stroke-width="1.5" stroke-dasharray="4 3"/></svg></div></div>
+            <div class="m-sec"><div class="ph"><h3>Viagem</h3></div><div class="pb"><div class="odo"><span class="">0</span><span class="">3</span><span class="">1</span><span class="">7</span><span class="dec">4</span><u>km</u></div><div class="row"><span>Tempo dirigindo</span><span class="tp-leader"></span><b>4 h 27 min</b></div><div class="row"><span>Odômetro</span><span class="tp-leader"></span><b>184 302<span class="sep">,</span>6<u>km</u></b></div></div></div>
+          </div>
+          <div style="position:absolute;inset:auto 0 0 0;background:var(--tp-panel);border-top:1px solid var(--tp-line-strong)">
+            <div class="ph"><h3>Mais</h3><span class="act tp-label">Fechar</span></div>
+            <div style="height:52px;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--tp-line);font:500 15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em"><span class="mono" style="font-size:11px;color:var(--tp-dim)">05</span>Manutenção</div><div style="height:52px;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--tp-line);font:500 15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em"><span class="mono" style="font-size:11px;color:var(--tp-dim)">06</span>Histórico</div><div style="height:52px;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--tp-line);font:500 15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em"><span class="mono" style="font-size:11px;color:var(--tp-dim)">07</span>Configurações</div><div style="height:52px;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--tp-line);font:500 15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em"><span class="mono" style="font-size:11px;color:var(--tp-dim)">08</span>Diagnóstico</div>
+            <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font:500 15px var(--font-cond);text-transform:uppercase;letter-spacing:.06em">Modo DEMO<button class="btn">Ativar</button></div>
+          </div>
+        </div>
+        <nav class="m-nav"><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M3 16a9 9 0 0 1 18 0M12 16l4-5"/></svg><span>Painel</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 6h11v9H2zM13 9h4l3 3v3h-7M5.5 18.5a1.5 1.5 0 1 0 0-.01M16.5 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Caminhão</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M6 19a2 2 0 1 0 0-.01M18 5a2 2 0 1 0 0-.01M6 17V9a3 3 0 0 1 3-3h4M18 7v8a3 3 0 0 1-3 3h-4"/></svg><span>Viagem</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 5h16v10H2zM18 9h3v6h-3M6 18.5a1.5 1.5 0 1 0 0-.01M11 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Reboque</span></a><a class="act" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg><span>Mais</span></a></nav>
+      </div>
+      <div class="cap">Folha "Mais": Manutenção, Histórico, Configurações, Diagnóstico e Modo DEMO (linhas de 52 px).</div>
+    </div>
+  </div>
+
+  <h2>Celular · 844 × 390 (paisagem)</h2>
+  <div class="phone land">
+    <nav class="m-nav"><a class="act" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M3 16a9 9 0 0 1 18 0M12 16l4-5"/></svg><span>Painel</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 6h11v9H2zM13 9h4l3 3v3h-7M5.5 18.5a1.5 1.5 0 1 0 0-.01M16.5 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Caminhão</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M6 19a2 2 0 1 0 0-.01M18 5a2 2 0 1 0 0-.01M6 17V9a3 3 0 0 1 3-3h4M18 7v8a3 3 0 0 1-3 3h-4"/></svg><span>Viagem</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M2 5h16v10H2zM18 9h3v6h-3M6 18.5a1.5 1.5 0 1 0 0-.01M11 18.5a1.5 1.5 0 1 0 0-.01"/></svg><span>Reboque</span></a><a class="" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"><path d="M5 12h.01M12 12h.01M19 12h.01"/></svg><span>Mais</span></a></nav>
+    <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+      <div class="m-top-bar"><span class="brand2">TP<b>·</b></span><span class="badge" style="--c:var(--tp-ok)"><span class="led"></span>Ao vivo</span><span class="clock">TER 14<span class="sep">:</span>32</span></div>
+      <div class="land-grid" style="flex:1">
+        <div class="gpair"><svg viewBox="0 0 240 240" class="gauge" role="img" aria-label="Velocidade 84 km/h, limite 80"><path d="M 184.5 30.28 A 110.5 110.5 0 0 1 210.52 183.38" stroke="var(--tp-warn)" stroke-width="5" fill="none"/><path d="M 34.81 179.65 A 104 104 0 1 1 205.19 179.65" stroke="var(--tp-line-strong)" stroke-width="1" fill="none"/><line x1="34.81" y1="179.65" x2="43.82" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="54.47" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">0</text><line x1="28.05" y1="168.6" x2="32.47" y2="166.26" stroke="var(--tp-dim)" stroke-width="1"/><line x1="22.72" y1="156.79" x2="27.4" y2="155.02" stroke="var(--tp-dim)" stroke-width="1"/><line x1="18.9" y1="144.4" x2="23.76" y2="143.23" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.65" y1="131.64" x2="21.62" y2="131.08" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.01" y1="118.7" x2="27.01" y2="118.84" stroke="var(--tp-text)" stroke-width="1.5"/><text x="40.01" y="119" class="g-num" text-anchor="middle" dominant-baseline="central">20</text><line x1="16.98" y1="105.78" x2="21.93" y2="106.47" stroke="var(--tp-dim)" stroke-width="1"/><line x1="19.54" y1="93.08" x2="24.37" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="23.67" y1="80.8" x2="28.3" y2="82.69" stroke="var(--tp-dim)" stroke-width="1"/><line x1="29.29" y1="69.13" x2="33.65" y2="71.57" stroke="var(--tp-dim)" stroke-width="1"/><line x1="36.32" y1="58.24" x2="45.17" y2="64.77" stroke="var(--tp-text)" stroke-width="1.5"/><text x="55.63" y="72.49" class="g-num" text-anchor="middle" dominant-baseline="central">40</text><line x1="44.65" y1="48.32" x2="48.27" y2="51.76" stroke="var(--tp-dim)" stroke-width="1"/><line x1="54.15" y1="39.5" x2="57.31" y2="43.37" stroke="var(--tp-dim)" stroke-width="1"/><line x1="64.67" y1="31.94" x2="67.33" y2="36.17" stroke="var(--tp-dim)" stroke-width="1"/><line x1="76.05" y1="25.74" x2="78.16" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="88.11" y1="21.01" x2="91.48" y2="31.48" stroke="var(--tp-text)" stroke-width="1.5"/><text x="95.47" y="43.85" class="g-num" text-anchor="middle" dominant-baseline="central">60</text><line x1="100.67" y1="17.81" x2="101.59" y2="22.73" stroke="var(--tp-dim)" stroke-width="1"/><line x1="113.52" y1="16.2" x2="113.83" y2="21.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="126.48" y1="16.2" x2="126.17" y2="21.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="139.33" y1="17.81" x2="138.41" y2="22.73" stroke="var(--tp-dim)" stroke-width="1"/><line x1="151.89" y1="21.01" x2="148.52" y2="31.48" stroke="var(--tp-text)" stroke-width="1.5"/><text x="144.53" y="43.85" class="g-num" text-anchor="middle" dominant-baseline="central">80</text><line x1="163.95" y1="25.74" x2="161.84" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="175.33" y1="31.94" x2="172.67" y2="36.17" stroke="var(--tp-dim)" stroke-width="1"/><line x1="185.85" y1="39.5" x2="182.69" y2="43.37" stroke="var(--tp-dim)" stroke-width="1"/><line x1="195.35" y1="48.32" x2="191.73" y2="51.76" stroke="var(--tp-dim)" stroke-width="1"/><line x1="203.68" y1="58.24" x2="194.83" y2="64.77" stroke="var(--tp-text)" stroke-width="1.5"/><text x="184.37" y="72.49" class="g-num" text-anchor="middle" dominant-baseline="central">100</text><line x1="210.71" y1="69.13" x2="206.35" y2="71.57" stroke="var(--tp-dim)" stroke-width="1"/><line x1="216.33" y1="80.8" x2="211.7" y2="82.69" stroke="var(--tp-dim)" stroke-width="1"/><line x1="220.46" y1="93.08" x2="215.63" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.02" y1="105.78" x2="218.07" y2="106.47" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.99" y1="118.7" x2="212.99" y2="118.84" stroke="var(--tp-text)" stroke-width="1.5"/><text x="199.99" y="119" class="g-num" text-anchor="middle" dominant-baseline="central">120</text><line x1="223.35" y1="131.64" x2="218.38" y2="131.08" stroke="var(--tp-dim)" stroke-width="1"/><line x1="221.1" y1="144.4" x2="216.24" y2="143.23" stroke="var(--tp-dim)" stroke-width="1"/><line x1="217.28" y1="156.79" x2="212.6" y2="155.02" stroke="var(--tp-dim)" stroke-width="1"/><line x1="211.95" y1="168.6" x2="207.53" y2="166.26" stroke="var(--tp-dim)" stroke-width="1"/><line x1="205.19" y1="179.65" x2="196.18" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="185.53" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">140</text><path d="M 46.28 171.62 A 90 90 0 1 1 193.72 171.62" stroke="var(--tp-line)" stroke-width="3" fill="none"/><path d="M 46.28 171.62 A 90 90 0 0 1 158.04 38.43" stroke="var(--tp-accent)" stroke-width="3" fill="none"/><g data-testid="gauge-marker"><path d="M 150 10.02 L 159.84 13.19 L 151.89 21.01 Z" fill="var(--tp-crit)"/><line x1="151.89" y1="21.01" x2="148.52" y2="31.48" stroke="var(--tp-crit)" stroke-width="1.5"/></g><rect x="72" y="150" width="96" height="44" fill="var(--tp-inset)" stroke="var(--tp-line)"/><text x="120" y="173" class="g-lcd" style="font-size:34px" text-anchor="middle" dominant-baseline="central">84</text><text x="120" y="208" class="g-unit" text-anchor="middle">KM/H</text><text x="120" y="222" class="g-sub" text-anchor="middle">LIMITE 80 · ACIMA</text><line x1="114.08" y1="132.69" x2="162.26" y2="29.37" stroke="var(--tp-accent)" stroke-width="2.5"/><circle cx="120" cy="120" r="7" fill="var(--tp-panel-2)" stroke="var(--tp-line-strong)"/><circle cx="120" cy="120" r="2" fill="var(--tp-accent)"/></svg><svg viewBox="0 0 240 240" class="gauge" role="img" aria-label="Rotação 1430 rpm"><path d="M 229.75 107.17 A 110.5 110.5 0 0 1 210.52 183.38" stroke="var(--tp-crit)" stroke-width="5" fill="none"/><path d="M 34.81 179.65 A 104 104 0 1 1 205.19 179.65" stroke="var(--tp-line-strong)" stroke-width="1" fill="none"/><line x1="34.81" y1="179.65" x2="43.82" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="54.47" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">0</text><line x1="27.06" y1="166.68" x2="31.53" y2="164.43" stroke="var(--tp-dim)" stroke-width="1"/><line x1="21.28" y1="152.71" x2="26.02" y2="151.14" stroke="var(--tp-dim)" stroke-width="1"/><line x1="17.58" y1="138.06" x2="22.5" y2="137.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.04" y1="123.02" x2="21.04" y2="122.88" stroke="var(--tp-dim)" stroke-width="1"/><line x1="16.7" y1="107.93" x2="27.63" y2="109.2" stroke="var(--tp-text)" stroke-width="1.5"/><text x="40.54" y="110.71" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="19.54" y1="93.08" x2="24.37" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="24.51" y1="78.81" x2="29.1" y2="80.79" stroke="var(--tp-dim)" stroke-width="1"/><line x1="31.48" y1="65.4" x2="35.74" y2="68.03" stroke="var(--tp-dim)" stroke-width="1"/><line x1="40.33" y1="53.15" x2="44.16" y2="56.36" stroke="var(--tp-dim)" stroke-width="1"/><line x1="50.86" y1="42.31" x2="58.17" y2="50.53" stroke="var(--tp-text)" stroke-width="1.5"/><text x="66.82" y="60.24" class="g-num" text-anchor="middle" dominant-baseline="central">1</text><line x1="62.85" y1="33.11" x2="65.6" y2="37.29" stroke="var(--tp-dim)" stroke-width="1"/><line x1="76.05" y1="25.74" x2="78.16" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="90.17" y1="20.37" x2="91.61" y2="25.16" stroke="var(--tp-dim)" stroke-width="1"/><line x1="104.93" y1="17.1" x2="105.65" y2="22.05" stroke="var(--tp-dim)" stroke-width="1"/><line x1="120" y1="16" x2="120" y2="27" stroke="var(--tp-text)" stroke-width="1.5"/><text x="120" y="40" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="135.07" y1="17.1" x2="134.35" y2="22.05" stroke="var(--tp-dim)" stroke-width="1"/><line x1="149.83" y1="20.37" x2="148.39" y2="25.16" stroke="var(--tp-dim)" stroke-width="1"/><line x1="163.95" y1="25.74" x2="161.84" y2="30.28" stroke="var(--tp-dim)" stroke-width="1"/><line x1="177.15" y1="33.11" x2="174.4" y2="37.29" stroke="var(--tp-dim)" stroke-width="1"/><line x1="189.14" y1="42.31" x2="181.83" y2="50.53" stroke="var(--tp-text)" stroke-width="1.5"/><text x="173.18" y="60.24" class="g-num" text-anchor="middle" dominant-baseline="central">2</text><line x1="199.67" y1="53.15" x2="195.84" y2="56.36" stroke="var(--tp-dim)" stroke-width="1"/><line x1="208.52" y1="65.4" x2="204.26" y2="68.03" stroke="var(--tp-dim)" stroke-width="1"/><line x1="215.49" y1="78.81" x2="210.9" y2="80.79" stroke="var(--tp-dim)" stroke-width="1"/><line x1="220.46" y1="93.08" x2="215.63" y2="94.38" stroke="var(--tp-dim)" stroke-width="1"/><line x1="223.3" y1="107.93" x2="212.37" y2="109.2" stroke="var(--tp-text)" stroke-width="1.5"/><text x="199.46" y="110.71" class="g-num" text-anchor="middle" dominant-baseline="central"></text><line x1="223.96" y1="123.02" x2="218.96" y2="122.88" stroke="var(--tp-dim)" stroke-width="1"/><line x1="222.42" y1="138.06" x2="217.5" y2="137.19" stroke="var(--tp-dim)" stroke-width="1"/><line x1="218.72" y1="152.71" x2="213.98" y2="151.14" stroke="var(--tp-dim)" stroke-width="1"/><line x1="212.94" y1="166.68" x2="208.47" y2="164.43" stroke="var(--tp-dim)" stroke-width="1"/><line x1="205.19" y1="179.65" x2="196.18" y2="173.34" stroke="var(--tp-text)" stroke-width="1.5"/><text x="185.53" y="165.89" class="g-num" text-anchor="middle" dominant-baseline="central">3</text><path d="M 46.28 171.62 A 90 90 0 1 1 193.72 171.62" stroke="var(--tp-line)" stroke-width="3" fill="none"/><path d="M 46.28 171.62 A 90 90 0 0 1 110.85 30.47" stroke="var(--tp-accent)" stroke-width="3" fill="none"/><rect x="72" y="150" width="96" height="44" fill="var(--tp-inset)" stroke="var(--tp-line)"/><text x="120" y="173" class="g-lcd" style="font-size:27px" text-anchor="middle" dominant-baseline="central">1430</text><text x="120" y="208" class="g-unit" text-anchor="middle">RPM</text><text x="120" y="222" class="g-sub" text-anchor="middle">×1000</text><line x1="121.42" y1="133.93" x2="109.84" y2="20.52" stroke="var(--tp-accent)" stroke-width="2.5"/><circle cx="120" cy="120" r="7" fill="var(--tp-panel-2)" stroke="var(--tp-line-strong)"/><circle cx="120" cy="120" r="2" fill="var(--tp-accent)"/></svg></div>
+        <div>
+          <div class="m-strip" style="grid-template-columns:repeat(6,1fr)"><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-blinkerLeft" data-state="on" role="img" aria-label="Pisca esq.: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M2 11 L10 4 V8 H21 V14 H10 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca esq.</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-hazard" data-state="off" role="img" aria-label="Alerta: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="2" stroke-linejoin="round"><path d="M12 2 L22.5 20 H1.5 Z"/><path d="M12 9 L17 17.5 H7 Z"/></g></svg><span>Alerta</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-blinkerRight" data-state="off" role="img" aria-label="Pisca dir.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><path d="M22 11 L14 4 V8 H3 V14 H14 V18 Z" fill="currentColor" stroke="none"/></svg><span>Pisca dir.</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-parking" data-state="on" role="img" aria-label="Posição: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.6" fill="none"><path d="M8 6a5 5 0 0 0 0 10"/><path d="M16 6a5 5 0 0 1 0 10"/><path d="M1 5h3.5M19.5 5H23M1 10h3.5M19.5 10H23M1 15h3.5M19.5 15H23"/></g></svg><span>Posição</span></div><div class="tt on" style="--c:var(--tp-ok)" data-testid="telltale-lowBeam" data-state="on" role="img" aria-label="Farol baixo: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><line x1="9" y1="5" x2="3" y2="8" stroke-linecap="round"/><line x1="9" y1="9" x2="3" y2="12" stroke-linecap="round"/><line x1="9" y1="13" x2="3" y2="16" stroke-linecap="round"/><line x1="9" y1="17" x2="3" y2="20" stroke-linecap="round"/></g></svg><span>Farol baixo</span></div><div class="tt off" style="--c:var(--tp-info)" data-testid="telltale-highBeam" data-state="off" role="img" aria-label="Farol alto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M14 4c4 0 7 3 7 7s-3 7-7 7c-1.5 0-2-3-2-7s.5-7 2-7z"/><path d="M9 5H2M9 9H2M9 13H2M9 17H2" stroke-linecap="round"/></g></svg><span>Farol alto</span></div><div class="tt off" style="--c:var(--tp-ok)" data-testid="telltale-auxFront" data-state="off" role="img" aria-label="Aux. diant.: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><path d="M10 5c4 0 7 3 7 6s-3 6-7 6c-1.3 0-1.7-2.5-1.7-6S8.7 5 10 5z"/><path d="M6 6 1 8M6 11 1 13M6 16 1 18" stroke-linecap="round"/><path d="M20 4v14" stroke-dasharray="2 2"/></g></svg><span>Aux. diant.</span></div><div class="tt off" style="--c:var(--tp-warn)" data-testid="telltale-auxRoof" data-state="off" role="img" aria-label="Aux. teto: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g stroke-width="1.7" fill="none"><rect x="3" y="13" width="18" height="6" rx="1.5"/><path d="M6 10V4M12 10V4M18 10V4" stroke-linecap="round"/></g></svg><span>Aux. teto</span></div><div class="tt off" style="--c:var(--tp-crit)" data-testid="telltale-brake" data-state="off" role="img" aria-label="Freio: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><circle cx="12" cy="11" r="6"/><path d="M5 4a10 10 0 0 0 0 14M19 4a10 10 0 0 1 0 14"/><path d="M12 7.5v4" stroke-linecap="round"/></g></svg><span>Freio</span></div><div class="tt off" style="--c:var(--tp-text)" data-testid="telltale-reverse" data-state="off" role="img" aria-label="Ré: desligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><rect x="4" y="4" width="16" height="14" rx="2"/><text x="12" y="15" font-size="10" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">R</text></g></svg><span>Ré</span></div><div class="tt nd" style="--c:var(--tp-warn)" data-testid="telltale-beacon" data-state="nd" role="img" aria-label="Giroflex: N/D">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M7 18v-5a5 5 0 0 1 10 0v5"/><path d="M4 19h16M12 2v3M4.5 5.5l2 2M19.5 5.5l-2 2M2 12h2.5M19.5 12H22" stroke-linecap="round"/></g></svg><span>Giroflex</span><b>N/D</b></div><div class="tt on" style="--c:var(--tp-info)" data-testid="telltale-dashboard" data-state="on" role="img" aria-label="Painel: ligado">
+    <svg viewBox="0 0 24 22" stroke="currentColor"><g fill="none" stroke-width="1.8"><path d="M3 16a9 9 0 0 1 18 0"/><path d="M12 16l4-5" stroke-linecap="round"/></g></svg><span>Painel</span><i>60%</i></div></div>
+          <div class="pb"><div class="seg" aria-label="Tanque 28%"><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit"></i><i class="lit mk"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px;margin-top:6px"><div class="row"><span>Marcha</span><span class="tp-leader"></span><b>12</b></div><div class="row"><span>Autonomia</span><span class="tp-leader"></span><b>412<u>km</u></b></div><div class="row"><span>Piloto</span><span class="tp-leader"></span><b>80<u>km/h</u></b></div><div class="row"><span>Água</span><span class="tp-leader"></span><b>88<u>°C</u></b></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cap">Paisagem: barra de navegação vira trilho lateral (só ícones); mostradores lado a lado + indicadores e combustível.</div>
+</div>
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-theme-btn]').forEach((b) => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.themeBtn;
+    document.querySelectorAll('[data-theme-btn]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+  }));
+  const demo = document.getElementById('demo-btn');
+  demo.addEventListener('click', () => {
+    const on = !document.body.classList.contains('show-demo');
+    document.body.classList.toggle('show-demo', on);
+    demo.setAttribute('aria-pressed', String(on));
+    const f = document.getElementById('src-field');
+    f.classList.toggle('demo', on); f.querySelector('b').textContent = on ? 'DEMO' : 'Ao vivo';
+    const m = document.getElementById('mode-btn'); m.textContent = on ? 'Sair do DEMO' : 'Modo DEMO'; m.classList.toggle('warn', on);
+  });
+</script>
+</body>
+</html>

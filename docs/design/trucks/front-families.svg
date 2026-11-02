@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 610" role="img" aria-label="Variações frontais por família de caminhão">
+  <title>TRUCKPULSE — folha de variações frontais por família</title>
+  <desc>Mesmo sistema de coordenadas do front-master.svg (300×410), reduzido a 60%. Mostra o que muda por família: altura do teto, para-brisa, para-sol, grade e assinatura dos faróis. Os faróis aqui são só GUIAS DE FORMA (sem data-lamp). Detalhes por submodelo no DESIGN-SPEC.md §8.</desc>
+  <style>
+    .t-paint{fill:var(--truck-paint,#c9ced6)}
+    .t-shade{fill:#000;opacity:.16}
+    .t-shade-2{fill:#000;opacity:.32}
+    .t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.38;stroke-width:1}
+    .t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}
+    .t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}
+    .t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}
+    .t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}
+    .t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}
+    .t-glass-hi{fill:#fff;opacity:.07}
+    .t-chassis{fill:var(--truck-chassis,#2a2b28)}
+    .t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-plate{fill:var(--truck-plate,#e9e6dc)}
+    .t-plate-eu{fill:var(--truck-plate-eu,#2a4fa0)}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}
+    .t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .t-lit-xenon{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}
+    .t-beam{fill:var(--lamp-xenon,#e8f0ff)}
+    .t-logo{fill:var(--truck-metal-lt,#c4c6c9);font:600 10px 'Barlow Condensed','Bahnschrift',sans-serif;letter-spacing:.32em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}
+    .tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}
+    .tp-beam{opacity:0;transition:opacity 200ms ease}
+    .tp-beam.on{opacity:1}
+  .ff-lbl{fill:var(--tp-text,#ebe7de);font:600 12px 'Barlow Condensed','Bahnschrift',sans-serif;letter-spacing:.08em}.ff-note{fill:var(--tp-muted,#a19c90);font:10px 'Barlow','Segoe UI',sans-serif}</style>
+  <defs>
+  <g id="ff-tire"><rect width="30" height="40" rx="5" class="t-rubber t-out"/><g stroke="#000" stroke-opacity=".75" stroke-width="1.8"><path d="M8 6V38M15 6V38M22 6V38"/></g></g>
+  <g id="ff-mirror"><line x1="34" y1="108" x2="16" y2="100" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="4"/><line x1="32" y1="178" x2="16" y2="184" stroke="var(--truck-plastic,#2b2c2a)" stroke-width="4"/><rect x="2" y="86" width="18" height="64" rx="3" class="t-plastic"/><rect x="5" y="90" width="12" height="56" rx="1.5" class="t-glass"/><rect x="3" y="156" width="16" height="30" rx="3" class="t-plastic"/></g>
+  <pattern id="ff-hex" width="9" height="15.6" patternUnits="userSpaceOnUse"><path d="M0 2.6 4.5 0 9 2.6 9 5.2 4.5 7.8 0 5.2Z M4.5 7.8V10.4M0 13 4.5 10.4 9 13" fill="none" stroke="var(--truck-plastic-2,#3a3b38)" stroke-width="1.2"/></pattern>
+  <!-- faróis por família. x = 0 é a borda externa -->
+  <g id="hl-scania"><path d="M0 4Q0 0 4 0H60Q66 0 66 6L62 24H4Q0 24 0 20Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><rect x="2" y="4" width="9" height="16" class="t-lens-amber"/><circle cx="24" cy="13" r="7" class="t-lit-xenon"/><circle cx="44" cy="13" r="7" class="t-metal-dk"/><rect x="14" y="1.5" width="46" height="2.6" class="t-lit-white"/></g>
+  <g id="hl-volvo"><path d="M0 4L60 0Q68 0 66 8L44 40H6Q0 40 0 34Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><path d="M6 6L58 3L58 7L10 10L10 34L6 34Z" class="t-lit-white"/><circle cx="22" cy="22" r="7" class="t-lit-xenon"/><circle cx="40" cy="14" r="5.5" class="t-metal-dk"/><rect x="14" y="31" width="20" height="6" class="t-lens-amber"/></g>
+  <g id="hl-daf"><path d="M0 0H58L70 22H4Q0 22 0 18Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><rect x="2" y="3" width="8" height="13" class="t-lens-amber"/><circle cx="22" cy="10" r="6" class="t-lit-xenon"/><circle cx="40" cy="10" r="6" class="t-metal-dk"/><path d="M8 17H62L63.5 19.5H8Z" class="t-lit-white"/></g>
+  <g id="hl-mb"><path d="M0 10Q30 -4 70 4V28Q70 32 66 32H4Q0 32 0 28Z" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><path d="M4 9Q30 -2 66 5V8.5Q30 1.5 4 12.5Z" class="t-lit-white"/><circle cx="24" cy="20" r="7" class="t-lit-xenon"/><circle cx="46" cy="20" r="7" class="t-metal-dk"/><rect x="2" y="16" width="8" height="12" class="t-lens-amber"/></g>
+  <g id="hl-vw"><rect width="70" height="26" rx="3" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><rect x="2" y="3" width="10" height="20" class="t-lens-amber"/><circle cx="26" cy="13" r="7" class="t-lit-xenon"/><circle cx="46" cy="13" r="7" class="t-metal-dk"/><rect x="58" y="4" width="8" height="18" class="t-lit-white"/></g>
+  <g id="hl-gen"><rect width="64" height="26" rx="5" class="t-lens-clear" stroke="var(--truck-metal-dk,#5d6166)"/><rect x="3" y="5" width="9" height="16" rx="1" class="t-lens-amber"/><circle cx="26" cy="13" r="7" class="t-lit-xenon"/><circle cx="46" cy="13" r="7" class="t-metal-dk"/></g>
+</defs>
+  <rect width="620" height="610" fill="var(--tp-bg,#121211)"/>
+  
+ <g transform="translate(20 20)" style="--truck-paint:#c9ced6" data-family="scania">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 72 L 34 74 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 72 L 34 74 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 72 L 266 74 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 72 L 266 74 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 60 Q 42 38 62 38 L 238 38 Q 258 38 260 60 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 58 Q 46 42 62 42 L 238 42 Q 254 42 256 58 L 256 64 L 44 64 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 60 L 47 58 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 60 L 253 58 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 82 L 248 82 Q 254 82 254 88 L 258 186 Q 258 194 250 194 L 50 194 Q 42 194 42 186 L 46 88 Q 46 82 52 82 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 83 L 106 83 L 80 193 L 46 193 Z" class="t-glass-hi"/>
+  <rect x="44" y="180" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="194" width="216" height="6" class="t-shade-2"/><path d="M 44 72 L 256 72 L 252 87 L 48 87 Z" class="t-plastic"/>
+  <rect x="64" y="206" width="172" height="86" class="t-plastic-2"/><rect x="66" y="208" width="168" height="14" class="t-plastic"/><text x="150" y="219" text-anchor="middle" class="t-logo">SCANIA</text>
+  <rect x="68" y="225" width="164" height="64" class="t-ink"/><rect x="66" y="230" width="168" height="4" class="t-paint"/><rect x="66" y="233" width="168" height="1" class="t-shade-2"/><rect x="66" y="240" width="168" height="4" class="t-paint"/><rect x="66" y="243" width="168" height="1" class="t-shade-2"/><rect x="66" y="250" width="168" height="4" class="t-paint"/><rect x="66" y="253" width="168" height="1" class="t-shade-2"/><rect x="66" y="260" width="168" height="4" class="t-paint"/><rect x="66" y="263" width="168" height="1" class="t-shade-2"/><rect x="66" y="270" width="168" height="4" class="t-paint"/><rect x="66" y="273" width="168" height="1" class="t-shade-2"/><rect x="66" y="280" width="168" height="4" class="t-paint"/><rect x="66" y="283" width="168" height="1" class="t-shade-2"/>
+  
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 296 L 276 296 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="296.5" x2="274" y2="296.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="104" y="316" width="92" height="22" class="t-ink"/><use href="#hl-scania" transform="translate(30 300)"/><use href="#hl-scania" transform="translate(270 300) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">SCANIA R / S</text>
+  <text x="0" y="276" class="ff-note">lamelas; faróis no para-choque</text>
+ </g>
+ <g transform="translate(220 20)" style="--truck-paint:#2c4a3e" data-family="volvo">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 64 L 34 66 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 64 L 34 66 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 64 L 266 66 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 64 L 266 66 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 52 Q 42 30 62 30 L 238 30 Q 258 30 260 52 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 50 Q 46 34 62 34 L 238 34 Q 254 34 256 50 L 256 56 L 44 56 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 52 L 47 50 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 52 L 253 50 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 74 L 248 74 Q 254 74 254 86 L 258 182 Q 258 190 250 190 L 50 190 Q 42 190 42 182 L 46 86 Q 46 74 52 74 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 75 L 106 75 L 80 189 L 46 189 Z" class="t-glass-hi"/>
+  <rect x="44" y="176" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="190" width="216" height="6" class="t-shade-2"/>
+  <path d="M 76 204 L 224 204 L 214 262 L 86 262 Z" class="t-ink"/><rect x="80" y="212" width="140" height="5" class="t-paint"/><rect x="80" y="216" width="140" height="1" class="t-shade-2"/><rect x="80" y="224" width="140" height="5" class="t-paint"/><rect x="80" y="228" width="140" height="1" class="t-shade-2"/><rect x="80" y="236" width="140" height="5" class="t-paint"/><rect x="80" y="240" width="140" height="1" class="t-shade-2"/><rect x="80" y="248" width="140" height="5" class="t-paint"/><rect x="80" y="252" width="140" height="1" class="t-shade-2"/>
+  <path d="M 92 258 L 204 206 L 210 212 L 98 264 Z" class="t-metal-lt"/><circle cx="150" cy="234" r="10" class="t-ink" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="3"/>
+  <text x="150" y="278" text-anchor="middle" class="t-logo">VOLVO</text>
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 290 L 276 290 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="290.5" x2="274" y2="290.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="96" y="300" width="108" height="22" rx="2" class="t-ink"/><use href="#hl-volvo" transform="translate(34 248)"/><use href="#hl-volvo" transform="translate(266 248) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">VOLVO FH4 / FH5</text>
+  <text x="0" y="276" class="ff-note">bumerangue alto; diagonal</text>
+ </g>
+ <g transform="translate(420 20)" style="--truck-paint:#1e4fa3" data-family="daf">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 68 L 34 70 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 68 L 34 70 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 68 L 266 70 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 68 L 266 70 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 56 Q 42 34 62 34 L 238 34 Q 258 34 260 56 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 54 Q 46 38 62 38 L 238 38 Q 254 38 256 54 L 256 60 L 44 60 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 56 L 47 54 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 56 L 253 54 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 78 L 248 78 Q 254 78 254 86 L 258 184 Q 258 192 250 192 L 50 192 Q 42 192 42 184 L 46 86 Q 46 78 52 78 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 79 L 106 79 L 80 191 L 46 191 Z" class="t-glass-hi"/>
+  <rect x="44" y="178" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="192" width="216" height="6" class="t-shade-2"/><path d="M 44 68 L 256 68 L 252 83 L 48 83 Z" class="t-plastic"/>
+  <path d="M 60 204 L 240 204 L 228 290 L 72 290 Z" class="t-ink"/><path d="M 60 216 L 240 216 L 228 290 L 72 290 Z" fill="url(#ff-hex)"/>
+  <rect x="60" y="204" width="180" height="12" class="t-metal-lt"/><text x="150" y="214" text-anchor="middle" class="t-logo" style="fill:var(--truck-ink,#0b0b0a)">DAF</text>
+  <path d="M 60 204 L 240 204 L 228 290 L 72 290 Z" class="t-seam"/>
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 296 L 276 296 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="296.5" x2="274" y2="296.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="104" y="318" width="92" height="20" class="t-ink"/><use href="#hl-daf" transform="translate(30 300)"/><use href="#hl-daf" transform="translate(270 300) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">DAF XF / XG</text>
+  <text x="0" y="276" class="ff-note">trapézio em colmeia</text>
+ </g>
+ <g transform="translate(20 320)" style="--truck-paint:#3b3f46" data-family="mb">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 66 L 34 68 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 66 L 34 68 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 66 L 266 68 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 66 L 266 68 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 54 Q 42 32 62 32 L 238 32 Q 258 32 260 54 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 52 Q 46 36 62 36 L 238 36 Q 254 36 256 52 L 256 58 L 44 58 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 54 L 47 52 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 54 L 253 52 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 76 L 248 76 Q 254 76 254 82 L 258 182 Q 258 190 250 190 L 50 190 Q 42 190 42 182 L 46 82 Q 46 76 52 76 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 77 L 106 77 L 80 189 L 46 189 Z" class="t-glass-hi"/>
+  <rect x="44" y="176" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="190" width="216" height="6" class="t-shade-2"/>
+  <rect x="58" y="204" width="184" height="80" rx="4" class="t-ink"/><rect x="60" y="220" width="180" height="9" class="t-metal"/><rect x="60" y="228" width="180" height="1" class="t-shade-2"/><rect x="60" y="240" width="180" height="9" class="t-metal"/><rect x="60" y="248" width="180" height="1" class="t-shade-2"/><rect x="60" y="260" width="180" height="9" class="t-metal"/><rect x="60" y="268" width="180" height="1" class="t-shade-2"/>
+  <circle cx="150" cy="244" r="18" class="t-paint" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="3"/><circle cx="150" cy="244" r="11" fill="none" stroke="var(--truck-metal,#8e9196)" stroke-width="2"/>
+  
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 292 L 276 292 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="292.5" x2="274" y2="292.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="104" y="318" width="92" height="20" class="t-ink"/><use href="#hl-mb" transform="translate(28 290)"/><use href="#hl-mb" transform="translate(272 290) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">MERCEDES ACTROS / MP4</text>
+  <text x="0" y="276" class="ff-note">3 barras largas; emblema</text>
+ </g>
+ <g transform="translate(220 320)" style="--truck-paint:#f2f2f0" data-family="vw">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 64 L 34 66 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 64 L 34 66 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 64 L 266 66 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 64 L 266 66 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 52 Q 42 30 62 30 L 238 30 Q 258 30 260 52 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 50 Q 46 34 62 34 L 238 34 Q 254 34 256 50 L 256 56 L 44 56 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 52 L 47 50 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 52 L 253 50 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 78 L 248 78 Q 254 78 254 84 L 258 184 Q 258 192 250 192 L 50 192 Q 42 192 42 184 L 46 84 Q 46 78 52 78 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 79 L 106 79 L 80 191 L 46 191 Z" class="t-glass-hi"/>
+  <rect x="44" y="178" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="192" width="216" height="6" class="t-shade-2"/><path d="M 44 66 L 256 66 L 252 81 L 48 81 Z" class="t-plastic"/>
+  <rect x="62" y="204" width="176" height="86" rx="2" class="t-ink"/><rect x="64" y="212" width="172" height="11" class="t-paint"/><rect x="64" y="222" width="172" height="1" class="t-shade-2"/><rect x="64" y="230" width="172" height="11" class="t-paint"/><rect x="64" y="240" width="172" height="1" class="t-shade-2"/><rect x="64" y="248" width="172" height="11" class="t-paint"/><rect x="64" y="258" width="172" height="1" class="t-shade-2"/><rect x="64" y="266" width="172" height="11" class="t-paint"/><rect x="64" y="276" width="172" height="1" class="t-shade-2"/>
+  <circle cx="150" cy="247" r="14" class="t-ink" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="3"/>
+  
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 296 L 276 296 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="296.5" x2="274" y2="296.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="96" y="314" width="108" height="24" class="t-ink"/><use href="#hl-vw" transform="translate(28 298)"/><use href="#hl-vw" transform="translate(272 298) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">VW METEOR</text>
+  <text x="0" y="276" class="ff-note">barras largas; faróis retos</text>
+ </g>
+ <g transform="translate(420 320)" style="--truck-paint:#6b7280" data-family="gen">
+  <rect x="-6" y="-6" width="192" height="292" fill="none" stroke="var(--tp-line,#2e2d29)"/>
+  <g transform="scale(.6)">
+   <line x1="0" y1="400" x2="300" y2="400" class="t-ground"/>
+   <use href="#ff-mirror"/><use href="#ff-mirror" transform="translate(300 0) scale(-1 1)"/>
+   
+  <path d="M 32 200 L 40 76 L 34 78 L 26 200 Z" class="t-paint"/><path d="M 32 200 L 40 76 L 34 78 L 26 200 Z" class="t-shade-2"/>
+  <path d="M 268 200 L 260 76 L 266 78 L 274 200 Z" class="t-paint"/><path d="M 268 200 L 260 76 L 266 78 L 274 200 Z" class="t-shade-2"/>
+  <path d="M 32 290 L 32 200 L 40 64 Q 42 42 62 42 L 238 42 Q 258 42 260 64 L 268 200 L 268 290 Z" class="t-paint"/>
+  <path d="M 44 62 Q 46 46 62 46 L 238 46 Q 254 46 256 62 L 256 68 L 44 68 Z" class="t-hi"/>
+  <path d="M 32 290 L 32 200 L 40 64 L 47 62 L 41 200 L 41 290 Z" class="t-shade"/>
+  <path d="M 268 290 L 268 200 L 260 64 L 253 62 L 259 200 L 259 290 Z" class="t-shade"/>
+  <line x1="34" y1="199" x2="266" y2="199" class="t-seam-hi"/><line x1="34" y1="200.5" x2="266" y2="200.5" class="t-seam"/>
+  <path d="M 52 86 L 248 86 Q 254 86 254 94 L 258 186 Q 258 194 250 194 L 50 194 Q 42 194 42 186 L 46 94 Q 46 86 52 86 Z" class="t-glass" stroke="#000" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M 70 87 L 106 87 L 80 193 L 46 193 Z" class="t-glass-hi"/>
+  <rect x="44" y="180" width="212" height="13" class="t-ink" opacity=".35"/>
+  <rect x="42" y="194" width="216" height="6" class="t-shade-2"/>
+  <rect x="68" y="208" width="164" height="82" rx="2" class="t-ink"/><rect x="70" y="218" width="160" height="4" class="t-paint"/><rect x="70" y="221" width="160" height="1" class="t-shade-2"/><rect x="70" y="232" width="160" height="4" class="t-paint"/><rect x="70" y="235" width="160" height="1" class="t-shade-2"/><rect x="70" y="246" width="160" height="4" class="t-paint"/><rect x="70" y="249" width="160" height="1" class="t-shade-2"/><rect x="70" y="260" width="160" height="4" class="t-paint"/><rect x="70" y="263" width="160" height="1" class="t-shade-2"/><rect x="70" y="274" width="160" height="4" class="t-paint"/><rect x="70" y="277" width="160" height="1" class="t-shade-2"/>
+  
+  <rect x="67" y="368" width="166" height="8" class="t-chassis"/>
+  <use href="#ff-tire" transform="translate(37 360)"/><use href="#ff-tire" transform="translate(233 360)"/>
+  <path d="M 24 296 L 276 296 L 276 352 Q 276 362 266 362 L 34 362 Q 24 362 24 352 Z" class="t-plastic-2"/>
+  <line x1="26" y1="296.5" x2="274" y2="296.5" class="t-seam-hi"/>
+  <rect x="30" y="361" width="240" height="6" class="t-plastic"/>
+  <rect x="122" y="342" width="56" height="12" rx="1" class="t-plate"/><rect x="122" y="342" width="6" height="12" class="t-plate-eu"/><rect x="104" y="318" width="92" height="20" class="t-ink"/><use href="#hl-gen" transform="translate(30 300)"/><use href="#hl-gen" transform="translate(270 300) scale(-1 1)"/>
+  </g>
+  <text x="0" y="262" class="ff-lbl">GENÉRICO</text>
+  <text x="0" y="276" class="ff-note">neutro, sem marca</text>
+ </g>
+</svg>

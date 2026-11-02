@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -14 1440 454" data-testid="trailer-side" data-type="lowbed" role="img" aria-label="Reboque Prancha rebaixada (lowbed) com escavadeira — vista lateral">
+  <title>TRUCKPULSE — reboque: Prancha rebaixada (lowbed) com escavadeira</title>
+  <desc>Referência de design. Escala 100 px = 1 m; frente do reboque à DIREITA em x = 1400, traseira em x = 40 (13,6 m).
+    x = 1400 − 100·m, y = 400 − 100·h. Piso h 1,45 (y 255); pino-rei a 1,25 m da frente (x 1275).
+    Mapeamento SDK sugerido: body_type 'lowloader' | id contém lowbed, lowloader, low_loader, overweight + cargo de máquina (excavator, dozer).
+    Luzes com as mesmas classes do cavalo (tp-lamp / on): side-marker, tail, brake, blinker-left-rear, reverse.
+    Estado de exemplo: lanternas e marcadores laterais ACESOS.</desc>
+  <style>
+    .t-shade{fill:#000;opacity:.14}.t-shade-2{fill:#000;opacity:.3}.t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.35;stroke-width:1}.t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}.t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}.t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}.t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}.t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}.t-chassis{fill:var(--truck-chassis,#2a2b28)}.t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}.t-lens-red{fill:var(--lens-red,#3e1311)}.t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}.t-lit-red{fill:var(--lamp-red,#ff2b1c)}.t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .tr-body{fill:var(--trailer-body,#d7dbe0)}.tr-reefer{fill:var(--trailer-reefer,#eceeef)}.tr-curtain{fill:var(--trailer-curtain,#3a5a7c)}
+    .tr-alu{fill:var(--trailer-alu,#aeb3b8)}.tr-tape{fill:none;stroke:var(--trailer-tape,#e3b000);stroke-width:3;stroke-dasharray:28 18}
+    .c-tank{fill:var(--cargo-tank,#b7bec8)}.c-container{fill:var(--cargo-container,#7d3a2c)}.c-wood{fill:var(--cargo-wood,#6f4c2c)}
+    .c-wood-end{fill:var(--cargo-wood-end,#c9a46a)}.c-machine{fill:var(--cargo-machine,#d9a21b)}.c-crate{fill:var(--cargo-crate,#a07c4f)}
+    .c-strap{fill:none;stroke:var(--cargo-strap,#c9a227);stroke-width:2.5}.c-adr{fill:#f07f12}.c-deck{fill:var(--cargo-deck,#5b4632)}
+    .c-tx{fill:#fff;opacity:.8;font:600 14px 'B612 Mono',Consolas,monospace;letter-spacing:.06em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}.tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}.tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+  </style>
+  <defs>
+    <g id="tr-wheel">
+      <circle r="50" class="t-rubber t-out"/>
+      <circle r="49.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="37" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="29" class="t-metal-dk"/><circle r="27.5" class="t-metal-lt"/><circle r="23" class="t-metal" />
+      <circle cx="19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="-19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="-11.46" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="15.78" cy="-11.46" r="2.6" class="t-rubber"/>
+      <circle r="13.5" class="t-metal-lt"/><circle cx="9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="0.00" cy="10.50" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="-3.24" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="-0.00" cy="-10.50" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="9.99" cy="-3.24" r="1.4" class="t-metal-dk"/>
+      <circle r="6.5" class="t-metal-dk"/><circle r="3" class="t-metal-lt"/>
+      <path d="M -22 -13 A 26 26 0 0 1 -6 -25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2"/>
+    </g>
+    <pattern id="tr-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0 8 8M8 0 0 8" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="1" fill="none"/></pattern>
+  </defs>
+  <line x1="0" y1="400" x2="1440" y2="400" class="t-ground"/>
+  
+      <g data-part="trailer-chassis">
+        <path d="M 1390 255 L 1080 255 L 1030 315 L 380 315 L 360 290 L 40 290 L 40 312 L 350 312 L 370 345 L 1040 345 L 1090 285 L 1390 285 Z" class="t-chassis t-out"/>
+        <rect x="380" y="315" width="650" height="9" class="c-deck"/><line x1="380" y1="316" x2="380" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="402" y1="316" x2="402" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="424" y1="316" x2="424" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="446" y1="316" x2="446" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="468" y1="316" x2="468" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="490" y1="316" x2="490" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="512" y1="316" x2="512" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="534" y1="316" x2="534" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="556" y1="316" x2="556" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="578" y1="316" x2="578" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="600" y1="316" x2="600" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="622" y1="316" x2="622" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="644" y1="316" x2="644" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="666" y1="316" x2="666" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="688" y1="316" x2="688" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="710" y1="316" x2="710" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="732" y1="316" x2="732" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="754" y1="316" x2="754" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="776" y1="316" x2="776" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="798" y1="316" x2="798" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="820" y1="316" x2="820" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="842" y1="316" x2="842" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="864" y1="316" x2="864" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="886" y1="316" x2="886" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="908" y1="316" x2="908" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="930" y1="316" x2="930" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="952" y1="316" x2="952" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="974" y1="316" x2="974" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="996" y1="316" x2="996" y2="324" class="t-seam" stroke-opacity=".4"/><line x1="1018" y1="316" x2="1018" y2="324" class="t-seam" stroke-opacity=".4"/>
+        <rect x="40" y="286" width="320" height="5" class="t-metal-dk"/>
+      </g>
+      <rect x="1230" y="268" width="100" height="4" class="t-metal-dk"/><rect x="1272" y="272" width="6" height="8" class="t-metal"/><g data-part="landing-gear">
+    <rect x="1154" y="285" width="12" height="45" class="t-metal-dk"/>
+    <rect x="1157" y="330" width="6" height="42" class="t-metal"/>
+    <rect x="1149" y="372" width="22" height="6" class="t-metal-dk"/>
+    <rect x="1166" y="296" width="10" height="12" class="t-plastic"/>
+    <path d="M 1176 302 H 1190 V 318" fill="none" stroke="var(--truck-metal,#8e9196)" stroke-width="2"/>
+  </g>
+      <g data-part="ramps">
+        <path d="M 58 290 L 40 290 L 26 150 L 44 150 Z" class="t-metal-dk"/>
+        <line x1="32" y1="170" x2="32" y2="170" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/><line x1="34.5" y1="195" x2="34.5" y2="195" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/><line x1="37" y1="220" x2="37" y2="220" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/><line x1="39.5" y1="245" x2="39.5" y2="245" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/><line x1="42" y1="270" x2="42" y2="270" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/>
+      </g>
+      <g data-part="cargo">
+        <!-- esteiras -->
+        <rect x="540" y="246" width="440" height="69" rx="34" class="t-rubber"/>
+        <rect x="540" y="246" width="440" height="69" rx="34" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="3" stroke-dasharray="6 5"/>
+        <circle cx="575" cy="280" r="24" class="t-metal-dk"/><circle cx="575" cy="280" r="9" class="t-metal"/>
+        <circle cx="945" cy="280" r="24" class="t-metal-dk"/><circle cx="945" cy="280" r="9" class="t-metal"/>
+        <circle cx="600" cy="296" r="9" class="t-metal-dk"/><circle cx="646" cy="296" r="9" class="t-metal-dk"/><circle cx="692" cy="296" r="9" class="t-metal-dk"/><circle cx="738" cy="296" r="9" class="t-metal-dk"/><circle cx="784" cy="296" r="9" class="t-metal-dk"/><circle cx="830" cy="296" r="9" class="t-metal-dk"/><circle cx="876" cy="296" r="9" class="t-metal-dk"/>
+        <rect x="600" y="248" width="320" height="10" class="t-plastic-2"/>
+        <!-- lança, braço e caçamba (posição de transporte) -->
+        <path d="M 646 206 L 680 188 L 588 30 L 556 48 Z" class="c-machine"/>
+        <path d="M 646 206 L 680 188 L 588 30 L 556 48 Z" class="t-seam"/>
+        <path d="M 560 34 L 592 48 L 512 268 L 480 258 Z" class="c-machine"/>
+        <path d="M 560 34 L 592 48 L 512 268 L 480 258 Z" class="t-shade"/>
+        <line x1="700" y1="214" x2="618" y2="104" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="7"/>
+        <line x1="700" y1="214" x2="618" y2="104" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+        <line x1="616" y1="58" x2="548" y2="150" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="6"/>
+        <path d="M 438 256 L 522 256 L 512 314 L 452 314 Z" class="c-machine"/>
+        <path d="M 438 256 L 522 256 L 512 314 L 452 314 Z" class="t-shade-2"/>
+        <rect x="456" y="312" width="8" height="4" class="t-metal-dk"/><rect x="474" y="312" width="8" height="4" class="t-metal-dk"/><rect x="492" y="312" width="8" height="4" class="t-metal-dk"/>
+        <!-- giro + casa -->
+        <rect x="690" y="232" width="170" height="14" class="t-chassis"/>
+        <path d="M 620 152 L 930 152 Q 984 152 984 196 L 984 232 L 620 232 Z" class="c-machine"/>
+        <path d="M 900 152 Q 984 152 984 196 L 984 232 L 900 232 Z" class="t-shade"/>
+        <rect x="620" y="210" width="364" height="22" class="t-shade"/>
+        <rect x="760" y="164" width="28" height="4" class="t-ink" opacity=".45"/><rect x="800" y="164" width="28" height="4" class="t-ink" opacity=".45"/><rect x="840" y="164" width="28" height="4" class="t-ink" opacity=".45"/><rect x="880" y="164" width="28" height="4" class="t-ink" opacity=".45"/>
+        <rect x="904" y="128" width="8" height="24" class="t-ink"/>
+        <path d="M 760 152 V 140 H 960 V 152" fill="none" stroke="var(--truck-ink,#0b0b0a)" stroke-width="2"/>
+        <!-- cabine do operador -->
+        <path d="M 628 152 L 628 56 Q 628 46 638 46 L 712 46 Q 724 46 726 58 L 732 152 Z" class="c-machine"/>
+        <path d="M 640 60 L 712 60 L 718 140 L 640 140 Z" class="t-glass"/>
+        <path d="M 650 60 L 668 60 L 652 140 L 640 140 Z" fill="#fff" opacity=".08"/>
+        <!-- correntes de amarração -->
+        <path d="M 546 300 L 500 316 M 975 300 L 1022 316 M 620 232 L 560 316 M 960 232 L 1000 316" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="2.5" stroke-dasharray="4 2" fill="none"/>
+      </g>
+      <g data-testid="trailer-axle-0">
+      <ellipse cx="300" cy="400" rx="36.800000000000004" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="250" y="312" width="12" height="16" class="t-chassis t-out"/><line x1="256" y1="324" x2="300" y2="360" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="316" y="312" width="22" height="26" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(300 360) scale(0.8)"/>
+      <path d="M 252 354 A 48 48 0 0 1 348 354 L 343 354 A 43 43 0 0 0 257 354 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-1">
+      <ellipse cx="200" cy="400" rx="36.800000000000004" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="150" y="312" width="12" height="16" class="t-chassis t-out"/><line x1="156" y1="324" x2="200" y2="360" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="216" y="312" width="22" height="26" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(200 360) scale(0.8)"/>
+      <path d="M 152 354 A 48 48 0 0 1 248 354 L 243 354 A 43 43 0 0 0 157 354 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-2">
+      <ellipse cx="100" cy="400" rx="36.800000000000004" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="50" y="312" width="12" height="16" class="t-chassis t-out"/><line x1="56" y1="324" x2="100" y2="360" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="116" y="312" width="22" height="26" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(100 360) scale(0.8)"/>
+      <path d="M 52 354 A 48 48 0 0 1 148 354 L 143 354 A 43 43 0 0 0 57 354 Z" class="t-plastic"/>
+    </g><rect x="936" y="330" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="936" y="330" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="696" y="330" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="696" y="330" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="456" y="330" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="456" y="330" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="1246" y="262" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><g data-part="tail">
+    <rect x="20" y="292" width="14" height="32" rx="1" class="t-plastic"/>
+    <rect x="22" y="294" width="10" height="6" class="t-lens-amber"/><rect x="22" y="294" width="10" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="22" y="301" width="10" height="6" class="t-lens-red"/><rect x="22" y="301" width="10" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="22" y="308" width="10" height="6" class="t-lens-red"/><rect x="22" y="308" width="10" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="22" y="315" width="10" height="6" class="t-lens-clear"/><rect x="22" y="315" width="10" height="6" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+    
+  </g>
+  <g data-part="underrun"><rect x="36" y="292" width="5" height="54" class="t-metal-dk"/><rect x="20" y="338" width="22" height="12" class="t-metal-dk"/></g>
+</svg>

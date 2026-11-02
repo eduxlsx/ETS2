@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -14 1440 454" data-testid="trailer-side" data-type="container" role="img" aria-label="Reboque Porta-contêiner (contêiner 40') — vista lateral">
+  <title>TRUCKPULSE — reboque: Porta-contêiner (contêiner 40')</title>
+  <desc>Referência de design. Escala 100 px = 1 m; frente do reboque à DIREITA em x = 1400, traseira em x = 40 (13,6 m).
+    x = 1400 − 100·m, y = 400 − 100·h. Piso h 1,45 (y 255); pino-rei a 1,25 m da frente (x 1275).
+    Mapeamento SDK sugerido: body_type 'container' | id contém container, cont_ , 40ft, 20ft.
+    Luzes com as mesmas classes do cavalo (tp-lamp / on): side-marker, tail, brake, blinker-left-rear, reverse.
+    Estado de exemplo: lanternas e marcadores laterais ACESOS.</desc>
+  <style>
+    .t-shade{fill:#000;opacity:.14}.t-shade-2{fill:#000;opacity:.3}.t-hi{fill:#fff;opacity:.13}
+    .t-seam{fill:none;stroke:#000;stroke-opacity:.35;stroke-width:1}.t-seam-hi{fill:none;stroke:#fff;stroke-opacity:.2;stroke-width:1}
+    .t-plastic{fill:var(--truck-plastic,#2b2c2a)}.t-plastic-2{fill:var(--truck-plastic-2,#3a3b38)}.t-rubber{fill:var(--truck-rubber,#1b1b19)}
+    .t-metal{fill:var(--truck-metal,#8e9196)}.t-metal-dk{fill:var(--truck-metal-dk,#5d6166)}.t-metal-lt{fill:var(--truck-metal-lt,#c4c6c9)}
+    .t-glass{fill:var(--truck-glass,#1c2832)}.t-chassis{fill:var(--truck-chassis,#2a2b28)}.t-ink{fill:var(--truck-ink,#0b0b0a)}
+    .t-out{stroke:var(--truck-outline,#4a4944);stroke-width:1;paint-order:stroke}
+    .t-ground{stroke:var(--tp-line-strong,#45433d);stroke-width:1}
+    .t-lens-amber{fill:var(--lens-amber,#4a3110)}.t-lens-red{fill:var(--lens-red,#3e1311)}.t-lens-clear{fill:var(--lens-clear,#30353a)}
+    .t-lit-amber{fill:var(--lamp-amber,#ffa21a)}.t-lit-red{fill:var(--lamp-red,#ff2b1c)}.t-lit-white{fill:var(--lamp-white,#f4f1e6)}
+    .tr-body{fill:var(--trailer-body,#d7dbe0)}.tr-reefer{fill:var(--trailer-reefer,#eceeef)}.tr-curtain{fill:var(--trailer-curtain,#3a5a7c)}
+    .tr-alu{fill:var(--trailer-alu,#aeb3b8)}.tr-tape{fill:none;stroke:var(--trailer-tape,#e3b000);stroke-width:3;stroke-dasharray:28 18}
+    .c-tank{fill:var(--cargo-tank,#b7bec8)}.c-container{fill:var(--cargo-container,#7d3a2c)}.c-wood{fill:var(--cargo-wood,#6f4c2c)}
+    .c-wood-end{fill:var(--cargo-wood-end,#c9a46a)}.c-machine{fill:var(--cargo-machine,#d9a21b)}.c-crate{fill:var(--cargo-crate,#a07c4f)}
+    .c-strap{fill:none;stroke:var(--cargo-strap,#c9a227);stroke-width:2.5}.c-adr{fill:#f07f12}.c-deck{fill:var(--cargo-deck,#5b4632)}
+    .c-tx{fill:#fff;opacity:.8;font:600 14px 'B612 Mono',Consolas,monospace;letter-spacing:.06em}
+    .tp-lamp{opacity:.12;transition:opacity 120ms linear}.tp-lamp.on{opacity:1}
+    .tp-lamp.on.t-lit-amber{filter:drop-shadow(0 0 3px var(--lamp-amber,#ffa21a))}.tp-lamp.on.t-lit-red{filter:drop-shadow(0 0 3px var(--lamp-red,#ff2b1c))}
+  </style>
+  <defs>
+    <g id="tr-wheel">
+      <circle r="50" class="t-rubber t-out"/>
+      <circle r="49.2" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="2.4" stroke-dasharray="3.4 2.2"/>
+      <circle r="37" fill="none" stroke="#000" stroke-opacity=".5"/>
+      <circle r="29" class="t-metal-dk"/><circle r="27.5" class="t-metal-lt"/><circle r="23" class="t-metal" />
+      <circle cx="19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="18.55" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="11.46" r="2.6" class="t-rubber"/><circle cx="-19.50" cy="0.00" r="2.6" class="t-rubber"/><circle cx="-15.78" cy="-11.46" r="2.6" class="t-rubber"/><circle cx="-6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="6.03" cy="-18.55" r="2.6" class="t-rubber"/><circle cx="15.78" cy="-11.46" r="2.6" class="t-rubber"/>
+      <circle r="13.5" class="t-metal-lt"/><circle cx="9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="0.00" cy="10.50" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="8.49" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="3.24" r="1.4" class="t-metal-dk"/><circle cx="-9.99" cy="-3.24" r="1.4" class="t-metal-dk"/><circle cx="-6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="-0.00" cy="-10.50" r="1.4" class="t-metal-dk"/><circle cx="6.17" cy="-8.49" r="1.4" class="t-metal-dk"/><circle cx="9.99" cy="-3.24" r="1.4" class="t-metal-dk"/>
+      <circle r="6.5" class="t-metal-dk"/><circle r="3" class="t-metal-lt"/>
+      <path d="M -22 -13 A 26 26 0 0 1 -6 -25" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2"/>
+    </g>
+    <pattern id="tr-mesh" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0 8 8M8 0 0 8" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="1" fill="none"/></pattern>
+  </defs>
+  <line x1="0" y1="400" x2="1440" y2="400" class="t-ground"/>
+  
+      <g data-part="trailer-chassis">
+        <path d="M 1390 255 L 45 255 L 45 283 L 520 283 L 560 296 L 1060 296 L 1100 268 L 1390 268 Z" class="t-chassis t-out"/>
+        <rect x="1334" y="250" width="12" height="6" class="t-metal"/><rect x="734" y="250" width="12" height="6" class="t-metal"/><rect x="115" y="250" width="12" height="6" class="t-metal"/>
+      </g>
+      <rect x="1230" y="268" width="100" height="4" class="t-metal-dk"/><rect x="1272" y="272" width="6" height="8" class="t-metal"/><g data-part="landing-gear">
+    <rect x="1154" y="268" width="12" height="62" class="t-metal-dk"/>
+    <rect x="1157" y="330" width="6" height="42" class="t-metal"/>
+    <rect x="1149" y="372" width="22" height="6" class="t-metal-dk"/>
+    <rect x="1166" y="296" width="10" height="12" class="t-plastic"/>
+    <path d="M 1176 302 H 1190 V 318" fill="none" stroke="var(--truck-metal,#8e9196)" stroke-width="2"/>
+  </g>
+      <g data-part="cargo">
+        <rect x="121" y="-4" width="1219" height="259" class="c-container"/>
+        <rect x="136" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="162" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="188" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="214" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="240" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="266" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="292" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="318" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="344" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="370" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="396" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="422" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="448" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="474" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="500" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="526" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="552" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="578" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="604" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="630" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="656" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="682" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="708" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="734" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="760" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="786" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="812" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="838" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="864" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="890" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="916" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="942" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="968" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="994" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1020" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1046" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1072" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1098" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1124" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1150" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1176" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1202" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1228" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1254" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1280" y="10" width="13" height="236" fill="#000" opacity=".12"/><rect x="1306" y="10" width="13" height="236" fill="#000" opacity=".12"/>
+        <rect x="121" y="-4" width="1219" height="12" class="t-shade-2"/><rect x="121" y="243" width="1219" height="12" class="t-shade-2"/>
+        <rect x="121" y="8" width="1219" height="3" class="t-hi"/>
+        <rect x="121" y="-4" width="16" height="14" class="t-metal-dk"/><rect x="125" y="0" width="8" height="5" rx="2.5" class="t-ink"/><rect x="1324" y="-4" width="16" height="14" class="t-metal-dk"/><rect x="1328" y="0" width="8" height="5" rx="2.5" class="t-ink"/><rect x="121" y="241" width="16" height="14" class="t-metal-dk"/><rect x="125" y="245" width="8" height="5" rx="2.5" class="t-ink"/><rect x="1324" y="241" width="16" height="14" class="t-metal-dk"/><rect x="1328" y="245" width="8" height="5" rx="2.5" class="t-ink"/>
+        <rect x="121" y="10" width="16" height="231" class="t-shade"/>
+        <line x1="129" y1="12" x2="129" y2="240" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/><line x1="133" y1="12" x2="133" y2="240" stroke="var(--truck-metal-lt,#c4c6c9)" stroke-width="1.5"/>
+        <text x="1310" y="36" text-anchor="end" class="c-tx">TPLU 204617 4</text>
+        <text x="1310" y="54" text-anchor="end" class="c-tx" style="font-size:11px">45G1</text>
+      </g>
+      <g data-testid="trailer-axle-0">
+      <ellipse cx="457" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="407" y="283" width="12" height="16" class="t-chassis t-out"/><line x1="413" y1="295" x2="457" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="473" y="283" width="22" height="45" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(457 350) scale(1)"/>
+      <path d="M 399 344 A 58 58 0 0 1 515 344 L 510 344 A 53 53 0 0 0 404 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-1">
+      <ellipse cx="326" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="276" y="283" width="12" height="16" class="t-chassis t-out"/><line x1="282" y1="295" x2="326" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="342" y="283" width="22" height="45" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(326 350) scale(1)"/>
+      <path d="M 268 344 A 58 58 0 0 1 384 344 L 379 344 A 53 53 0 0 0 273 344 Z" class="t-plastic"/>
+    </g><g data-testid="trailer-axle-2">
+      <ellipse cx="195" cy="400" rx="46" ry="3" class="t-ink" opacity=".5"/>
+      <rect x="145" y="283" width="12" height="16" class="t-chassis t-out"/><line x1="151" y1="295" x2="195" y2="350" stroke="var(--truck-metal-dk,#5d6166)" stroke-width="6"/>
+      <rect x="211" y="283" width="22" height="45" rx="5" class="t-rubber"/>
+      <use href="#tr-wheel" transform="translate(195 350) scale(1)"/>
+      <path d="M 137 344 A 58 58 0 0 1 253 344 L 248 344 A 53 53 0 0 0 142 344 Z" class="t-plastic"/>
+    </g><rect x="128" y="340" width="8" height="52" class="t-rubber"/><rect x="1246" y="270" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="1246" y="270" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="976" y="270" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="976" y="270" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="706" y="270" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="706" y="270" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="436" y="270" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="436" y="270" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><rect x="166" y="270" width="8" height="5" rx="1" class="t-lens-amber"/><rect x="166" y="270" width="8" height="5" rx="1" class="t-lit-amber tp-lamp on" data-lamp="side-marker"/><g data-part="tail">
+    <rect x="38" y="286" width="14" height="32" rx="1" class="t-plastic"/>
+    <rect x="40" y="288" width="10" height="6" class="t-lens-amber"/><rect x="40" y="288" width="10" height="6" class="t-lit-amber tp-lamp" data-lamp="blinker-left-rear"/>
+    <rect x="40" y="295" width="10" height="6" class="t-lens-red"/><rect x="40" y="295" width="10" height="6" class="t-lit-red tp-lamp on" data-lamp="tail" style="opacity:.55"/>
+    <rect x="40" y="302" width="10" height="6" class="t-lens-red"/><rect x="40" y="302" width="10" height="6" class="t-lit-red tp-lamp" data-lamp="brake"/>
+    <rect x="40" y="309" width="10" height="6" class="t-lens-clear"/><rect x="40" y="309" width="10" height="6" class="t-lit-white tp-lamp" data-lamp="reverse"/>
+    
+  </g>
+  <g data-part="underrun"><rect x="54" y="286" width="5" height="54" class="t-metal-dk"/><rect x="38" y="338" width="22" height="12" class="t-metal-dk"/></g>
+</svg>

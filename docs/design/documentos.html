@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="graphite">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121211">
+<title>TRUCKPULSE — Documentos e imersão (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Arimo+Narrow&family=B612+Mono:wght@400;700&family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500&family=Caveat:wght@500;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ====== tokens da interface (iguais ao mockup.html / DESIGN-SPEC §2) ====== */
+:root,:root[data-theme='graphite']{--tp-bg:#121211;--tp-panel:#1a1a18;--tp-panel-2:#22221f;--tp-inset:#0e0e0d;--tp-line:#2e2d29;--tp-line-strong:#45433d;--tp-text:#ebe7de;--tp-muted:#a19c90;--tp-dim:#6b675e;--tp-accent:#ff7a1a;--tp-accent-ink:#121211;--tp-accent-2:#ffb066;--tp-ok:#6fbf5a;--tp-warn:#f2b600;--tp-crit:#f0412e;--tp-info:#4a9dff}
+:root[data-theme='midnight']{--tp-bg:#0a0d12;--tp-panel:#0f141b;--tp-panel-2:#151b24;--tp-inset:#070a0e;--tp-line:#1f2732;--tp-line-strong:#2f3a48;--tp-text:#cdd5df;--tp-muted:#8593a5;--tp-dim:#556274;--tp-accent:#ff9a3c;--tp-accent-ink:#0a0d12;--tp-accent-2:#ffc078;--tp-ok:#5fb87a;--tp-warn:#e8b23a;--tp-crit:#e5533d;--tp-info:#5b9cf5}
+:root[data-theme='contrast']{--tp-bg:#000;--tp-panel:#000;--tp-panel-2:#141414;--tp-inset:#000;--tp-line:#5c5c5c;--tp-line-strong:#a0a0a0;--tp-text:#fff;--tp-muted:#d0d0d0;--tp-dim:#9a9a9a;--tp-accent:#ff9500;--tp-accent-ink:#000;--tp-accent-2:#ffc266;--tp-ok:#3cff6e;--tp-warn:#ffe000;--tp-crit:#ff4040;--tp-info:#4da3ff}
+:root{
+  --font-sans:'Barlow','Bahnschrift','Segoe UI',system-ui,sans-serif;
+  --font-cond:'Barlow Condensed','Bahnschrift SemiCondensed','Bahnschrift','Arial Narrow',sans-serif;
+  --font-mono:'B612 Mono','Cascadia Mono',Consolas,monospace;
+  /* ====== tokens de PAPEL (iguais em todos os temas: papel é papel) ====== */
+  --paper:#fbfaf6; --paper-2:#f3f0e6; --paper-edge:#d9d4c4;
+  --paper-thermal:#f7f7f2; --paper-carbon-1:#fff8d6; --paper-carbon-2:#fde3e3;
+  --ink:#16161a; --ink-2:#4a4a52; --ink-rule:#2b2b30;
+  --ink-blue:#1f3f9a; --ink-red:#b3261e; --ink-pen:#1b2a6b;
+  --doc-font:'Arimo','Liberation Sans','Arial',sans-serif;
+  --doc-narrow:'Arimo Narrow','Arial Narrow','Liberation Sans Narrow',sans-serif;
+  --doc-mono:'Courier Prime','Courier New',monospace;
+  --hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--tp-bg);color:var(--tp-text);font:14px/20px var(--font-sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.tp-label{font:600 11px/14px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;color:var(--tp-muted)}
+.btn{font:600 12px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--tp-line-strong);background:transparent;color:var(--tp-text);border-radius:2px;padding:0 12px;min-height:32px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:focus-visible{outline:2px solid var(--tp-accent);outline-offset:1px}
+.btn.solid{background:var(--tp-accent);border-color:var(--tp-accent);color:var(--tp-accent-ink)}
+.badge{font:600 11px/18px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--c,var(--tp-line));color:var(--c,var(--tp-muted));background:color-mix(in srgb,var(--c,transparent) 12%,transparent);border-radius:2px;padding:0 6px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.led{width:6px;height:6px;background:var(--c,var(--tp-ok));display:inline-block}
+
+/* ====== layout do documento de design ====== */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 16px;background:var(--tp-panel);border-bottom:1px solid var(--tp-line)}
+.top h1{margin:0;font:600 16px var(--font-cond);letter-spacing:.12em;text-transform:uppercase}
+.top h1 b{color:var(--tp-accent);font-weight:600}
+.top nav{display:flex;gap:1px;overflow-x:auto;background:var(--tp-line);flex:1;min-width:0}
+.top nav a{flex:0 0 auto;background:var(--tp-panel);color:var(--tp-muted);text-decoration:none;font:500 13px/32px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;padding:0 10px;min-height:32px}
+.top nav a:hover{color:var(--tp-text)}
+.themes{display:flex;gap:4px}
+.wrap{max-width:1320px;margin:0 auto;padding:16px}
+.sec{margin:28px 0 8px;display:flex;align-items:center;gap:10px;scroll-margin-top:64px}
+.sec h2{margin:0;font:600 18px var(--font-cond);text-transform:uppercase;letter-spacing:.06em}
+.sec .code{font:11px var(--font-mono);color:var(--tp-dim)}
+.sec::after{content:'';flex:1;border-top:1px solid var(--tp-line)}
+.lede{color:var(--tp-muted);font-size:13px;max-width:900px;margin:0 0 12px}
+.src{font:11px var(--font-mono);color:var(--tp-dim);overflow-wrap:anywhere}
+.lede,.ledger td,.row{overflow-wrap:anywhere}
+main,.wrap{min-width:0;max-width:100vw}
+@media (max-width:600px){.top .themes{display:none}.wrap{padding:10px}.mini>div{min-width:0!important;flex:1 1 calc(100% - 60px)!important}.sec .code{display:none}}
+.src b{color:var(--tp-ok);font-weight:400}.src i{color:var(--tp-warn);font-style:normal}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--tp-line);border:1px solid var(--tp-line)}
+.p{background:var(--tp-panel);min-width:0}
+.ph{min-height:32px;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid var(--tp-line);flex-wrap:wrap}
+.ph h3{margin:0;font:600 13px var(--font-cond);text-transform:uppercase;letter-spacing:.1em}
+.ph .r{margin-left:auto;display:flex;gap:6px;align-items:center}
+.pb{padding:12px}
+.c12{grid-column:span 12}.c8{grid-column:span 8}.c7{grid-column:span 7}.c6{grid-column:span 6}.c5{grid-column:span 5}.c4{grid-column:span 4}
+@media (max-width:900px){.c8,.c7,.c6,.c5,.c4{grid-column:span 12}}
+.row{display:flex;align-items:baseline;font-size:13px;line-height:24px}
+.row span:first-child{color:var(--tp-muted)}
+.row .ld{flex:1;border-bottom:1px dotted var(--tp-line-strong);margin:0 6px 5px}
+.row b{font:400 13px var(--font-mono)}
+
+/* ====== mesa de documentos (fundo onde o papel fica) ====== */
+.desk{background:var(--tp-inset);padding:20px;display:flex;justify-content:center;overflow:hidden}
+.desk>*{width:100%}
+.sep{display:inline-block;margin:0 -.24em}
+@media (max-width:600px){.desk{padding:8px}}
+
+/* ====== papel A4 escalável: todas as medidas em cqw (1cqw = 1% da largura da folha) ====== */
+.sheet-wrap{width:100%;max-width:820px;container-type:inline-size}
+.sheet{position:relative;background:var(--paper);color:var(--ink);font-family:var(--doc-font);padding:2.2cqw;box-shadow:0 0 0 1px var(--paper-edge);aspect-ratio:210/297;overflow:hidden}
+.sheet.auto{aspect-ratio:auto}
+.sheet *{line-height:1.15}
+.wm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:5}
+.wm span{transform:rotate(-32deg);font:700 7.4cqw var(--doc-font);color:rgba(179,38,30,.10);letter-spacing:.06em;white-space:nowrap;border:.6cqw solid rgba(179,38,30,.10);padding:.6cqw 2cqw}
+.disc{margin-top:1cqw;font:700 1.25cqw var(--doc-font);text-align:center;color:var(--ink-red);letter-spacing:.06em;border-top:.15cqw solid var(--ink-rule);padding-top:.6cqw}
+/* caixas do DANFE */
+.bx{border:.13cqw solid var(--ink-rule);margin:-.065cqw;padding:.25cqw .45cqw .35cqw;min-width:0;position:relative}
+.bx .l{font:1.05cqw var(--doc-narrow);text-transform:uppercase;color:var(--ink-2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bx .v{font:1.5cqw var(--doc-font);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.7cqw}
+.bx .v.b{font-weight:700}.bx .v.r{text-align:right}.bx .v.c{text-align:center}
+.brow{display:grid;margin:.065cqw}
+.bt{font:700 1.15cqw var(--doc-font);text-transform:uppercase;margin:.8cqw 0 .15cqw .1cqw}
+.danfe-head{display:grid;grid-template-columns:38fr 17fr 45fr}
+.emit{display:grid;grid-template-columns:7.5cqw 1fr;gap:.8cqw;align-items:center}
+.logo{width:7.5cqw;height:7.5cqw;border:.13cqw solid var(--ink-rule);display:flex;align-items:center;justify-content:center;font:700 2.6cqw var(--doc-font)}
+.emit .nm{font:700 1.75cqw var(--doc-font);text-transform:uppercase}
+.emit .ad{font:1.25cqw var(--doc-font);margin-top:.3cqw}
+.dbox{text-align:center}
+.dbox .t1{font:700 2.4cqw var(--doc-font)}
+.dbox .t2{font:1.05cqw var(--doc-font);margin:.2cqw 0 .5cqw}
+.dbox .es{display:flex;align-items:center;justify-content:center;gap:.8cqw;font:1.15cqw var(--doc-font);text-align:left}
+.dbox .es i{font:700 1.9cqw var(--doc-font);font-style:normal;border:.13cqw solid var(--ink-rule);width:2.6cqw;height:2.6cqw;display:flex;align-items:center;justify-content:center}
+.dbox .nn{font:700 1.45cqw var(--doc-font);margin-top:.5cqw}
+.bar svg{width:100%;height:4.6cqw;display:block}
+.chave{font:700 1.18cqw var(--doc-mono);letter-spacing:0;text-align:center;white-space:nowrap}
+.consult{font:1.15cqw var(--doc-font);text-align:center;margin-top:.3cqw}
+.prod{width:100%;border-collapse:collapse;font:1.15cqw var(--doc-font)}
+.prod th{font:1cqw var(--doc-narrow);text-transform:uppercase;border:.13cqw solid var(--ink-rule);padding:.25cqw;color:var(--ink-2);font-weight:400}
+.prod td{border-left:.13cqw solid var(--ink-rule);border-right:.13cqw solid var(--ink-rule);padding:.3cqw .25cqw;vertical-align:top}
+.prod td.n{text-align:right;font-family:var(--doc-font)}
+.prod tr.fill td{height:9cqw;border-bottom:.13cqw solid var(--ink-rule)}
+.addl{display:grid;grid-template-columns:62fr 38fr}
+.addl .v{white-space:normal;font-size:1.2cqw;line-height:1.3;height:12cqw}
+/* canhoto destacável */
+.canhoto{display:grid;grid-template-columns:80fr 20fr;border-bottom:.2cqw dashed var(--ink-2);padding-bottom:1cqw;margin-bottom:1cqw}
+.canhoto .rec{grid-column:1/2}
+.qr svg{width:100%;height:100%;display:block}
+
+/* ====== status / stepper ====== */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--tp-line);border:1px solid var(--tp-line)}
+.steps div{background:var(--tp-panel);padding:8px 10px;min-height:52px}
+.steps div b{display:block;font:600 13px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;color:var(--tp-dim)}
+.steps div span{font:11px var(--font-mono);color:var(--tp-dim)}
+.steps div.done b{color:var(--tp-text)}.steps div.done{box-shadow:inset 0 3px 0 var(--tp-ok)}
+.steps div.cur{box-shadow:inset 0 3px 0 var(--tp-accent)}.steps div.cur b{color:var(--tp-accent)}
+.steps div.cancel{box-shadow:inset 0 3px 0 var(--tp-crit)}.steps div.cancel b{color:var(--tp-crit)}
+@media (max-width:600px){.steps{grid-template-columns:1fr 1fr}}
+
+/* ====== canhoto de entrega: assinatura + carimbo ====== */
+.sign-area{width:100%;position:relative;background:var(--paper);color:var(--ink);font-family:var(--doc-font);padding:16px;box-shadow:0 0 0 1px var(--paper-edge);container-type:inline-size;overflow:hidden}
+.sign-area .hdr{font:700 13px var(--doc-font);text-transform:uppercase;border-bottom:1.5px solid var(--ink-rule);padding-bottom:6px;display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
+.sign-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--ink-rule);margin-top:10px}
+.sign-grid>div{border:.75px solid var(--ink-rule);padding:6px 8px;min-height:44px;position:relative}
+.sign-grid .l{font:10px var(--doc-narrow);text-transform:uppercase;color:var(--ink-2);display:block}
+.sign-grid .v{font:14px var(--doc-font)}
+.pad{position:relative;grid-column:1/3;height:170px;padding:0!important}
+.pad canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.pad .hint{position:absolute;left:10px;bottom:28px;right:10px;border-bottom:1px solid var(--ink-2);font:11px var(--doc-font);color:var(--ink-2);padding-bottom:2px;pointer-events:none}
+.pad .x{position:absolute;left:10px;bottom:31px;font:700 18px var(--doc-font);color:var(--ink-2);pointer-events:none}
+.stamp-slot{position:absolute;right:4%;top:18%;width:min(240px,46%);aspect-ratio:1/1;pointer-events:none;z-index:4}
+.stamp-slot.rect{aspect-ratio:2.4/1;top:auto;bottom:22%;right:30%;width:min(280px,52%)}
+.stamp{width:100%;height:100%;opacity:0}
+.stamp.hit{animation:stamp-hit .42s cubic-bezier(.2,.9,.3,1.25) forwards}
+@keyframes stamp-hit{0%{opacity:0;transform:scale(2.3) rotate(var(--r0,-16deg))}55%{opacity:.95;transform:scale(.95) rotate(var(--r1,-7deg))}72%{transform:scale(1.03) rotate(var(--r1,-7deg))}100%{opacity:.88;transform:scale(1) rotate(var(--r1,-7deg))}}
+.sign-area.thump{animation:thump .18s .2s linear}
+@keyframes thump{0%,100%{transform:translateY(0)}40%{transform:translateY(2px)}}
+@media (prefers-reduced-motion:reduce){.stamp.hit{animation:none;opacity:.88;transform:rotate(var(--r1,-7deg))}.sign-area.thump{animation:none}}
+.sig-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.sig-actions .btn{min-height:44px}
+
+/* ====== recibos térmicos ====== */
+.receipts{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;align-items:flex-start}
+.thermal{width:290px;max-width:100%;background:var(--paper-thermal);color:#1d1d1d;font:12.5px/1.35 var(--doc-mono);padding:18px 16px 26px;position:relative;
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 8px) no-repeat,conic-gradient(from 135deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/12px 8px repeat-x;
+          mask:linear-gradient(#000 0 0) top/100% calc(100% - 8px) no-repeat,conic-gradient(from 135deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/12px 8px repeat-x}
+.thermal .c{text-align:center}.thermal .b{font-weight:700}
+.thermal hr{border:0;border-top:1px dashed #555;margin:7px 0}
+.thermal .kv{display:flex;justify-content:space-between;gap:8px}
+.thermal .big{font-size:18px;font-weight:700}
+.thermal .fade{color:#666;font-size:11px}
+.thermal .barc{height:38px;margin-top:8px}
+.thermal .barc svg{width:100%;height:100%}
+.thermal::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.018) 0 1px,transparent 1px 3px);pointer-events:none}
+.ticket{width:360px;max-width:100%;background:#eef3f7;color:#14222e;font:13px/1.35 var(--doc-font);display:grid;grid-template-columns:1fr 92px;border:1px solid #9fb2c2}
+.ticket .main{padding:12px 14px;border-right:2px dashed #9fb2c2}
+.ticket .stub{padding:12px 8px;writing-mode:vertical-rl;transform:rotate(180deg);font:700 12px var(--doc-font);letter-spacing:.14em;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px}
+.ticket .route{display:flex;align-items:center;gap:8px;font:700 17px var(--doc-font);margin:8px 0}
+.ticket .route i{flex:1;border-top:2px dotted #14222e;position:relative}
+.ticket .k{font:10px var(--doc-narrow);text-transform:uppercase;color:#4d6273}
+
+/* ====== auto de infração (talão em carbono) ====== */
+.talao{max-width:640px;margin:0 auto;position:relative;container-type:inline-size;isolation:isolate}
+.talao .via{background:var(--paper-carbon-1);color:#23211c;padding:3cqw 3cqw 4cqw;position:relative;font-family:var(--doc-font);box-shadow:0 0 0 1px #d8cf9a}
+.talao .via.v2{position:absolute;inset:1.6cqw -1.2cqw -1.6cqw 1.2cqw;background:var(--paper-carbon-2);z-index:-1;box-shadow:0 0 0 1px #e2b9b9}
+.talao .perf{position:absolute;left:0;right:0;top:0;height:2.4cqw;background:radial-gradient(circle at 1.2cqw 0,var(--tp-inset) .7cqw,transparent .75cqw) 0 0/2.4cqw 2.4cqw repeat-x}
+.talao h4{margin:1.5cqw 0 .3cqw;font:700 3.3cqw var(--doc-font);text-transform:uppercase;letter-spacing:.04em}
+.talao .org{font:1.9cqw var(--doc-font);text-transform:uppercase;padding-right:26cqw}
+.talao .no{position:absolute;right:3cqw;top:3.4cqw;font:700 3.2cqw var(--doc-mono);color:#a3261e}
+.talao .f{display:grid;grid-template-columns:repeat(6,1fr);border:.25cqw solid #3a3527;margin-top:2cqw}
+.talao .f>div{border:.12cqw solid #3a3527;padding:.6cqw 1cqw;min-height:7cqw}
+.talao .f .l{font:1.6cqw var(--doc-narrow);text-transform:uppercase;color:#5c5545;display:block}
+.talao .f .h{font:500 3.9cqw/1 var(--hand);color:var(--ink-pen)}
+.talao .s2{grid-column:span 2}.talao .s3{grid-column:span 3}.talao .s4{grid-column:span 4}.talao .s6{grid-column:span 6}
+.talao .sig{font:700 5cqw/1 var(--hand);color:var(--ink-pen);transform:rotate(-4deg);display:inline-block}
+
+/* ====== pasta / prancheta ====== */
+.folder{display:grid;grid-template-columns:260px 1fr;gap:1px;background:var(--tp-line);border:1px solid var(--tp-line)}
+@media (max-width:760px){.folder{grid-template-columns:1fr}}
+.folder aside{background:var(--tp-panel)}
+.folder .filters{display:flex;flex-wrap:wrap;gap:6px;padding:10px;border-bottom:1px solid var(--tp-line)}
+.chip{font:600 12px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;border:1px solid var(--tp-line-strong);background:transparent;color:var(--tp-muted);border-radius:2px;padding:0 10px;min-height:32px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--tp-panel-2);color:var(--tp-text);box-shadow:inset 0 -2px 0 var(--tp-accent)}
+@media (pointer:coarse){.chip{min-height:44px}}
+.trip{border-bottom:1px solid var(--tp-line)}
+.trip>header{padding:10px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.trip>header b{font:600 14px var(--font-cond);letter-spacing:.04em;text-transform:uppercase}
+.doc-item{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 12px 4px 14px;cursor:pointer;border-left:3px solid transparent}
+.doc-item:hover{background:var(--tp-panel-2)}
+.doc-item.act{background:var(--tp-panel-2);border-left-color:var(--tp-accent)}
+.doc-item .ic{width:26px;height:32px;flex:0 0 auto;background:var(--paper);position:relative;clip-path:polygon(0 0,70% 0,100% 22%,100% 100%,0 100%)}
+.doc-item .ic::after{content:attr(data-k);position:absolute;inset:auto 0 3px 0;text-align:center;font:700 8px var(--font-mono);color:#333}
+.doc-item .t{flex:1;min-width:0}
+.doc-item .t b{display:block;font:500 13px var(--font-sans);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-item .t span{font:11px var(--font-mono);color:var(--tp-dim)}
+.clip{background:#6d5236;padding:44px 18px 18px;position:relative;min-height:420px}
+.clip::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:150px;height:40px;background:#9aa0a6;border:1px solid #5d6166;clip-path:polygon(12% 0,88% 0,100% 40%,100% 100%,0 100%,0 40%)}
+.clip::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 9px);pointer-events:none}
+.clip .sheet-wrap{margin:0 auto;position:relative;z-index:1}
+
+/* ====== jornada / tacógrafo ====== */
+.jr{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:center}
+@media (max-width:760px){.jr{grid-template-columns:1fr}}
+.disc svg{width:100%;max-width:300px;display:block;margin:0 auto}
+.meter{margin-bottom:12px}
+.m-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.m-val{font:400 13px var(--font-mono)}
+.m-track{position:relative;height:10px;background:var(--tp-inset);border:1px solid var(--tp-line)}
+.m-fill{position:absolute;inset:0 auto 0 0}
+.m-mark{position:absolute;top:-4px;bottom:-1px;width:1px;background:var(--tp-text)}
+.tl{display:grid;grid-template-columns:repeat(24,1fr);height:26px;border:1px solid var(--tp-line);background:var(--tp-inset)}
+.tl i{border-right:1px solid var(--tp-line)}
+.tl i.d{background:var(--tp-accent)}.tl i.w{background:var(--tp-accent-2)}.tl i.r{background:transparent}.tl i.p{background:var(--tp-panel-2)}
+.tl-l{display:flex;justify-content:space-between;font:10px var(--font-mono);color:var(--tp-dim);margin-top:2px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.legend span{font:500 11px var(--font-cond);text-transform:uppercase;letter-spacing:.06em;color:var(--tp-muted);display:flex;gap:6px;align-items:center}
+.legend i{width:12px;height:12px;background:var(--c);border:1px solid var(--tp-line-strong)}
+
+/* ====== despachante (rádio) ====== */
+.radio{background:#15130f;border:1px solid var(--tp-line-strong);padding:10px;position:relative}
+.radio .lcd{background:#2a2a12;color:#d9e37a;font:13px/1.35 var(--font-mono);padding:8px 10px;border:1px solid #000;min-height:58px;box-shadow:inset 0 0 0 2px #1d1d0b;text-shadow:0 0 1px #d9e37a}
+.radio .lcd .ch{display:flex;justify-content:space-between;font-size:11px;color:#b8c25e;margin-bottom:4px}
+.radio .grill{height:30px;margin-top:8px;background:radial-gradient(circle,#000 1.2px,transparent 1.6px) 0 0/7px 7px}
+.toasts{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;flex-direction:column;gap:8px;width:min(380px,calc(100vw - 32px))}
+.toast{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;background:var(--tp-panel);border:1px solid var(--tp-line-strong);border-left:3px solid var(--c,var(--tp-accent));padding:10px 12px;animation:tin .16s linear}
+.toast .who{font:600 11px var(--font-cond);letter-spacing:.1em;text-transform:uppercase;color:var(--c,var(--tp-accent))}
+.toast p{margin:2px 0 0;font-size:13px;line-height:18px}
+.toast .t{font:11px var(--font-mono);color:var(--tp-dim)}
+.toast .wave{width:22px;height:22px;display:flex;gap:2px;align-items:center}
+.toast .wave i{width:3px;background:var(--c,var(--tp-accent));animation:wv .9s ease-in-out infinite}
+.toast .wave i:nth-child(2){animation-delay:.15s}.toast .wave i:nth-child(3){animation-delay:.3s}
+@keyframes wv{0%,100%{height:4px}50%{height:18px}}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.toast,.toast .wave i{animation:none}.toast .wave i{height:10px}}
+@media (max-width:600px){.toasts{left:8px;right:8px;bottom:72px;width:auto}}
+
+/* ====== carteira ====== */
+.ledger{width:100%;border-collapse:collapse;font-size:13px}
+.ledger th{font:600 11px var(--font-cond);text-transform:uppercase;letter-spacing:.08em;color:var(--tp-muted);text-align:left;border-bottom:1px solid var(--tp-line-strong);padding:6px 8px;background:var(--tp-panel-2)}
+.ledger td{border-bottom:1px solid var(--tp-line);padding:6px 8px}
+.ledger td.n{text-align:right;font-family:var(--font-mono)}
+.ledger .pos{color:var(--tp-ok)}.ledger .neg{color:var(--tp-crit)}
+.ledger .tag{font:10px var(--font-mono);color:var(--tp-dim)}
+@media (max-width:600px){.ledger .hide-s{display:none}}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--tp-line);border-bottom:1px solid var(--tp-line)}
+.kpis div{background:var(--tp-panel);padding:10px 12px}
+.kpis b{display:block;font:400 22px/28px var(--font-mono)}
+@media (max-width:600px){.kpis{grid-template-columns:1fr 1fr}}
+
+/* ====== checklist ====== */
+.chk{list-style:none;margin:0;padding:0}
+.chk li{display:flex;align-items:center;gap:10px;min-height:44px;border-bottom:1px solid var(--tp-line);padding:0 12px}
+.chk .st{font:400 12px var(--font-mono);width:62px;flex:0 0 auto}
+.chk .ok{color:var(--tp-ok)}.chk .bad{color:var(--tp-crit)}.chk .man{color:var(--tp-dim)}
+.chk label{display:flex;align-items:center;gap:10px;flex:1;min-height:44px;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--tp-accent)}
+.chk small{margin-left:auto;font:10px var(--font-mono);color:var(--tp-dim)}
+
+/* ====== integração (mini-painéis) ====== */
+.mini{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.mini .paperthumb{width:46px;height:60px;background:var(--paper);position:relative;flex:0 0 auto;clip-path:polygon(0 0,74% 0,100% 18%,100% 100%,0 100%)}
+.mini .paperthumb::before{content:'';position:absolute;inset:10px 8px auto;height:28px;background:repeating-linear-gradient(#999 0 1px,transparent 1px 5px)}
+.mini .paperthumb::after{content:'';position:absolute;right:4px;bottom:4px;width:22px;height:22px;border:2px solid var(--ink-blue);border-radius:50%;opacity:.7;transform:rotate(-12deg)}
+
+/* ====== impressão ====== */
+@media print{
+  @page{size:A4;margin:8mm}
+  html,body{background:#fff!important}
+  body>*{display:none!important}
+  body>.print-root{display:block!important}
+  .print-root .sheet-wrap{max-width:none;width:194mm}
+  .print-root .sheet{box-shadow:none}
+}
+.print-root{display:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>TRUCK<b>PULSE</b> · Documentos</h1>
+  <nav aria-label="Seções">
+    <a href="#integracao">Integração</a><a href="#pasta">Pasta</a><a href="#nfe">DANFE</a><a href="#cte">CT-e</a><a href="#mdfe">MDF-e</a><a href="#canhoto">Canhoto</a><a href="#recibos">Recibos</a><a href="#multa">Auto de infração</a><a href="#jornada">Jornada</a><a href="#despachante">Despachante</a><a href="#carteira">Carteira</a><a href="#checklist">Checklist</a><a href="#relatorio">Relatório</a>
+  </nav>
+  <div class="themes" role="group" aria-label="Tema">
+    <button class="btn" data-th="graphite">Grafite</button><button class="btn" data-th="midnight">Noturna</button><button class="btn" data-th="contrast">Contraste</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="lede">Mockup interativo da seção <b>Documentos</b> e das funções de imersão (spec: <code>DOCUMENTOS-SPEC.md</code>). Os dados são de um frete de exemplo; em cada bloco a linha <span class="src"><b>SDK</b> = canal real</span> · <span class="src"><i>SIM</i> = Derivado</span> indica a origem. A interface usa os tokens do tema; <b>o papel é sempre papel</b>.</p>
+
+  <!-- ===================== INTEGRAÇÃO ===================== -->
+  <div class="sec" id="integracao"><h2>Pontos de integração</h2><span class="code">Painel · Viagem · barra de status</span></div>
+  <div class="grid">
+    <section class="p c7">
+      <div class="ph"><h3>Painel › Documentos do frete</h3><span class="tp-label" style="color:var(--tp-dim)">P-10</span><div class="r"><span class="badge" style="--c:var(--tp-accent)"><span class="led" style="--c:var(--tp-accent)"></span>Em trânsito</span></div></div>
+      <div class="pb">
+        <div class="mini">
+          <div class="paperthumb" aria-hidden="true"></div>
+          <div style="flex:1;min-width:220px">
+            <div style="font:600 15px var(--font-cond);letter-spacing:.04em;text-transform:uppercase" id="mini-route">Calais → Lyon</div>
+            <div class="src" id="mini-docs">NF-e 000.004.217 · CT-e 000.001.388 · MDF-e 000.000.512</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><a class="btn" href="#pasta">Abrir pasta</a><a class="btn solid" href="#canhoto">Entregar e assinar</a></div>
+        </div>
+        <div class="steps" style="margin-top:12px" id="steps-mini"></div>
+      </div>
+    </section>
+    <section class="p c5">
+      <div class="ph"><h3>Viagem › Jornada do motorista</h3><span class="tp-label" style="color:var(--tp-dim)">V-04</span></div>
+      <div class="pb">
+        <div class="meter"><div class="m-top"><span class="tp-label">Direção contínua</span><span class="m-val" style="color:var(--tp-warn)">4 h 52 / 5 h 30</span></div><div class="m-track"><div class="m-fill" style="width:88.5%;background:var(--tp-warn)"></div><div class="m-mark" style="left:90.9%"></div></div></div>
+        <div class="row"><span>Parada obrigatória (Lei 13.103)</span><span class="ld"></span><b>em 38 min</b></div>
+        <div class="row"><span>Descanso do jogo (restStop)</span><span class="ld"></span><b>6 h 10 min</b></div>
+        <div class="row"><span>Saldo da viagem</span><span class="ld"></span><b style="color:var(--tp-ok)">R$ 18.412,60</b></div>
+      </div>
+    </section>
+  </div>
+  <p class="src" style="margin-top:6px">Barra de status ganha o campo <b>DOC</b> (ex.: "NF-e EM TRÂNSITO") e o item de navegação <b>09 DOCUMENTOS</b> (no celular: dentro de "Mais"). Toasts do despachante aparecem em qualquer página.</p>
+
+  <!-- ===================== PASTA ===================== -->
+  <div class="sec" id="pasta"><h2>Pasta de documentos</h2><span class="code">página "Documentos"</span></div>
+  <div class="folder">
+    <aside>
+      <div class="filters" role="group" aria-label="Filtrar por tipo" id="filters"></div>
+      <div id="trips"></div>
+    </aside>
+    <div class="clip"><div class="sheet-wrap" id="clip-view"></div>
+      <div style="position:relative;z-index:1;display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+        <button class="btn solid" id="print-btn">Imprimir / salvar PDF</button><button class="btn" style="background:#00000055">Exportar todos da viagem</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== DANFE ===================== -->
+  <div class="sec" id="nfe"><h2>NF-e · DANFE</h2><span class="code">gerada no início do frete (onJob 0→1)</span></div>
+  <p class="src"><b>SDK</b>: cargo, cargoMass, citySrc/compSrc, cityDst/compDst, jobStartingTime, truckLicensePlate(+país), trailer licensePlate, unitCount · <i>SIM</i>: CNPJ/IE (determinísticos, DV válido), NCM/CFOP por tabela de carga, valor da mercadoria (massa × preço/kg da categoria), ICMS 12 %, nº/série, chave de acesso (DV módulo 11), protocolo</p>
+  <div class="desk"><div class="sheet-wrap" id="danfe"></div></div>
+
+  <!-- ===================== CT-e ===================== -->
+  <div class="sec" id="cte"><h2>CT-e · DACTE</h2><span class="code">conhecimento de transporte (modelo 57)</span></div>
+  <p class="src"><b>SDK</b>: jobIncome (valor do frete), plannedDistanceKm, cargoMass, origem/destino, placas · <i>SIM</i>: transportadora (nome do perfil do motorista), RNTRC, CFOP 6.353, componentes do frete, ICMS 12 %</p>
+  <div class="desk"><div class="sheet-wrap" id="dacte"></div></div>
+
+  <!-- ===================== MDF-e ===================== -->
+  <div class="sec" id="mdfe"><h2>MDF-e · DAMDFE</h2><span class="code">manifesto (modelo 58)</span></div>
+  <p class="src"><b>SDK</b>: placas, cargoMass, origem/destino, truckBrand/truckName, trailers acoplados · <i>SIM</i>: condutor (Configurações › Motorista), CPF fictício com DV válido, percurso</p>
+  <div class="desk"><div class="sheet-wrap" id="damdfe"></div></div>
+
+  <!-- ===================== CANHOTO ===================== -->
+  <div class="sec" id="canhoto"><h2>Canhoto de recebimento</h2><span class="code">entrega: assinatura + carimbo</span></div>
+  <p class="src"><b>SDK</b>: jobDelivered (borda de subida) + jobDeliveredRevenue, jobDeliveredCargoDamage, jobDeliveredDistanceKm, jobDeliveredDeliveryTime, jobDeliveredEarnedXp, jobDeliveredAutoparkUsed/AutoloadUsed, time_abs (data/hora do jogo) · jobCancelled + jobCancelledPenalty → CANCELADO · <i>SIM</i>: nome do recebedor</p>
+  <div class="steps" id="steps-main"></div>
+  <div class="grid" style="margin-top:12px">
+    <section class="p c8">
+      <div class="desk" style="padding:14px">
+        <div class="sign-area" id="sign-area">
+          <div class="hdr"><span>Recebemos de <span id="cn-emit">TRADEAUX LOGÍSTICA</span> os produtos da NF-e indicada</span><span>NF-e Nº <span id="cn-num">000.004.217</span> · Série 1</span></div>
+          <div class="sign-grid">
+            <div><span class="l">Data / hora do recebimento (relógio do jogo)</span><span class="v" id="cn-date">—</span></div>
+            <div><span class="l">Recebedor</span><span class="v" style="font:600 20px var(--hand);color:var(--ink-pen)">M. Lefèvre — doca 4</span></div>
+            <div class="pad"><canvas id="pad" aria-label="Área de assinatura do motorista"></canvas><span class="x">✕</span><span class="hint">Assinatura do motorista (dedo ou mouse)</span></div>
+            <div><span class="l">Avaria registrada</span><span class="v" id="cn-dmg">2,4 % (abaixo do limite de 5 %)</span></div>
+            <div><span class="l">Ressalvas</span><span class="v">—</span></div>
+          </div>
+          <div class="stamp-slot" id="slot-round"></div>
+          <div class="stamp-slot rect" id="slot-rect"></div>
+          <div class="disc" style="font-size:10px;margin-top:10px">TRUCKPULSE</div>
+        </div>
+      </div>
+    </section>
+    <section class="p c4">
+      <div class="ph"><h3>Simular eventos</h3></div>
+      <div class="pb">
+        <p style="margin:0 0 10px;font-size:13px;color:var(--tp-muted)">No app, a assinatura é pedida quando <code>jobDelivered</code> sobe; o carimbo bate depois de "Assinar". Teste aqui:</p>
+        <div class="sig-actions" style="flex-direction:column">
+          <button class="btn" id="clr">Limpar assinatura</button>
+          <button class="btn solid" id="sign">Assinar e entregar</button>
+          <button class="btn" id="dmg">Entregar com avaria (8,7 %)</button>
+          <button class="btn" id="cancel" style="color:var(--tp-crit);border-color:var(--tp-crit)">Frete cancelado (jobCancelled)</button>
+          <button class="btn" id="reset">Reiniciar</button>
+        </div>
+        <div style="margin-top:14px">
+          <div class="row"><span>Receita (jobDeliveredRevenue)</span><span class="ld"></span><b>€ 3.210</b></div>
+          <div class="row"><span>XP ganho</span><span class="ld"></span><b>1.284</b></div>
+          <div class="row"><span>Autopark</span><span class="ld"></span><b>não</b></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== RECIBOS ===================== -->
+  <div class="sec" id="recibos"><h2>Recibos e cupons</h2><span class="code">tollgate · ferry/train · refuel</span></div>
+  <p class="src"><b>SDK</b>: tollgate + tollgatePayAmount · ferry/train + Source/TargetName + PayAmount · refuel/refuelPayed + refuelAmount (litros) · truckWheelCount/eixos (categoria) · placa · <i>SIM</i>: concessionária, praça, bomba/bico, preço por litro (configurável), nº de série</p>
+  <div class="desk"><div class="receipts" id="receipts"></div></div>
+
+  <!-- ===================== MULTA ===================== -->
+  <div class="sec" id="multa"><h2>Auto de infração</h2><span class="code">fined + fineOffence + fineAmount</span></div>
+  <p class="src"><b>SDK</b>: fined (borda), fineOffence, fineAmount, placa, time_abs · <i>SIM</i>: órgão autuador, nº do AIT, enquadramento (tabela offence → artigo), local ("rodovia — rota Calais → Lyon"), agente</p>
+  <div class="desk" style="padding:28px 28px 40px"><div class="talao" id="talao"></div></div>
+
+  <!-- ===================== JORNADA ===================== -->
+  <div class="sec" id="jornada"><h2>Diário de bordo · jornada · tacógrafo</h2><span class="code">Lei 13.103/2015</span></div>
+  <p class="src"><b>SDK</b>: time_abs (relógio do jogo), speed, engineEnabled, parkingBrake, restStop (min até descanso do jogo) · <i>SIM</i>: regras da Lei 13.103 aplicadas ao relógio do jogo (5 h 30 de direção → 30 min de descanso; 8 h + 2 h extras/dia; 11 h de interjornada)</p>
+  <div class="grid">
+    <section class="p c5"><div class="ph"><h3>Disco do tacógrafo · 24 h</h3><div class="r"><span class="badge">TER · 14:32</span></div></div><div class="pb disc" id="disc"></div></section>
+    <section class="p c7">
+      <div class="ph"><h3>Controle de jornada</h3><div class="r"><span class="badge" style="--c:var(--tp-warn)"><span class="led" style="--c:var(--tp-warn)"></span>Parar em 38 min</span></div></div>
+      <div class="pb">
+        <div class="meter"><div class="m-top"><span class="tp-label">Direção contínua</span><span class="m-val">4 h 52 / 5 h 30</span></div><div class="m-track"><div class="m-fill" style="width:88.5%;background:var(--tp-warn)"></div><div class="m-mark" style="left:90.9%"></div></div></div>
+        <div class="meter"><div class="m-top"><span class="tp-label">Direção no dia</span><span class="m-val">7 h 05 / 8 h (+2 h)</span></div><div class="m-track"><div class="m-fill" style="width:70.8%;background:var(--tp-accent)"></div><div class="m-mark" style="left:80%"></div></div></div>
+        <div class="meter"><div class="m-top"><span class="tp-label">Interjornada (último descanso)</span><span class="m-val">11 h 20 / 11 h</span></div><div class="m-track"><div class="m-fill" style="width:100%;background:var(--tp-ok)"></div></div></div>
+        <div class="tp-label" style="margin-top:14px">Linha do tempo de hoje (relógio do jogo)</div>
+        <div class="tl" id="tl"></div>
+        <div class="tl-l"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div>
+        <div class="legend"><span><i style="--c:var(--tp-accent)"></i>Direção</span><span><i style="--c:var(--tp-accent-2)"></i>Outros trabalhos (carga/espera)</span><span><i style="--c:var(--tp-panel-2)"></i>Parado</span><span><i style="--c:transparent"></i>Descanso</span></div>
+        <table class="ledger" style="margin-top:12px">
+          <thead><tr><th>Hora (jogo)</th><th>Registro</th><th class="hide-s">Local</th><th style="text-align:right">Duração</th></tr></thead>
+          <tbody>
+            <tr><td class="n" style="text-align:left">06:10</td><td>Início de jornada · checklist OK</td><td class="hide-s">Calais</td><td class="n">—</td></tr>
+            <tr><td class="n" style="text-align:left">06:25</td><td>Carregamento (autoload: não)</td><td class="hide-s">Tradeaux</td><td class="n">0 h 35</td></tr>
+            <tr><td class="n" style="text-align:left">07:00</td><td>Direção</td><td class="hide-s">A26</td><td class="n">2 h 13</td></tr>
+            <tr><td class="n" style="text-align:left">09:13</td><td>Descanso 30 min (pausa legal)</td><td class="hide-s">Área de serviço</td><td class="n">0 h 31</td></tr>
+            <tr><td class="n" style="text-align:left">09:44</td><td>Direção · pedágio · abastecimento</td><td class="hide-s">A26 → A5</td><td class="n">4 h 52</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== DESPACHANTE ===================== -->
+  <div class="sec" id="despachante"><h2>Despachante da transportadora</h2><span class="code">rádio + notificações</span></div>
+  <p class="src"><b>SDK</b>: onJob (novo frete), routeDistanceKm (aproximação), time_abs × time_abs_delivery (prazo), fined, cargoDamage, fuel (reserva), restStop · <i>SIM</i>: textos, nome do despachante, voz (Web Speech API, pt-BR, opcional)</p>
+  <div class="grid">
+    <section class="p c5">
+      <div class="ph"><h3>Rádio da central</h3><div class="r"><label class="tp-label" style="display:flex;gap:6px;align-items:center;min-height:32px"><input type="checkbox" id="voice"> voz</label></div></div>
+      <div class="pb">
+        <div class="radio"><div class="lcd" id="lcd"><div class="ch"><span>CH 19 · CENTRAL</span><span id="lcd-t">14:32</span></div><span id="lcd-msg">Aguardando chamada…</span></div><div class="grill"></div></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px" id="radio-btns"></div>
+      </div>
+    </section>
+    <section class="p c7">
+      <div class="ph"><h3>Gatilhos</h3></div>
+      <div class="pb" style="padding:0">
+        <table class="ledger"><thead><tr><th>Evento</th><th>Condição (SDK)</th><th class="hide-s">Mensagem</th></tr></thead><tbody>
+          <tr><td>Novo frete</td><td class="tag">onJob 0→1</td><td class="hide-s">"Frete confirmado: {carga}, {massa} t para {destino}. Documentos emitidos."</td></tr>
+          <tr><td>Meio do caminho</td><td class="tag">route ≤ 50 % planned</td><td class="hide-s">"Metade do percurso. Prazo folgado em {folga}."</td></tr>
+          <tr><td>Chegando</td><td class="tag">routeDistanceKm &lt; 25</td><td class="hide-s">"{empresa} avisada: doca reservada."</td></tr>
+          <tr><td>Atraso</td><td class="tag">time_abs &gt; deadline − ETA</td><td class="hide-s">"Previsão de atraso de {min}. Quer que eu avise o cliente?"</td></tr>
+          <tr><td>Avaria</td><td class="tag">cargoDamage ↑ &gt; 2 %</td><td class="hide-s">"Registramos avaria de {x} %. Dirija com cuidado."</td></tr>
+          <tr><td>Multa</td><td class="tag">fined ↑</td><td class="hide-s">"Recebemos o auto de infração: {offence}, R$ {valor}."</td></tr>
+          <tr><td>Jornada</td><td class="tag">direção ≥ 5 h 00</td><td class="hide-s">"Faltam 30 min para a parada obrigatória."</td></tr>
+          <tr><td>Combustível</td><td class="tag">fuel.reserve ↑</td><td class="hide-s">"Entrou na reserva. Posto conveniado a {km} km."</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== CARTEIRA ===================== -->
+  <div class="sec" id="carteira"><h2>Carteira do motorista</h2><span class="code">financeiro por viagem</span></div>
+  <p class="src"><b>SDK</b>: jobDeliveredRevenue, jobCancelledPenalty, fineAmount, tollgatePayAmount, ferryPayAmount, trainPayAmount, refuelAmount (L) · <i>SIM</i>: preço do diesel (configurável), câmbio € → R$ (configurável, padrão 1 € = R$ 6,00), diárias</p>
+  <div class="grid">
+    <section class="p c12">
+      <div class="kpis" id="kpis"></div>
+      <table class="ledger"><thead><tr><th>Hora (jogo)</th><th>Lançamento</th><th class="hide-s">Documento</th><th style="text-align:right">Valor</th><th style="text-align:right" class="hide-s">Saldo</th></tr></thead><tbody id="ledger"></tbody></table>
+    </section>
+  </div>
+
+  <!-- ===================== CHECKLIST ===================== -->
+  <div class="sec" id="checklist"><h2>Checklist pré-viagem</h2><span class="code">liberado antes de sair</span></div>
+  <p class="src"><b>SDK</b> (verificação automática): freio de estacionamento, pressão de ar, combustível, desgaste, reboque acoplado, luzes, cargoMass · itens manuais: documentos, amarração, tacógrafo, EPI</p>
+  <div class="grid">
+    <section class="p c7"><div class="ph"><h3>Checklist · Calais → Lyon</h3><div class="r"><span class="badge" style="--c:var(--tp-warn)" id="chk-badge">6 / 10</span></div></div>
+      <ul class="chk" id="chk"></ul>
+    </section>
+    <section class="p c5" id="relatorio">
+      <div class="ph"><h3>Relatório de entrega</h3><div class="r"><span class="badge" style="--c:var(--tp-ok)">Entregue</span></div></div>
+      <div class="pb">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font:700 44px var(--font-mono)">4,5</span><span class="tp-label">/ 5 · avaliação do cliente</span></div>
+        <div aria-label="4,5 de 5" style="font:22px var(--font-mono);letter-spacing:4px;color:var(--tp-accent)">★★★★<span style="opacity:.45">★</span></div>
+        <div style="margin-top:8px">
+          <div class="row"><span>Prazo (folga)</span><span class="ld"></span><b style="color:var(--tp-ok)">+1 h 48</b></div>
+          <div class="row"><span>Avaria da carga</span><span class="ld"></span><b>2,4 %</b></div>
+          <div class="row"><span>Infrações na viagem</span><span class="ld"></span><b style="color:var(--tp-crit)">1</b></div>
+          <div class="row"><span>Jornada respeitada</span><span class="ld"></span><b style="color:var(--tp-ok)">sim</b></div>
+          <div class="row"><span>Consumo médio</span><span class="ld"></span><b>31,4 L/100</b></div>
+          <div class="row"><span>Estacionamento</span><span class="ld"></span><b>manual (+0,5)</b></div>
+        </div>
+        <p class="src" style="margin-top:8px">Nota = 5 − 1,5·(avaria/10 %) − 0,5·multas − 1·(atraso&gt;0) − 0,5·(jornada violada) + 0,5·(sem autopark), limitada a 1…5 (SIM, determinística).</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="print-root" id="print-root"></div>
+
+<script>
+/* =================================================================
+   Dados do frete de exemplo (no app: snapshot do frame no evento)
+   ================================================================= */
+const JOB = {
+  cargo: 'Frutas secas', cargoId: 'dryfruit', massKg: 18240, units: 1,
+  citySrc: 'Calais', compSrc: 'Tradeaux', countrySrc: 'FR',
+  cityDst: 'Lyon', compDst: 'Agrominta', countryDst: 'FR',
+  income: 3210, plannedKm: 752, startGame: '2026-11-03T06:25', deadline: '2026-11-04T02:00',
+  truckPlate: 'TP-517-RJ', truckCountry: 'FR', trailerPlate: 'TRL-4471', truck: 'Scania R', axles: 5,
+  driver: 'Eduardo B.', carrier: 'TRUCKPULSE TRANSPORTES', fx: 6.0,
+};
+const brl = (v) => 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const num = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+
+/* hash determinístico (FNV-1a) → dígitos */
+function fnv(s) { let h = 2166136261; for (const c of s) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619) >>> 0; } return h; }
+function digits(seed, n) { let out = '', h = fnv(seed); while (out.length < n) { h = Math.imul(h ^ (h >>> 15), 2246822519) >>> 0; out += String(h % 10); } return out; }
+/* CNPJ fictício com DV válido: raiz 99 + 6 dígitos do nome + filial 0001 */
+function cnpj(name) {
+  const b = ('99' + digits('cnpj:' + name, 6) + '0001').split('').map(Number);
+  const dv = (arr, w) => { const s = arr.reduce((a, d, i) => a + d * w[i], 0) % 11; return s < 2 ? 0 : 11 - s; };
+  const d1 = dv(b, [5,4,3,2,9,8,7,6,5,4,3,2]); const d2 = dv([...b, d1], [6,5,4,3,2,9,8,7,6,5,4,3,2]);
+  const s = [...b, d1, d2].join('');
+  return `${s.slice(0,2)}.${s.slice(2,5)}.${s.slice(5,8)}/${s.slice(8,12)}-${s.slice(12)}`;
+}
+function cpf(name) {
+  const b = digits('cpf:' + name, 9).split('').map(Number);
+  const dv = (arr) => { const s = arr.reduce((a, d, i) => a + d * (arr.length + 1 - i), 0) % 11; return s < 2 ? 0 : 11 - s; };
+  const d1 = dv(b), d2 = dv([...b, d1]); const s = [...b, d1, d2].join('');
+  return `${s.slice(0,3)}.${s.slice(3,6)}.${s.slice(6,9)}-${s.slice(9)}`;
+}
+const ie = (name) => { const d = digits('ie:' + name, 12); return `${d.slice(0,3)}.${d.slice(3,6)}.${d.slice(6,9)}.${d.slice(9)}`; };
+/* chave de acesso 44 dígitos: cUF(2) AAMM(4) CNPJ(14) mod(2) série(3) nº(9) tpEmis(1) cNF(8) DV(1) */
+function chave(mod, numero, emitCnpj) {
+  const base = '91' + '2611' + emitCnpj.replace(/\D/g, '') + String(mod).padStart(2,'0') + '001' + String(numero).padStart(9,'0') + '1' + digits('cnf:' + numero + mod, 8);
+  let s = 0, w = 2; for (let i = base.length - 1; i >= 0; i--) { s += Number(base[i]) * w; w = w === 9 ? 2 : w + 1; }
+  const r = s % 11; const dv = r < 2 ? 0 : 11 - r; return base + dv;
+}
+const fmtChave = (k) => k.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+/* Code 128-C (padrões oficiais) → SVG */
+const C128 = ['212222','222122','222221','121223','121322','131222','122213','122312','132212','221213','221312','231212','112232','122132','122231','113222','123122','123221','223211','221132','221231','213212','223112','312131','311222','321122','321221','312212','322112','322211','212123','212321','232121','111323','131123','131321','112313','132113','132311','211313','231113','231311','112133','112331','132131','113123','113321','133121','313121','211331','231131','213113','213311','213131','311123','311321','331121','312113','312311','332111','314111','221411','431111','111224','111422','121124','121421','141122','141221','112214','112412','122114','122411','142112','142211','241211','221114','413111','241112','134111','111242','121142','121241','114212','124112','124211','411212','421112','421211','212141','214121','412121','111143','111341','131141','114113','114311','411113','411311','113141','114131','311141','411131','211412','211214','211232','2331112'];
+function code128c(d) {
+  const vals = [105]; for (let i = 0; i < d.length; i += 2) vals.push(Number(d.slice(i, i + 2)));
+  let chk = 105; vals.slice(1).forEach((v, i) => (chk += v * (i + 1))); vals.push(chk % 103); vals.push(106);
+  let x = 10, bars = '';
+  for (const v of vals) { const p = C128[v]; for (let i = 0; i < p.length; i++) { const w = Number(p[i]); if (i % 2 === 0) bars += `<rect x="${x}" y="0" width="${w}" height="60"/>`; x += w; } }
+  return `<svg viewBox="0 0 ${x + 10} 60" preserveAspectRatio="none" fill="#111" role="img" aria-label="Código de barras da chave de acesso">${bars}</svg>`;
+}
+/* QR ilustrativo (no app: qrcode-generator com a URL de consulta fictícia) */
+function fakeQR(seed, fg = '#111', bg = 'transparent') {
+  const N = 25; let s = `<svg viewBox="-2 -2 ${N + 4} ${N + 4}" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${N + 4}" height="${N + 4}" fill="${bg}"/>`;
+  const h = digits('qr' + seed, N * N);
+  const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" fill="${fg}"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fbfaf6"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="${fg}"/>`;
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    if ((x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9)) continue;
+    if (Number(h[y * N + x]) > 4) s += `<rect x="${x}" y="${y}" width="1" height="1" fill="${fg}"/>`;
+  }
+  return s + finder(0,0) + finder(N-7,0) + finder(0,N-7) + '</svg>';
+}
+
+const PRICE_KG = { dryfruit: 9.8 };           // R$/kg por categoria de carga (tabela SIM)
+const NCM = { dryfruit: ['0813.40.90', 'FRUTAS SECAS DIVERSAS, EMBALADAS EM CAIXAS'] };
+const EMIT = { name: (JOB.compSrc + ' Logística').toUpperCase(), cnpj: cnpj(JOB.compSrc + JOB.citySrc) };
+const DEST = { name: (JOB.compDst + ' Distribuição').toUpperCase(), cnpj: cnpj(JOB.compDst + JOB.cityDst) };
+const CARR = { name: JOB.carrier, cnpj: cnpj(JOB.carrier) };
+const vProd = Math.round(JOB.massKg * PRICE_KG[JOB.cargoId] * 100) / 100;
+const icms = Math.round(vProd * 0.12 * 100) / 100;
+const vFrete = JOB.income * JOB.fx;
+const icmsFrete = Math.round(vFrete * 0.12 * 100) / 100;
+const NF = { n: 4217, chave: chave(55, 4217, EMIT.cnpj) };
+const CT = { n: 1388, chave: chave(57, 1388, CARR.cnpj) };
+const MD = { n: 512, chave: chave(58, 512, CARR.cnpj) };
+const nfmt = (n) => String(n).padStart(9, '0').replace(/(\d{3})(\d{3})(\d{3})/, '$1.$2.$3');
+const gdate = (iso) => { const d = new Date(iso); return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); };
+
+const bx = (l, v, cls = '', span = '') => `<div class="bx" ${span ? `style="grid-column:span ${span}"` : ''}><span class="l">${l}</span><span class="v ${cls}">${v}</span></div>`;
+const brow = (cols, html) => `<div class="brow" style="grid-template-columns:${cols}">${html}</div>`;
+const disclaimer = `<div class="disc">DOCUMENTO · gerado pelo TRUCKPULSE</div>`;
+const wm = `<div class="wm"><span>NFe</span></div>`;
+
+/* =================== DANFE =================== */
+function danfe() {
+  return `<div class="sheet" id="sheet-nfe">${wm}
+    <div class="canhoto">
+      ${brow('1fr', bx(`Recebemos de ${EMIT.name} os produtos constantes da nota fiscal eletrônica indicada ao lado`, `Destinatário: ${DEST.name} — ${JOB.cityDst}/${JOB.countryDst} · Valor total: ${brl(vProd)}`))}
+      <div class="bx" style="grid-row:span 2;text-align:center"><span class="l" style="text-align:center">NF-e</span><span class="v b c" style="font-size:1.9cqw">Nº ${nfmt(NF.n)}</span><span class="v c">SÉRIE 001</span></div>
+      ${brow('30fr 70fr', bx('Data de recebimento', '') + bx('Identificação e assinatura do recebedor', ''))}
+    </div>
+    <div class="danfe-head">
+      <div class="bx"><span class="l">Identificação do emitente</span>
+        <div class="emit" style="margin-top:.5cqw"><div class="logo">${JOB.compSrc[0]}</div><div><div class="nm">${EMIT.name}</div><div class="ad">Zone Industrielle Nord, 1200 — Port<br>${JOB.citySrc} / ${JOB.countrySrc} · CEP 62100-000<br>Fone (00) 0000-0000</div></div></div></div>
+      <div class="bx dbox"><div class="t1">DANFE</div><div class="t2">Documento Auxiliar da<br>Nota Fiscal Eletrônica</div>
+        <div class="es"><span>0 - ENTRADA<br>1 - SAÍDA</span><i>1</i></div><div class="nn">Nº ${nfmt(NF.n)}<br>SÉRIE 001<br>FOLHA 1/1</div></div>
+      <div class="bx"><div class="bar">${code128c(NF.chave)}</div><span class="l" style="margin-top:.4cqw">Chave de acesso</span><div class="chave">${fmtChave(NF.chave)}</div>
+        <div class="consult">Consulta de autenticidade no portal nacional da NF-e<br>www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora</div></div>
+    </div>
+    ${brow('58fr 42fr', bx('Natureza da operação', 'VENDA DE MERCADORIA ADQUIRIDA DE TERCEIROS', 'b') + bx('Protocolo de autorização de uso', '991 2611 0004217 8 — ' + gdate(JOB.startGame), 'c'))}
+    ${brow('1fr 1fr 1fr', bx('Inscrição estadual', ie(EMIT.name)) + bx('Insc. estadual do subst. trib.', '') + bx('CNPJ', EMIT.cnpj))}
+    <div class="bt">Destinatário / remetente</div>
+    ${brow('58fr 24fr 18fr', bx('Nome / razão social', DEST.name, 'b') + bx('CNPJ / CPF', DEST.cnpj) + bx('Data da emissão', gdate(JOB.startGame).slice(0,10), 'c'))}
+    ${brow('46fr 22fr 14fr 18fr', bx('Endereço', 'Rue de la Logistique, 88') + bx('Bairro / distrito', 'Gerland') + bx('CEP', '69007-000') + bx('Data da saída/entrada', gdate(JOB.startGame).slice(0,10), 'c'))}
+    ${brow('40fr 18fr 6fr 18fr 18fr', bx('Município', JOB.cityDst) + bx('Fone / fax', '') + bx('UF', JOB.countryDst, 'c') + bx('Inscrição estadual', ie(DEST.name)) + bx('Hora da saída', gdate(JOB.startGame).slice(11), 'c'))}
+    <div class="bt">Cálculo do imposto</div>
+    ${brow('repeat(5,1fr)', bx('Base de cálc. do ICMS', num(vProd), 'r') + bx('Valor do ICMS', num(icms), 'r') + bx('Base cálc. ICMS S.T.', '0,00', 'r') + bx('Valor do ICMS subst.', '0,00', 'r') + bx('Valor total dos produtos', num(vProd), 'r b'))}
+    ${brow('repeat(6,1fr)', bx('Valor do frete', '0,00', 'r') + bx('Valor do seguro', '0,00', 'r') + bx('Desconto', '0,00', 'r') + bx('Outras despesas', '0,00', 'r') + bx('Valor do IPI', '0,00', 'r') + bx('Valor total da nota', num(vProd), 'r b'))}
+    <div class="bt">Transportador / volumes transportados</div>
+    ${brow('34fr 20fr 12fr 13fr 5fr 16fr', bx('Nome / razão social', CARR.name, 'b') + bx('Frete por conta', '1 - DESTINATÁRIO') + bx('Código ANTT', digits('rntrc', 8)) + bx('Placa do veículo', JOB.truckPlate, 'b') + bx('UF', JOB.truckCountry, 'c') + bx('CNPJ / CPF', CARR.cnpj))}
+    ${brow('44fr 30fr 6fr 20fr', bx('Endereço', 'Av. das Transportadoras, 517') + bx('Município', JOB.citySrc) + bx('UF', JOB.countrySrc, 'c') + bx('Inscrição estadual', ie(CARR.name)))}
+    ${brow('repeat(6,1fr)', bx('Quantidade', '24', 'r') + bx('Espécie', 'PALETES') + bx('Marca', '—') + bx('Numeração', '1 A 24') + bx('Peso bruto', num(JOB.massKg + 600, 3) + ' kg', 'r') + bx('Peso líquido', num(JOB.massKg, 3) + ' kg', 'r'))}
+    <div class="bt">Dados do produto / serviço</div>
+    <table class="prod"><thead><tr><th>Código</th><th style="width:30%">Descrição do produto / serviço</th><th>NCM/SH</th><th>CST</th><th>CFOP</th><th>UN</th><th>Qtde.</th><th>V. unit.</th><th>V. total</th><th>BC ICMS</th><th>V. ICMS</th><th>Alíq. ICMS</th></tr></thead>
+      <tbody><tr class="fill"><td>${JOB.cargoId.toUpperCase()}</td><td>${NCM[JOB.cargoId][1]}<br><span style="color:#555">Placa reboque ${JOB.trailerPlate}</span></td><td>${NCM[JOB.cargoId][0]}</td><td>000</td><td>6.102</td><td>KG</td><td class="n">${num(JOB.massKg, 4)}</td><td class="n">${num(PRICE_KG[JOB.cargoId], 4)}</td><td class="n">${num(vProd)}</td><td class="n">${num(vProd)}</td><td class="n">${num(icms)}</td><td class="n">12,00</td></tr></tbody></table>
+    <div class="bt">Dados adicionais</div>
+    <div class="addl">${bx('Informações complementares', `Frete do jogo Euro Truck Simulator 2 · origem ${JOB.compSrc} (${JOB.citySrc}) → destino ${JOB.compDst} (${JOB.cityDst}) · distância planejada ${JOB.plannedKm} km · valor do frete € ${JOB.income.toLocaleString('pt-BR')} (câmbio simulado 1 € = R$ ${num(JOB.fx)}) · prazo ${gdate(JOB.deadline)} (relógio do jogo). Valores de mercadoria e impostos SIMULADOS.`)}${bx('Reservado ao fisco', '')}</div>
+    ${disclaimer}
+  </div>`;
+}
+
+/* =================== DACTE =================== */
+function dacte() {
+  return `<div class="sheet" id="sheet-cte">${wm}
+    <div class="danfe-head" style="grid-template-columns:40fr 22fr 38fr">
+      <div class="bx"><span class="l">Emitente (transportador)</span><div class="emit" style="margin-top:.5cqw"><div class="logo" style="font-size:1.9cqw">TP</div><div><div class="nm">${CARR.name}</div><div class="ad">CNPJ ${CARR.cnpj}<br>IE ${ie(CARR.name)} · RNTRC ${digits('rntrc', 8)}<br>${JOB.citySrc} / ${JOB.countrySrc}</div></div></div></div>
+      <div class="bx dbox"><div class="t1">DACTE</div><div class="t2">Documento Auxiliar do<br>Conhecimento de Transporte Eletrônico</div><div class="nn">MODELO 57 · SÉRIE 001<br>Nº ${nfmt(CT.n)}<br>FOLHA 1/1</div></div>
+      <div class="bx"><div class="bar">${code128c(CT.chave)}</div><span class="l">Chave de acesso</span><div class="chave">${fmtChave(CT.chave)}</div><div class="consult">Protocolo 991 2611 0001388 4 · ${gdate(JOB.startGame)}</div></div>
+    </div>
+    ${brow('repeat(4,1fr)', bx('Modal', 'RODOVIÁRIO', 'b') + bx('Tipo do CT-e', 'NORMAL') + bx('Tipo do serviço', 'NORMAL') + bx('Tomador do serviço', 'DESTINATÁRIO'))}
+    ${brow('1fr 1fr', bx('CFOP — natureza da prestação', '6.353 — PRESTAÇÃO DE SERVIÇO DE TRANSPORTE A ESTABELECIMENTO COMERCIAL') + bx('Data e hora de emissão', gdate(JOB.startGame), 'c'))}
+    ${brow('1fr 1fr', bx('Início da prestação', `${JOB.citySrc} — ${JOB.countrySrc}`, 'b') + bx('Término da prestação', `${JOB.cityDst} — ${JOB.countryDst}`, 'b'))}
+    ${brow('1fr 1fr', bx('Remetente', `${EMIT.name}<br>CNPJ ${EMIT.cnpj}`.replace('<br>', ' · ')) + bx('Destinatário', `${DEST.name} · CNPJ ${DEST.cnpj}`))}
+    ${brow('1fr 1fr', bx('Expedidor', '—') + bx('Recebedor', '—'))}
+    <div class="bt">Informações da carga</div>
+    ${brow('40fr 20fr 20fr 20fr', bx('Produto predominante', JOB.cargo.toUpperCase(), 'b') + bx('Outras características', 'CARGA PALETIZADA') + bx('Valor total da carga', num(vProd), 'r') + bx('Peso bruto (kg)', num(JOB.massKg + 600, 3), 'r'))}
+    <div class="bt">Componentes do valor da prestação do serviço</div>
+    ${brow('repeat(4,1fr)', bx('Frete peso', num(vFrete * 0.82), 'r') + bx('Frete valor (ad valorem)', num(vFrete * 0.08), 'r') + bx('Pedágio', num(vFrete * 0.06), 'r') + bx('Gris / outros', num(vFrete * 0.04), 'r'))}
+    ${brow('1fr 1fr', bx('Valor total do serviço', brl(vFrete), 'r b') + bx('Valor a receber', brl(vFrete), 'r b'))}
+    <div class="bt">Informações relativas ao imposto</div>
+    ${brow('repeat(5,1fr)', bx('Situação tributária', '00 - TRIBUTAÇÃO NORMAL') + bx('Base de cálculo', num(vFrete), 'r') + bx('Alíq. ICMS', '12,00', 'r') + bx('Valor ICMS', num(icmsFrete), 'r') + bx('% red. BC', '0,00', 'r'))}
+    <div class="bt">Documentos originários</div>
+    ${brow('20fr 80fr', bx('Tipo', 'NF-e') + bx('Chave de acesso', fmtChave(NF.chave), 'b'))}
+    <div class="bt">Dados específicos do modal rodoviário</div>
+    ${brow('repeat(4,1fr)', bx('RNTRC da empresa', digits('rntrc', 8)) + bx('Placa tração', JOB.truckPlate, 'b') + bx('Placa reboque', JOB.trailerPlate, 'b') + bx('Previsão de entrega', gdate(JOB.deadline), 'c'))}
+    <div class="bt">Observações</div>
+    <div class="addl">${bx('Observações gerais', `Distância planejada ${JOB.plannedKm} km. Valor do frete = receita do frete no jogo (jobIncome € ${JOB.income.toLocaleString('pt-BR')}) × câmbio simulado.`)}${bx('Reservado ao fisco', '')}</div>
+    ${disclaimer}
+  </div>`;
+}
+
+/* =================== DAMDFE =================== */
+function damdfe() {
+  return `<div class="sheet" id="sheet-mdfe">${wm}
+    <div class="danfe-head" style="grid-template-columns:44fr 56fr">
+      <div class="bx"><span class="l">Emitente</span><div class="emit" style="margin-top:.5cqw"><div class="logo" style="font-size:1.9cqw">TP</div><div><div class="nm">${CARR.name}</div><div class="ad">CNPJ ${CARR.cnpj} · IE ${ie(CARR.name)}<br>RNTRC ${digits('rntrc', 8)}</div></div></div></div>
+      <div class="bx"><div style="display:grid;grid-template-columns:1fr 13cqw;gap:1cqw;align-items:center"><div><div class="t1" style="font:700 2.4cqw var(--doc-font)">DAMDFE</div><div style="font:1.1cqw var(--doc-font)">Documento Auxiliar do Manifesto Eletrônico de Documentos Fiscais</div><div class="bar" style="margin-top:.6cqw">${code128c(MD.chave)}</div></div><div class="qr" style="height:13cqw">${fakeQR(MD.chave)}</div></div>
+        <span class="l">Chave de acesso</span><div class="chave">${fmtChave(MD.chave)}</div></div>
+    </div>
+    ${brow('repeat(6,1fr)', bx('Modelo', '58', 'c') + bx('Série', '001', 'c') + bx('Número', nfmt(MD.n), 'c') + bx('Folha', '1/1', 'c') + bx('Emissão', gdate(JOB.startGame), 'c', '') + bx('UF carreg. → descarreg.', `${JOB.countrySrc} → ${JOB.countryDst}`, 'c'))}
+    ${brow('repeat(4,1fr)', bx('Qtd. CT-e', '1', 'r b') + bx('Qtd. NF-e', '1', 'r b') + bx('Peso total (kg)', num(JOB.massKg + 600, 3), 'r b') + bx('Valor total da carga', brl(vProd), 'r b'))}
+    <div class="bt">Modal rodoviário de carga</div>
+    <table class="prod"><thead><tr><th>Veículo</th><th>Placa</th><th>País/UF</th><th>RNTRC</th><th>Tipo</th><th>Eixos</th></tr></thead><tbody>
+      <tr><td>Tração · ${JOB.truck}</td><td><b>${JOB.truckPlate}</b></td><td>${JOB.truckCountry}</td><td>${digits('rntrc', 8)}</td><td>Cavalo mecânico</td><td class="n">2</td></tr>
+      <tr><td>Reboque · sider</td><td><b>${JOB.trailerPlate}</b></td><td>${JOB.truckCountry}</td><td>${digits('rntrc', 8)}</td><td>Semirreboque</td><td class="n">3</td></tr>
+      <tr class="fill" style="height:2cqw"><td colspan="6"></td></tr></tbody></table>
+    <div class="bt">Condutor</div>
+    ${brow('60fr 40fr', bx('Nome', JOB.driver.toUpperCase(), 'b') + bx('CPF (fictício)', cpf(JOB.driver)))}
+    <div class="bt">Percurso e documentos vinculados</div>
+    ${brow('1fr', bx('Percurso', `${JOB.citySrc} (${JOB.countrySrc}) → ${JOB.cityDst} (${JOB.countryDst}) · ${JOB.plannedKm} km planejados`))}
+    ${brow('20fr 80fr', bx('CT-e', fmtChave(CT.chave)) + bx('NF-e vinculada', fmtChave(NF.chave)))}
+    ${brow('1fr 1fr', bx('Seguradora (simulada)', 'SEGURADORA EXEMPLO S.A. · apólice ' + digits('ap', 10)) + bx('Averbação', digits('av', 14)))}
+    <div class="bt">Observações</div>
+    <div class="addl">${bx('Informações complementares', 'Manifesto encerrado automaticamente na entrega (jobDelivered) ou cancelado (jobCancelled).')}${bx('Reservado ao fisco', '')}</div>
+    ${disclaimer}
+  </div>`;
+}
+
+document.getElementById('danfe').innerHTML = danfe();
+document.getElementById('dacte').innerHTML = dacte();
+document.getElementById('damdfe').innerHTML = damdfe();
+document.getElementById('cn-emit').textContent = EMIT.name;
+document.getElementById('cn-num').textContent = nfmt(NF.n);
+document.getElementById('mini-docs').textContent = `NF-e ${nfmt(NF.n)} · CT-e ${nfmt(CT.n)} · MDF-e ${nfmt(MD.n)}`;
+
+/* =================== status (stepper) =================== */
+let STATUS = 'transit';
+function renderSteps(el) {
+  const steps = [['issued', 'Emitida', gdate(JOB.startGame)], ['transit', 'Em trânsito', `${JOB.plannedKm} km`], ['delivered', 'Entregue · assinada', STATUS === 'delivered' ? '04/11 00:12' : '—'], ['end', STATUS === 'cancelled' ? 'Cancelada' : 'Arquivada', STATUS === 'cancelled' ? 'multa € 1.250' : '—']];
+  const order = { issued: 0, transit: 1, delivered: 2, cancelled: 3 };
+  el.innerHTML = steps.map(([k, l, s], i) => {
+    let c = i < order[STATUS] ? 'done' : i === order[STATUS] ? 'cur' : '';
+    if (STATUS === 'cancelled' && i === 3) c = 'cancel'; if (STATUS === 'cancelled' && i === 2) c = '';
+    if (STATUS === 'delivered' && i === 2) c = 'done';
+    return `<div class="${c}"><b>${l}</b><span>${s}</span></div>`;
+  }).join('');
+}
+const refreshSteps = () => { renderSteps(document.getElementById('steps-main')); renderSteps(document.getElementById('steps-mini')); };
+refreshSteps();
+
+/* =================== assinatura =================== */
+const pad = document.getElementById('pad'), ctx = pad.getContext('2d');
+/* traços guardados em coordenadas normalizadas (0..1) → redesenha ao redimensionar e serializa para o servidor */
+let strokes = [], cur = null, drawing = false, inked = false;
+const penColor = () => getComputedStyle(document.documentElement).getPropertyValue('--ink-pen').trim() || '#1b2a6b';
+function seg(a, b, W, H) { ctx.lineWidth = b.w; ctx.beginPath(); ctx.moveTo(a.x * W, a.y * H); ctx.quadraticCurveTo(a.x * W, a.y * H, ((a.x + b.x) / 2) * W, ((a.y + b.y) / 2) * H); ctx.lineTo(b.x * W, b.y * H); ctx.stroke(); }
+function redraw() { const r = pad.getBoundingClientRect(); ctx.clearRect(0, 0, r.width, r.height); for (const s of strokes) for (let i = 1; i < s.length; i++) seg(s[i - 1], s[i], r.width, r.height); }
+function fit() { const r = pad.getBoundingClientRect(), d = devicePixelRatio || 1; pad.width = Math.max(1, r.width * d); pad.height = Math.max(1, r.height * d); ctx.setTransform(d, 0, 0, d, 0, 0); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = penColor(); redraw(); }
+fit(); addEventListener('resize', fit);
+const pt = (e, prev) => { const r = pad.getBoundingClientRect(); const p = { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height, t: performance.now() };
+  if (prev) { const v = Math.hypot((p.x - prev.x) * r.width, (p.y - prev.y) * r.height) / Math.max(1, p.t - prev.t); p.w = e.pointerType === 'pen' && e.pressure ? 1 + e.pressure * 2.6 : Math.max(1.1, 3.2 - v * 1.6); } else p.w = 2.4; return p; };
+pad.addEventListener('pointerdown', (e) => { if (STATUS !== 'transit') return; drawing = true; pad.setPointerCapture(e.pointerId); cur = [pt(e)]; strokes.push(cur); });
+pad.addEventListener('pointermove', (e) => { if (!drawing) return; const r = pad.getBoundingClientRect(); const p = pt(e, cur[cur.length - 1]); seg(cur[cur.length - 1], p, r.width, r.height); cur.push(p); inked = true; });
+['pointerup', 'pointercancel'].forEach((ev) => pad.addEventListener(ev, () => (drawing = false)));
+function clearSig() { strokes = []; inked = false; redraw(); }
+function autoSignature() { // rubrica de exemplo quando o usuário confirma sem desenhar
+  const s = []; let x = 0.06; const y = 0.62;
+  for (let i = 0; i < 90; i++) { x += 0.0052; const a = i * 0.42; s.push({ x, y: y - 0.11 * Math.sin(a) * (1 + 0.6 * Math.sin(i * 0.11)) - 0.05 * Math.sin(a * 0.5), w: 1.3 + 1.2 * Math.abs(Math.cos(a)) }); }
+  strokes.push(s, [{ x: 0.08, y: 0.74, w: 1.4 }, { x: 0.3, y: 0.71, w: 2.2 }, { x: 0.52, y: 0.73, w: 1.2 }]); inked = true; redraw();
+}
+
+/* =================== carimbos (SVG com tinta irregular) =================== */
+function roundStamp(color, top, center, sub, seed) {
+  return `<svg class="stamp" viewBox="0 0 220 220" style="--r0:${-18 + (seed % 7)}deg;--r1:${-9 + (seed % 5)}deg" aria-hidden="true">
+    <defs>
+      <filter id="ink${seed}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="${seed}" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.35" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in" result="c"/><feTurbulence type="turbulence" baseFrequency=".035" numOctaves="2" seed="${seed + 3}" result="w"/><feDisplacementMap in="c" in2="w" scale="3.5"/></filter>
+      <path id="arcT${seed}" d="M 34 110 A 76 76 0 0 1 186 110"/><path id="arcB${seed}" d="M 26 110 A 84 84 0 0 0 194 110"/>
+    </defs>
+    <g filter="url(#ink${seed})" fill="${color}" stroke="${color}">
+      <circle cx="110" cy="110" r="100" fill="none" stroke-width="6"/><circle cx="110" cy="110" r="90" fill="none" stroke-width="2"/><circle cx="110" cy="110" r="56" fill="none" stroke-width="2"/>
+      <text font-family="Arimo,Arial,sans-serif" font-weight="700" font-size="15" letter-spacing="2.5" stroke="none"><textPath href="#arcT${seed}" startOffset="50%" text-anchor="middle">${top}</textPath></text>
+      <text font-family="Arimo,Arial,sans-serif" font-weight="700" font-size="12" letter-spacing="2" stroke="none"><textPath href="#arcB${seed}" startOffset="50%" text-anchor="middle" dominant-baseline="hanging">${sub}</textPath></text>
+      <text x="110" y="104" text-anchor="middle" font-family="Arimo,Arial,sans-serif" font-weight="700" font-size="20" stroke="none">${center[0]}</text>
+      <text x="110" y="126" text-anchor="middle" font-family="'Courier Prime',monospace" font-weight="700" font-size="14" stroke="none">${center[1]}</text>
+      <text x="110" y="143" text-anchor="middle" font-family="'Courier Prime',monospace" font-size="12" stroke="none">${center[2]}</text>
+      <text x="20" y="116" font-size="14" stroke="none">★</text><text x="188" y="116" font-size="14" stroke="none">★</text>
+    </g></svg>`;
+}
+function rectStamp(color, l1, l2, seed) {
+  return `<svg class="stamp" viewBox="0 0 300 125" style="--r0:${8 + (seed % 5)}deg;--r1:${-4 - (seed % 4)}deg" aria-hidden="true">
+    <defs><filter id="inkr${seed}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="${seed}" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.4" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in" result="c"/><feTurbulence baseFrequency=".03" seed="${seed + 1}" result="w"/><feDisplacementMap in="c" in2="w" scale="3"/></filter></defs>
+    <g filter="url(#inkr${seed})" fill="${color}" stroke="${color}"><rect x="6" y="6" width="288" height="113" fill="none" stroke-width="7"/><rect x="16" y="16" width="268" height="93" fill="none" stroke-width="2"/>
+      <text x="150" y="70" text-anchor="middle" font-family="Arimo,Arial,sans-serif" font-weight="700" font-size="40" letter-spacing="4" stroke="none">${l1}</text>
+      <text x="150" y="96" text-anchor="middle" font-family="'Courier Prime',monospace" font-weight="700" font-size="15" stroke="none">${l2}</text></g></svg>`;
+}
+function hit(slot, svg) {
+  const el = document.getElementById(slot); el.innerHTML = svg; const s = el.querySelector('.stamp');
+  requestAnimationFrame(() => { s.classList.add('hit'); const a = document.getElementById('sign-area'); a.classList.remove('thump'); void a.offsetWidth; a.classList.add('thump'); thud(); });
+}
+function thud() { try { const ac = new (window.AudioContext || window.webkitAudioContext)(); const o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(140, ac.currentTime); o.frequency.exponentialRampToValueAtTime(45, ac.currentTime + .12); g.gain.setValueAtTime(.35, ac.currentTime); g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + .16); o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + .17); } catch {} }
+const STAMP_TIME = ['04 NOV 2026', '00:12', 'DOCA 4'];
+function deliver(damage) {
+  if (STATUS !== 'transit') return; if (!inked) autoSignature();
+  document.getElementById('cn-date').textContent = '04/11/2026 00:12 (jogo)';
+  document.getElementById('cn-dmg').textContent = damage > 5 ? `${num(damage, 1)} % — ACIMA do limite de 5 %` : `${num(damage, 1)} % (abaixo do limite de 5 %)`;
+  STATUS = 'delivered'; refreshSteps();
+  setTimeout(() => hit('slot-round', roundStamp('#1f3f9a', JOB.compDst.toUpperCase() + ' · ' + JOB.cityDst.toUpperCase(), ['RECEBIDO', ...STAMP_TIME.slice(0, 2)], 'CONFERIDO · ' + STAMP_TIME[2], 7)), 120);
+  if (damage > 5) setTimeout(() => hit('slot-rect', rectStamp('#b3261e', 'AVARIA', `REGISTRADA ${num(damage, 1)} %`, 11)), 820);
+  toast('Central', `Entrega confirmada em ${JOB.cityDst}. NF-e ${nfmt(NF.n)} assinada e carimbada.`, 'var(--tp-ok)');
+}
+document.getElementById('sign').onclick = () => deliver(2.4);
+document.getElementById('dmg').onclick = () => deliver(8.7);
+document.getElementById('cancel').onclick = () => { if (STATUS !== 'transit') return; STATUS = 'cancelled'; refreshSteps(); hit('slot-rect', rectStamp('#b3261e', 'CANCELADO', 'jobCancelled · multa € 1.250', 5)); toast('Central', 'Frete cancelado. Multa contratual de € 1.250 lançada na carteira.', 'var(--tp-crit)'); };
+document.getElementById('clr').onclick = () => { if (STATUS === 'transit') clearSig(); };
+document.getElementById('reset').onclick = () => { STATUS = 'transit'; refreshSteps(); clearSig(); ['slot-round', 'slot-rect'].forEach((s) => (document.getElementById(s).innerHTML = '')); document.getElementById('cn-date').textContent = '—'; document.getElementById('cn-dmg').textContent = '—'; };
+
+/* =================== recibos =================== */
+const PRICE_L = 6.19;
+function receipts() {
+  const toll = 41.6 * JOB.fx, liters = 412.6, fuelTot = liters * PRICE_L;
+  return `
+  <div class="thermal" id="doc-toll"><div class="c b">AUTOROUTES DU NORD S.A.</div><div class="c fade">CONCESSIONÁRIA (FICTÍCIA) · CNPJ ${cnpj('autoroutes')}</div><hr>
+    <div class="c b">RECIBO DE PEDÁGIO</div><hr>
+    <div class="kv"><span>PRAÇA</span><span>P-14 · A26 KM 212</span></div><div class="kv"><span>CABINE</span><span>07</span></div>
+    <div class="kv"><span>DATA/HORA</span><span>03/11/26 09:58</span></div><div class="kv"><span>PLACA</span><span>${JOB.truckPlate}</span></div>
+    <div class="kv"><span>CATEGORIA</span><span>9 · ${JOB.axles} EIXOS</span></div><div class="kv"><span>PAGAMENTO</span><span>TAG</span></div><hr>
+    <div class="kv big"><span>TOTAL</span><span>${brl(toll)}</span></div><div class="fade">tollgatePayAmount € 41,60 × câmbio simulado</div><hr>
+    <div class="c fade">BOA VIAGEM · NÃO É DOCUMENTO FISCAL</div><div class="barc">${code128c(digits('toll', 20))}</div></div>
+
+  <div class="thermal" id="doc-fuel"><div class="c b">POSTO ESTRELA DA A5 LTDA</div><div class="c fade">CNPJ ${cnpj('posto estrela')} · IE ${ie('posto')}</div><hr>
+    <div class="c b">DANFE NFC-e — DOCUMENTO AUXILIAR<br>DA NOTA FISCAL DE CONSUMIDOR</div><hr>
+    <div class="kv b"><span>ITEM</span><span>QTD × VL UNIT</span></div>
+    <div>001 ÓLEO DIESEL S10</div><div class="kv"><span>BOMBA 03 · BICO 06</span><span>${num(liters, 3)} L × ${num(PRICE_L, 3)}</span></div>
+    <div class="kv"><span></span><span class="b">${num(fuelTot)}</span></div><hr>
+    <div class="kv"><span>QTD. TOTAL DE ITENS</span><span>1</span></div><div class="kv big"><span>VALOR A PAGAR</span><span>${brl(fuelTot)}</span></div>
+    <div class="kv"><span>FORMA PGTO</span><span>CARTÃO FROTA</span></div><div class="kv"><span>ODÔMETRO</span><span>184.211 km</span></div><div class="kv"><span>PLACA</span><span>${JOB.truckPlate}</span></div><hr>
+    <div class="fade">refuelAmount ${num(liters, 1)} L (SDK) · preço/L SIMULADO (Configurações)</div>
+    <div style="display:grid;grid-template-columns:90px 1fr;gap:8px;align-items:center;margin-top:8px"><div style="height:90px">${fakeQR('nfce')}</div><div class="fade">Consulta pela chave de acesso<br>${fmtChave(chave(65, 88213, cnpj('posto estrela'))).slice(0, 29)}…<br>NFC-e nº 088.213 série 1</div></div>
+    <hr><div class="c b" style="color:#9d1d16">NFe</div></div>
+
+  <div class="ticket" id="doc-ferry"><div class="main">
+      <div style="display:flex;justify-content:space-between"><b>BALSA · NORDIC FERRY (FICT.)</b><span class="k">nº ${digits('ferry', 7)}</span></div>
+      <div class="route"><span>DOVER</span><i></i><span>CALAIS</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 12px">
+        <div><div class="k">Partida (jogo)</div><b>03/11 · 05:40</b></div><div><div class="k">Veículo</div><b>${JOB.truckPlate}</b></div>
+        <div><div class="k">Categoria</div><b>CAMINHÃO + REBOQUE</b></div><div><div class="k">Valor</div><b>${brl(186 * JOB.fx)}</b></div></div>
+      <div class="k" style="margin-top:8px">ferrySourceName / ferryTargetName / ferryPayAmount (SDK) · trem usa o mesmo bilhete com "TREM"</div>
+    </div><div class="stub">EMBARQUE · CONVÉS 3</div></div>`;
+}
+document.getElementById('receipts').innerHTML = receipts();
+
+/* =================== auto de infração =================== */
+const OFFENCE = { speeding: ['218, I', 'Transitar em velocidade superior à máxima permitida em até 20 %', 'MÉDIA'], speeding_camera: ['218, I', 'Velocidade superior à máxima permitida (radar)', 'MÉDIA'], red_signal: ['208', 'Avançar o sinal vermelho do semáforo', 'GRAVÍSSIMA'], wrong_way: ['186, II', 'Transitar pela contramão de direção', 'GRAVÍSSIMA'], no_lights: ['250, I, b', 'Deixar de manter acesas as luzes de posição/farol', 'MÉDIA'], crash: ['169', 'Dirigir sem atenção ou sem os cuidados indispensáveis à segurança', 'LEVE'], avoid_sleeping: ['67-C', 'Descumprir o tempo de direção e descanso do motorista', 'GRAVE'], avoid_weighing: ['209', 'Evadir-se para não efetuar a pesagem obrigatória', 'GRAVE'], illegal_trailer: ['231, V', 'Transitar com reboque em desacordo com a autorização', 'GRAVE'], avoid_inspection: ['209', 'Deixar de adentrar às áreas de fiscalização', 'GRAVE'], illegal_border_crossing: ['209', 'Transpor bloqueio de fiscalização', 'GRAVE'], hard_shoulder_violation: ['193', 'Transitar pelo acostamento', 'GRAVÍSSIMA'], damaged_vehicle_usage: ['230, XVIII', 'Conduzir veículo em mau estado de conservação', 'GRAVE'], generic: ['—', 'Infração de trânsito', 'MÉDIA'] };
+function talao(offence = 'speeding', amountEur = 650) {
+  const [art, desc, grav] = OFFENCE[offence];
+  return `<div class="via v2"></div><div class="via" id="doc-fine"><div class="perf"></div>
+    <div class="org">Polícia Rodoviária (órgão fictício) · Superintendência Regional</div>
+    <h4>Auto de infração de trânsito</h4><div class="no">AIT ${digits('ait', 3)}-${digits('ait2', 6)}</div>
+    <div class="f">
+      <div class="s2"><span class="l">Placa</span><span class="h">${JOB.truckPlate}</span></div><div class="s2"><span class="l">Marca / modelo</span><span class="h">${JOB.truck}</span></div><div class="s2"><span class="l">Espécie</span><span class="h">carga · tração</span></div>
+      <div class="s4"><span class="l">Local da infração</span><span class="h">Rodovia — rota ${JOB.citySrc} → ${JOB.cityDst}</span></div><div class="s2"><span class="l">Data · hora (jogo)</span><span class="h">03/11 · 12:47</span></div>
+      <div class="s2"><span class="l">Código / enquadramento (CTB)</span><span class="h">art. ${art}</span></div><div class="s4"><span class="l">Descrição da infração · fineOffence = "${offence}"</span><span class="h">${desc}</span></div>
+      <div class="s2"><span class="l">Gravidade</span><span class="h">${grav}</span></div><div class="s2"><span class="l">Valor (fineAmount × câmbio)</span><span class="h">${brl(amountEur * JOB.fx)}</span></div><div class="s2"><span class="l">Medição</span><span class="h">${offence.startsWith('speeding') ? '97 km/h · lim. 80' : '—'}</span></div>
+      <div class="s3"><span class="l">Condutor</span><span class="h">${JOB.driver}</span></div><div class="s3"><span class="l">Assinatura do condutor</span><span class="sig">${JOB.driver.split(' ')[0]}</span></div>
+      <div class="s3"><span class="l">Agente autuador · matrícula</span><span class="h">Sd. Ramires · ${digits('mat', 6)}</span></div><div class="s3"><span class="l">Assinatura do agente</span><span class="sig">Ramires</span></div>
+      <div class="s6"><span class="l">Observações</span><span class="h">Condutor notificado no local.</span></div>
+    </div>
+    <div style="font:1.6cqw var(--doc-font);margin-top:1.6cqw;color:#5c5545">1ª via — condutor · 2ª via (rosa) — órgão autuador</div>
+  </div>`;
+}
+document.getElementById('talao').innerHTML = talao();
+
+/* =================== tacógrafo =================== */
+function tacho() {
+  const cx = 150, cy = 150, P = (r, h) => { const a = (h / 24) * 2 * Math.PI - Math.PI / 2; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; };
+  const arcP = (r, h0, h1) => { const [x0, y0] = P(r, h0), [x1, y1] = P(r, h1); return `M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${h1 - h0 > 12 ? 1 : 0} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`; };
+  let s = `<svg viewBox="0 0 300 300" role="img" aria-label="Disco de tacógrafo de 24 horas"><circle cx="150" cy="150" r="146" fill="#f3f0e6"/><circle cx="150" cy="150" r="146" fill="none" stroke="#16161a" stroke-width="1.5"/>`;
+  for (let m = 0; m < 24 * 12; m++) { const h = m / 12, maj = m % 12 === 0; const [x0, y0] = P(142, h), [x1, y1] = P(maj ? 128 : 136, h); s += `<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#16161a" stroke-width="${maj ? 1.2 : .5}"/>`; if (maj) { const [tx, ty] = P(118, h); s += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" font-family="Arimo,Arial" font-size="9" text-anchor="middle" dominant-baseline="central" fill="#16161a">${h}</text>`; } }
+  // faixas de velocidade (0..120 km/h → r 70..106)
+  for (const v of [40, 80, 120]) s += `<circle cx="150" cy="150" r="${70 + v * 0.3}" fill="none" stroke="#9c958a" stroke-width=".5" stroke-dasharray="2 2"/>`;
+  // traço de velocidade
+  let d = ''; for (let m = 0; m <= 14.53 * 60; m += 4) { const h = m / 60; let v = 0; if ((h > 7 && h < 9.22) || (h > 9.73 && h < 14.53)) v = 72 + 10 * Math.sin(m / 7) + 6 * Math.sin(m / 2.3); if (h > 6.4 && h < 7) v = 8 * Math.abs(Math.sin(m)); const [x, y] = P(70 + v * 0.3, h); d += (d ? ' L ' : 'M ') + x.toFixed(1) + ' ' + y.toFixed(1); }
+  s += `<path d="${d}" fill="none" stroke="#1f3f9a" stroke-width=".9"/>`;
+  // atividade (anel interno): direção grossa, trabalho médio, descanso fino
+  const act = [[0, 6.17, 'r'], [6.17, 7, 'w'], [7, 9.22, 'd'], [9.22, 9.73, 'r'], [9.73, 14.53, 'd']];
+  for (const [a, b, k] of act) s += `<path d="${arcP(58, a, b)}" fill="none" stroke="#16161a" stroke-width="${k === 'd' ? 7 : k === 'w' ? 4 : 1}"/>`;
+  s += `<circle cx="150" cy="150" r="44" fill="#fbfaf6" stroke="#16161a"/><text x="150" y="134" text-anchor="middle" font-family="Arimo,Arial" font-weight="700" font-size="10" fill="#16161a">${JOB.driver.toUpperCase()}</text><text x="150" y="148" text-anchor="middle" font-family="Courier Prime,monospace" font-size="10" fill="#16161a">${JOB.truckPlate}</text><text x="150" y="162" text-anchor="middle" font-family="Courier Prime,monospace" font-size="9" fill="#16161a">03/11 · km 183.840</text><text x="150" y="175" text-anchor="middle" font-family="Arimo,Arial" font-size="7" fill="#b3261e">SIMULADO</text>`;
+  const [nx, ny] = P(146, 14.53); s += `<g class="tacho-needle"><line x1="150" y1="150" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="var(--tp-accent)" stroke-width="2"/></g><circle cx="150" cy="150" r="4" fill="#16161a"/>`;
+  return s + '</svg>';
+}
+document.getElementById('disc').innerHTML = tacho() + '<p class="src" style="text-align:center;margin:6px 0 0">anel interno: direção (grosso) · trabalho (médio) · descanso (fino) · traço azul: velocidade</p>';
+document.getElementById('tl').innerHTML = Array.from({ length: 24 }, (_, h) => `<i class="${h < 6 ? 'r' : h === 6 ? 'w' : (h >= 7 && h < 9) || (h >= 10 && h < 15) ? 'd' : h === 9 ? 'p' : ''}"></i>`).join('');
+
+/* =================== despachante =================== */
+const MSGS = [
+  ['Novo frete', `Frete confirmado: ${JOB.cargo.toLowerCase()}, ${num(JOB.massKg / 1000, 1)} t para ${JOB.compDst} em ${JOB.cityDst}. NF-e, CT-e e MDF-e emitidos.`, 'var(--tp-accent)'],
+  ['Atraso', 'Atenção: previsão de chegada 40 minutos depois do prazo. Quer que eu avise o cliente?', 'var(--tp-warn)'],
+  ['Chegando', `${JOB.compDst} avisada. Doca 4 reservada, siga a sinalização do pátio.`, 'var(--tp-ok)'],
+  ['Multa', 'Recebemos o auto de infração por excesso de velocidade. Valor lançado na carteira.', 'var(--tp-crit)'],
+  ['Jornada', 'Faltam 30 minutos para a parada obrigatória. Há uma área de serviço em 18 km.', 'var(--tp-warn)'],
+];
+function toast(who, text, c) {
+  const el = document.createElement('div'); el.className = 'toast'; el.style.setProperty('--c', c);
+  el.innerHTML = `<div class="wave"><i></i><i></i><i></i></div><div><div class="who">${who} · CH 19</div><p>${text}</p></div><span class="t">14:32</span>`;
+  const box = document.getElementById('toasts'); box.prepend(el); while (box.children.length > 3) box.lastChild.remove(); setTimeout(() => el.remove(), 7000);
+  document.getElementById('lcd-msg').textContent = text;
+  if (document.getElementById('voice').checked && 'speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(text); u.lang = 'pt-BR'; u.rate = 1.05; speechSynthesis.cancel(); speechSynthesis.speak(u); }
+}
+document.getElementById('radio-btns').innerHTML = MSGS.map((m, i) => `<button class="btn" data-m="${i}" style="min-height:44px">${m[0]}</button>`).join('');
+document.querySelectorAll('[data-m]').forEach((b) => (b.onclick = () => { const m = MSGS[b.dataset.m]; toast('Central', m[1], m[2]); }));
+
+/* =================== carteira =================== */
+const LEDGER = [
+  ['05:40', 'Balsa Dover → Calais (antes da coleta)', 'Bilhete ' + digits('ferry', 7), -186 * JOB.fx, 'ferryPayAmount'],
+  ['06:25', 'Adiantamento de frete (50 %)', 'CT-e ' + nfmt(CT.n), JOB.income * JOB.fx * 0.5, 'SIM'],
+  ['09:58', 'Pedágio A26 · praça P-14', 'Recibo', -41.6 * JOB.fx, 'tollgatePayAmount'],
+  ['11:20', 'Abastecimento 412,6 L', 'NFC-e 088.213', -412.6 * PRICE_L, 'refuelAmount × preço SIM'],
+  ['12:47', 'Multa: excesso de velocidade', 'AIT', -650 * JOB.fx, 'fineAmount'],
+  ['00:12', 'Saldo do frete na entrega', 'Canhoto NF-e', JOB.income * JOB.fx * 0.5, 'jobDeliveredRevenue'],
+];
+(() => { let bal = 0, inc = 0, out = 0; document.getElementById('ledger').innerHTML = LEDGER.map(([t, d, doc, v, src]) => { bal += v; v > 0 ? (inc += v) : (out += v); return `<tr><td class="n" style="text-align:left">${t}</td><td>${d}<div class="tag">${src}</div></td><td class="hide-s tag">${doc}</td><td class="n ${v < 0 ? 'neg' : 'pos'}">${v < 0 ? '−' : '+'} ${brl(Math.abs(v))}</td><td class="n hide-s">${brl(bal)}</td></tr>`; }).join('');
+  document.getElementById('kpis').innerHTML = `<div><span class="tp-label">Receitas</span><b style="color:var(--tp-ok)">${brl(inc)}</b></div><div><span class="tp-label">Despesas</span><b style="color:var(--tp-crit)">${brl(-out)}</b></div><div><span class="tp-label">Resultado da viagem</span><b>${brl(bal)}</b></div><div><span class="tp-label">R$ / km</span><b>${num(bal / JOB.plannedKm)}</b></div>`; })();
+
+/* =================== checklist =================== */
+const CHK = [['auto', 'ok', 'Freio de estacionamento aplicado', 'parkingBrake'], ['auto', 'ok', 'Pressão de ar ≥ 8 bar', 'airPressure'], ['auto', 'bad', 'Combustível ≥ 50 % para a rota', 'fuel.percent 28 %'], ['auto', 'ok', 'Reboque acoplado', 'trailer.attached'], ['auto', 'ok', 'Desgaste do caminhão < 10 %', 'wear'], ['auto', 'ok', 'Luzes de posição funcionando', 'lights.parking'], ['man', 0, 'NF-e, CT-e e MDF-e na pasta'], ['man', 1, 'Carga amarrada e conferida'], ['man', 0, 'Disco do tacógrafo trocado'], ['man', 0, 'EPI e triângulo a bordo']];
+document.getElementById('chk').innerHTML = CHK.map(([k, s, l, src], i) => k === 'auto'
+  ? `<li><span class="st ${s}">${s === 'ok' ? '[ OK ]' : '[FALHA]'}</span><span>${l}</span><small>${src}</small></li>`
+  : `<li><span class="st man">[ -- ]</span><label><input type="checkbox" ${s ? 'checked' : ''}>${l}</label><small>manual</small></li>`).join('');
+
+/* =================== pasta =================== */
+const DOCS = [
+  { id: 'sheet-nfe', k: 'NF-e', t: 'DANFE ' + nfmt(NF.n), s: 'Em trânsito', trip: 1, type: 'fiscal' },
+  { id: 'sheet-cte', k: 'CT-e', t: 'DACTE ' + nfmt(CT.n), s: 'Autorizado', trip: 1, type: 'fiscal' },
+  { id: 'sheet-mdfe', k: 'MDF', t: 'DAMDFE ' + nfmt(MD.n), s: 'Aberto', trip: 1, type: 'fiscal' },
+  { id: 'doc-toll', k: 'PED', t: 'Pedágio A26 · P-14', s: brl(41.6 * JOB.fx), trip: 1, type: 'recibo' },
+  { id: 'doc-fuel', k: 'NFC', t: 'Abastecimento 412,6 L', s: brl(412.6 * PRICE_L), trip: 1, type: 'recibo' },
+  { id: 'doc-ferry', k: 'BAL', t: 'Balsa Dover → Calais', s: brl(186 * JOB.fx), trip: 1, type: 'recibo' },
+  { id: 'doc-fine', k: 'AIT', t: 'Multa · velocidade', s: brl(650 * JOB.fx), trip: 1, type: 'multa' },
+  { id: 'old', k: 'NF-e', t: 'DANFE 000.004.198', s: 'Entregue', trip: 2, type: 'fiscal' },
+  { id: 'old2', k: 'NF-e', t: 'DANFE 000.004.176', s: 'Cancelada', trip: 3, type: 'fiscal' },
+];
+const TRIPS = { 1: ['Calais → Lyon', 'Em trânsito', 'var(--tp-accent)'], 2: ['Rotterdam → Calais', 'Entregue', 'var(--tp-ok)'], 3: ['Paris → Bruxelas', 'Cancelada', 'var(--tp-crit)'] };
+let filter = 'todos', current = 'sheet-nfe';
+function renderFolder() {
+  document.getElementById('filters').innerHTML = [['todos', 'Todos'], ['fiscal', 'Fiscais'], ['recibo', 'Recibos'], ['multa', 'Multas']].map(([k, l]) => `<button class="chip" aria-pressed="${filter === k}" data-f="${k}">${l}</button>`).join('');
+  document.getElementById('trips').innerHTML = Object.entries(TRIPS).map(([id, [r, s, c]]) => `<div class="trip"><header><b>${r}</b><span class="badge" style="--c:${c}">${s}</span></header>${DOCS.filter((d) => d.trip == id && (filter === 'todos' || d.type === filter)).map((d) => `<div class="doc-item ${d.id === current ? 'act' : ''}" data-d="${d.id}" tabindex="0" role="button"><span class="ic" data-k="${d.k}"></span><span class="t"><b>${d.t}</b><span>${d.s}</span></span></div>`).join('')}</div>`).join('');
+  document.querySelectorAll('[data-f]').forEach((b) => (b.onclick = () => { filter = b.dataset.f; renderFolder(); }));
+  document.querySelectorAll('[data-d]').forEach((b) => (b.onclick = b.onkeydown = (e) => { if (e.type === 'keydown' && e.key !== 'Enter') return; current = b.dataset.d; renderFolder(); }));
+  const src = document.getElementById(current);
+  document.getElementById('clip-view').innerHTML = src ? src.outerHTML.replace(/id="[^"]*"/, '') : '<div class="sheet" style="display:flex;align-items:center;justify-content:center;font:2cqw var(--doc-font)">Documento arquivado (viagem anterior)</div>';
+}
+renderFolder();
+document.getElementById('print-btn').onclick = () => { const src = document.getElementById(current); const root = document.getElementById('print-root'); root.innerHTML = `<div class="sheet-wrap">${src ? src.outerHTML : ''}</div>`; print(); };
+
+/* separadores estreitos na B612 Mono (DESIGN-SPEC §2.3) — só fora do papel */
+(function sep() {
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const list = [];
+  while (w.nextNode()) { const n = w.currentNode, p = n.parentElement;
+    if (!p || p.closest('.sheet,.thermal,.talao,.ticket,.sign-area,svg,script,style')) continue;
+    if (/\d[,:.]\d/.test(n.nodeValue) && getComputedStyle(p).fontFamily.includes('B612')) list.push(n); }
+  for (const n of list) { const t = document.createElement('span');
+    t.innerHTML = n.nodeValue.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(\d)([,:.])(?=\d)/g, '$1<span class="sep">$2</span>');
+    n.replaceWith(...t.childNodes); }
+})();
+if (location.hash === '#canhoto-assinado') setTimeout(() => deliver(8.7), 300);
+/* tema */
+document.querySelectorAll('[data-th]').forEach((b) => (b.onclick = () => (document.documentElement.dataset.theme = b.dataset.th)));
+</script>
+</body>
+</html>
